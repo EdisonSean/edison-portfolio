@@ -34,6 +34,12 @@ const archiveTitleVariableTextSettings = {
   radius: 140,
   falloff: "gaussian" as const,
 };
+const archiveProjectTitleVariableTextSettings = {
+  fromFontVariationSettings: "'wght' 700, 'opsz' 18",
+  toFontVariationSettings: "'wght' 1000, 'opsz' 42",
+  radius: 120,
+  falloff: "gaussian" as const,
+};
 const archiveNumberVariableTextSettings = {
   fromFontVariationSettings: "'wght' 500, 'opsz' 14",
   toFontVariationSettings: "'wght' 1000, 'opsz' 42",
@@ -438,7 +444,11 @@ export default function ArchiveContent({
 
                 <div className="grid min-w-0 gap-4 md:grid-cols-[minmax(0,1fr)_auto]">
                   <p className="text-[clamp(1.35rem,2.1vw,2.4rem)] font-bold leading-[1.08] text-zinc-200">
-                    {item.title}
+                    <VariableProximity
+                      label={item.title}
+                      containerRef={containerRef}
+                      {...archiveProjectTitleVariableTextSettings}
+                    />
                   </p>
                   <p className="text-zinc-500 md:text-right">{item.year}</p>
                 </div>

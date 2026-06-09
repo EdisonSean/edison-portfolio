@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import CustomCursor from "@/components/layout/CustomCursor";
+import ScrollEnhancer from "@/components/layout/ScrollEnhancer";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
+        <ScrollEnhancer />
         <CustomCursor />
       </body>
     </html>
