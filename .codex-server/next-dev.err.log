@@ -1,0 +1,1838 @@
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'join')
+    at eval (components/archive/ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:287:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:34:38)
+    at WorkPage (components/work/WorkPage.tsx:57:33)
+    at Page (app\work\page.tsx:10:10)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div>
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⨯ TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components\archive\ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components\archive\ArchiveContent.tsx:287:18)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div> {
+  digest: '1705796718'
+}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'join')
+    at eval (components/archive/ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:287:18)
+    at Set.forEach (<anonymous>)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:34:38)
+    at WorkPage (components/work/WorkPage.tsx:57:33)
+    at Page (app\work\page.tsx:10:10)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div>
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components/archive/ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:287:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:26:5)
+    at WorkPage (components/work/WorkPage.tsx:54:11)
+    at Page (app\work\page.tsx:10:10)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div>
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⨯ TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components\archive\ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components\archive\ArchiveContent.tsx:287:18)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div> {
+  digest: '1705796718'
+}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components/archive/ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:287:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:26:5)
+    at WorkPage (components/work/WorkPage.tsx:52:11)
+    at Page (app\work\page.tsx:10:10)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div>
+⨯ TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components\archive\ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components\archive\ArchiveContent.tsx:287:18)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div> {
+  digest: '1705796718'
+}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'join')
+    at <unknown> (components/archive/ArchiveContent.tsx:312:32)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:287:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:26:5)
+    at WorkPage (components/work/WorkPage.tsx:52:11)
+    at Page (app\work\page.tsx:10:10)
+  310 |                     #{item.title}
+  311 |                     <br />
+> 312 |                     {item.role.join(" / ")}
+      |                                ^
+  313 |                   </p>
+  314 |                   <p className="text-zinc-500 md:text-right">{item.year}</p>
+  315 |                 </div>
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at eval (components/archive/ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:292:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:3:1)
+    at WorkPage (components/work/WorkPage.tsx:48:27)
+    at Page (app\work\page.tsx:10:10)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type}
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+⨯ TypeError: Cannot read properties of undefined (reading 'map')
+    at <unknown> (components\archive\ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components\archive\ArchiveContent.tsx:292:18)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type} {
+  digest: '556772306'
+}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at eval (components/archive/ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:292:18)
+    at Set.forEach (<anonymous>)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:3:1)
+    at WorkPage (components/work/WorkPage.tsx:46:29)
+    at Page (app\work\page.tsx:10:10)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at <unknown> (components/archive/ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:292:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:26:5)
+    at WorkPage (components/work/WorkPage.tsx:52:11)
+    at Page (app\work\page.tsx:10:10)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type}
+⨯ TypeError: Cannot read properties of undefined (reading 'map')
+    at <unknown> (components\archive\ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components\archive\ArchiveContent.tsx:292:18)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type} {
+  digest: '556772306'
+}
+[browser] Uncaught TypeError: Cannot read properties of undefined (reading 'map')
+    at <unknown> (components/archive/ArchiveContent.tsx:338:31)
+    at Array.map (<anonymous>)
+    at ArchiveContent (components/archive/ArchiveContent.tsx:292:18)
+    at WorkCategoryView (components/work/WorkCategoryView.tsx:26:5)
+    at WorkPage (components/work/WorkPage.tsx:52:11)
+    at Page (app\work\page.tsx:10:10)
+  336 |                   </p>
+  337 |
+> 338 |                   {item.media.map((mediaItem, mediaIndex) => (
+      |                               ^
+  339 |                     <figure key={`${mediaItem.src}-${mediaIndex}`}>
+  340 |                       <ArchiveMediaFrame
+  341 |                         type={mediaItem.type}
+⚠ Fast Refresh had to perform a full reload due to a runtime error.
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+⨯ ./data/works.ts:38:14
+the name `works` is defined multiple times
+  [90m36 |[0m ];
+  [90m37 |[0m
+[31m[1m>[0m [90m38 |[0m [36mexport[0m [36mconst[0m works: [33mWorkItem[0m[] = [
+  [90m   |[0m              [31m[1m^^^^^[0m
+  [90m39 |[0m   {
+  [90m40 |[0m     slug: [32m"example-commercial-work"[0m,
+  [90m41 |[0m     title: [32m"Example Commercial Work"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+⨯ ./data/works.ts:38:14
+the name `works` is defined multiple times
+  [90m36 |[0m ];
+  [90m37 |[0m
+[31m[1m>[0m [90m38 |[0m [36mexport[0m [36mconst[0m works: [33mWorkItem[0m[] = [
+  [90m   |[0m              [31m[1m^^^^^[0m
+  [90m39 |[0m   {
+  [90m40 |[0m     slug: [32m"example-commercial-work"[0m,
+  [90m41 |[0m     title: [32m"Example Commercial Work"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+
+[browser] Uncaught Error: ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./data/works.ts:38:14)
+    at <unknown> (Error: (./data/works.ts:38:14)
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+⨯ ./data/works.ts:38:14
+the name `works` is defined multiple times
+  [90m36 |[0m ];
+  [90m37 |[0m
+[31m[1m>[0m [90m38 |[0m [36mexport[0m [36mconst[0m works: [33mWorkItem[0m[] = [
+  [90m   |[0m              [31m[1m^^^^^[0m
+  [90m39 |[0m   {
+  [90m40 |[0m     slug: [32m"example-commercial-work1"[0m,
+  [90m41 |[0m     title: [32m"Example Commercial Work"[0m,
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+
+[browser] Uncaught Error: ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work1",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+
+    at <unknown> (Error: ./data/works.ts:38:14)
+    at <unknown> (Error: (./data/works.ts:38:14)
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work1",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+[browser] ./data/works.ts:38:14
+the name `works` is defined multiple times
+  36 | ];
+  37 |
+> 38 | export const works: WorkItem[] = [
+     |              ^^^^^
+  39 |   {
+  40 |     slug: "example-commercial-work1",
+  41 |     title: "Example Commercial Work",
+
+Ecmascript file had an error
+
+Import traces:
+  Client Component Browser:
+    ./data/works.ts [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./data/works.ts [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component] 
+[browser] Encountered two children with the same key, `example-commercial-work`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `example-commercial-work`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `example-commercial-work`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+[browser] Encountered two children with the same key, `example-commercial-work`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version. 
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { workCategories, type WorkCategory } from "@/data/workCategories";
+> 3 | import { works } from "@/data/works";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type WorkCategoryViewProps = {
+  6 |   selectedCategory: WorkCategory;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  10 |   type WorkCategory,
+  11 | } from "@/data/workCategories";
+> 12 | import { works } from "@/data/works";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import WorkCategoryView from "@/components/work/WorkCategoryView";
+  14 |
+  15 | export default function WorkPage() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { workCategories, [36mtype[0m [33mWorkCategory[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mWorkCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mWorkCategory[0m;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  [90m10 |[0m   [36mtype[0m [33mWorkCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/workCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { works } [36mfrom[0m [32m"@/data/works"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mWorkCategoryView[0m [36mfrom[0m [32m"@/components/work/WorkCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mWorkPage[0m() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] Uncaught Error: ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { workCategories, type WorkCategory } from "@/data/workCategories";
+> 3 | import { works } from "@/data/works";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type WorkCategoryViewProps = {
+  6 |   selectedCategory: WorkCategory;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./components/work/WorkCategoryView.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./components/work/WorkCategoryView.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { workCategories, type WorkCategory } from "@/data/workCategories";
+> 3 | import { works } from "@/data/works";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type WorkCategoryViewProps = {
+  6 |   selectedCategory: WorkCategory;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  10 |   type WorkCategory,
+  11 | } from "@/data/workCategories";
+> 12 | import { works } from "@/data/works";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import WorkCategoryView from "@/components/work/WorkCategoryView";
+  14 |
+  15 | export default function WorkPage() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/work/WorkCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/works'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { workCategories, type WorkCategory } from "@/data/workCategories";
+> 3 | import { works } from "@/data/works";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type WorkCategoryViewProps = {
+  6 |   selectedCategory: WorkCategory;
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/work/WorkCategoryView.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Client Component Browser]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/work/WorkCategoryView.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Client Component SSR]
+    ./components/work/WorkPage.tsx [Server Component]
+    ./app/work/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/work/WorkPage.tsx:12:1
+Module not found: Can't resolve '@/data/works'
+  10 |   type WorkCategory,
+  11 | } from "@/data/workCategories";
+> 12 | import { works } from "@/data/works";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import WorkCategoryView from "@/components/work/WorkCategoryView";
+  14 |
+  15 | export default function WorkPage() {
+
+Import map: aliased to relative './data/works' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/work/WorkPage.tsx
+    ./app/work/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+⨯ ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { labCategories, [36mtype[0m [33mLabCategory[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mLabCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mLabCategory[0m;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { labCategories, [36mtype[0m [33mLabCategory[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mLabCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mLabCategory[0m;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { labCategories, [36mtype[0m [33mLabCategory[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mLabCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mLabCategory[0m;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  [90m1 |[0m [36mimport[0m [33mArchiveContent[0m [36mfrom[0m [32m"@/components/archive/ArchiveContent"[0m;
+  [90m2 |[0m [36mimport[0m { labCategories, [36mtype[0m [33mLabCategory[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m3 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m  |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m4 |[0m
+  [90m5 |[0m [36mtype[0m [33mLabCategoryViewProps[0m = {
+  [90m6 |[0m   selectedCategory: [33mLabCategory[0m;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  [90m10 |[0m   [36mtype[0m [33mLabCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mLabCategoryView[0m [36mfrom[0m [32m"@/components/lab/LabCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mLabPage[0m() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  [90m10 |[0m   [36mtype[0m [33mLabCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mLabCategoryView[0m [36mfrom[0m [32m"@/components/lab/LabCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mLabPage[0m() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  [90m10 |[0m   [36mtype[0m [33mLabCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mLabCategoryView[0m [36mfrom[0m [32m"@/components/lab/LabCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mLabPage[0m() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+⨯ ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  [90m10 |[0m   [36mtype[0m [33mLabCategory[0m,
+  [90m11 |[0m } [36mfrom[0m [32m"@/data/labCategories"[0m;
+[31m[1m>[0m [90m12 |[0m [36mimport[0m { labs } [36mfrom[0m [32m"@/data/labs"[0m;
+  [90m   |[0m [31m[1m^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^[0m
+  [90m13 |[0m [36mimport[0m [33mLabCategoryView[0m [36mfrom[0m [32m"@/components/lab/LabCategoryView"[0m;
+  [90m14 |[0m
+  [90m15 |[0m [36mexport[0m [36mdefault[0m [36mfunction[0m [33mLabPage[0m() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+[browser] ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { labCategories, type LabCategory } from "@/data/labCategories";
+> 3 | import { labs } from "@/data/labs";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type LabCategoryViewProps = {
+  6 |   selectedCategory: LabCategory;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  10 |   type LabCategory,
+  11 | } from "@/data/labCategories";
+> 12 | import { labs } from "@/data/labs";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import LabCategoryView from "@/components/lab/LabCategoryView";
+  14 |
+  15 | export default function LabPage() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] Uncaught Error: ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { labCategories, type LabCategory } from "@/data/labCategories";
+> 3 | import { labs } from "@/data/labs";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type LabCategoryViewProps = {
+  6 |   selectedCategory: LabCategory;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+    at <unknown> (Error: ./components/lab/LabCategoryView.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+    at <unknown> (Error: (./components/lab/LabCategoryView.tsx:3:1)
+    at <unknown> (https://nextjs.org/docs/messages/module-not-found)
+[browser] ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { labCategories, type LabCategory } from "@/data/labCategories";
+> 3 | import { labs } from "@/data/labs";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type LabCategoryViewProps = {
+  6 |   selectedCategory: LabCategory;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  10 |   type LabCategory,
+  11 | } from "@/data/labCategories";
+> 12 | import { labs } from "@/data/labs";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import LabCategoryView from "@/components/lab/LabCategoryView";
+  14 |
+  15 | export default function LabPage() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/lab/LabCategoryView.tsx:3:1
+Module not found: Can't resolve '@/data/labs'
+  1 | import ArchiveContent from "@/components/archive/ArchiveContent";
+  2 | import { labCategories, type LabCategory } from "@/data/labCategories";
+> 3 | import { labs } from "@/data/labs";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  4 |
+  5 | type LabCategoryViewProps = {
+  6 |   selectedCategory: LabCategory;
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import traces:
+  Client Component Browser:
+    ./components/lab/LabCategoryView.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Client Component Browser]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./components/lab/LabCategoryView.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Client Component SSR]
+    ./components/lab/LabPage.tsx [Server Component]
+    ./app/lab/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found 
+[browser] ./components/lab/LabPage.tsx:12:1
+Module not found: Can't resolve '@/data/labs'
+  10 |   type LabCategory,
+  11 | } from "@/data/labCategories";
+> 12 | import { labs } from "@/data/labs";
+     | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  13 | import LabCategoryView from "@/components/lab/LabCategoryView";
+  14 |
+  15 | export default function LabPage() {
+
+Import map: aliased to relative './data/labs' inside of [project]/
+
+Import trace:
+  Server Component:
+    ./components/lab/LabPage.tsx
+    ./app/lab/page.tsx
+
+https://nextjs.org/docs/messages/module-not-found 
