@@ -14,4 +14,5 @@ export type WorkItem = {
   role: string[];
   description: string;
   featured: boolean;
+  featuredOrder?: number;
 };

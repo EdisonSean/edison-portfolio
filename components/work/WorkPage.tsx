@@ -9,7 +9,7 @@ import {
   workCategories,
   type WorkCategory,
 } from "@/data/workCategories";
-import { works } from "@/data/works";
+import { getWorksByCategory } from "@/data/works";
 import WorkCategoryView from "@/components/work/WorkCategoryView";
 
 export default function WorkPage() {
@@ -17,12 +17,7 @@ export default function WorkPage() {
     useState<WorkCategory>(defaultWorkCategory);
   const [activeItemSlug, setActiveItemSlug] = useState<string | null>(null);
   const selectedWorks = useMemo(
-    () =>
-      works.filter((work) =>
-        selectedCategory === "featured"
-          ? work.featured
-          : work.categories.includes(selectedCategory),
-      ),
+    () => getWorksByCategory(selectedCategory),
     [selectedCategory],
   );
 

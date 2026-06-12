@@ -15,7 +15,7 @@
 浏览器里使用的路径不要写 `public`，例如：
 
 ```ts
-src: "/works/my-project/cover.jpg"
+src: "/works/my-project/cover.jpg";
 ```
 
 ## Work 示例：多张图片
@@ -29,7 +29,7 @@ src: "/works/my-project/cover.jpg"
   projectName: "Nike Air Flow Launch",
   client: "Nike",
   year: 2026,
-  categories: ["product"],
+  categories: ["cloth"],
   media: [
     {
       type: "image",
@@ -51,6 +51,7 @@ src: "/works/my-project/cover.jpg"
   role: ["FX design", "look development"],
   description: "A commercial product motion piece built around soft airflow and material detail.",
   featured: true,
+  featuredOrder: 1,
 }
 ```
 
@@ -89,6 +90,7 @@ public/
   role: ["cloth simulation", "motion design"],
   description: "A short commercial cloth loop focused on folds, weight, and controlled wind motion.",
   featured: true,
+  featuredOrder: 2,
 }
 ```
 
@@ -113,7 +115,7 @@ public/
   projectName: "Sony Product Reveal",
   client: "Sony",
   year: 2025,
-  categories: ["fluid", "product"],
+  categories: ["fluid"],
   media: [
     {
       type: "video",
@@ -129,6 +131,7 @@ public/
   role: ["fluid simulation", "rendering", "compositing"],
   description: "A product reveal film using liquid motion, macro splashes, and controlled highlight passes.",
   featured: true,
+  featuredOrder: 3,
 }
 ```
 

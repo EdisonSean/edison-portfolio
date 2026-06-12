@@ -1,6 +1,6 @@
 import ArchiveContent from "@/components/archive/ArchiveContent";
 import { workCategories, type WorkCategory } from "@/data/workCategories";
-import { works } from "@/data/works";
+import { getWorksByCategory } from "@/data/works";
 
 type WorkCategoryViewProps = {
   selectedCategory: WorkCategory;
@@ -16,13 +16,8 @@ export default function WorkCategoryView({
   const category =
     workCategories.find((item) => item.slug === selectedCategory) ??
     workCategories[0];
-  const filteredWorks = works.filter((work) =>
-    selectedCategory === "featured"
-      ? work.featured
-      : work.categories.includes(selectedCategory),
-  );
-  const title =
-    selectedCategory === "featured" ? "Selected Works" : category.label;
+  const filteredWorks = getWorksByCategory(selectedCategory);
+  const title = selectedCategory === "featured" ? "Featured" : category.label;
 
   return (
     <ArchiveContent

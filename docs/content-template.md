@@ -42,7 +42,7 @@ public/
 浏览器路径不要写 `public`：
 
 ```ts
-src: "/works/your-work-slug/cover.jpg"
+src: "/works/your-work-slug/cover.jpg";
 ```
 
 ## 媒体项写法
@@ -126,18 +126,14 @@ data/
     particles.ts
     procedural.ts
     rbd.ts
-    product.ts
 ```
 
 新增项目时，放进它最主要的分类文件。比如主方向是布料模拟，就放进
-`data/workItems/cloth.ts`。如果它也应该出现在 Product，
-就在 `categories` 里加上对应分类：
-
-```ts
-categories: ["cloth", "product"]
-```
+`data/workItems/cloth.ts`。如果它也应该出现在其他分类，
+就在 `categories` 里加上对应分类。
 
 Featured 只由 `featured: true` 控制。不要在 `categories` 里写 `"featured"`。
+Featured 的自定义排序用 `featuredOrder` 控制，数字越小越靠前；不写 `featuredOrder` 的项目会排在已编号项目后面。
 `featured.ts` 是占位文件，一般不要把项目复制进去。
 
 ```ts
@@ -147,7 +143,7 @@ Featured 只由 `featured: true` 控制。不要在 `categories` 里写 `"featur
   projectName: "Campaign / Film Name",
   client: "Client Name",
   year: 2026,
-  categories: ["product"],
+  categories: ["cloth"],
   media: [
     {
       type: "image",
@@ -172,13 +168,14 @@ Featured 只由 `featured: true` 控制。不要在 `categories` 里写 `"featur
   role: ["FX design", "look development"],
   description: "One short sentence about the whole project.",
   featured: true,
+  featuredOrder: 1,
 }
 ```
 
 Work 可用分类：
 
 ```txt
-cloth, fluid, pyro, particles, procedural, rbd, product
+cloth, fluid, pyro, particles, procedural, rbd
 ```
 
 ## Lab 项目
@@ -202,7 +199,7 @@ data/
 `categories` 里加上 `"recent"`：
 
 ```ts
-categories: ["recent", "shader"]
+categories: ["recent", "shader"];
 ```
 
 `recent.ts` 和 `all.ts` 是交叉/浏览分类占位文件。一般不要把项目复制到

@@ -5,8 +5,7 @@ export type WorkCategory =
   | "pyro"
   | "particles"
   | "procedural"
-  | "rbd"
-  | "product";
+  | "rbd";
 
 export type WorkCategoryInfo = {
   slug: WorkCategory;
@@ -33,7 +32,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "02",
     label: "Cloth / Knitting",
     meta: "Fabric systems",
-    description: "Commercial cloth, fabric, laces, soft panels, and knitting-led motion.",
+    description:
+      "Commercial cloth, fabric, laces, soft panels, and knitting-led motion.",
     keywords: ["cloth", "knitting", "fabric"],
   },
   {
@@ -41,7 +41,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "03",
     label: "Fluid",
     meta: "Liquid motion",
-    description: "Fluid-led commercial shots, from macro gel to product splash work.",
+    description:
+      "Fluid-led commercial shots, from macro gel to product splash work.",
     keywords: ["fluid", "splash", "macro"],
   },
   {
@@ -49,7 +50,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "04",
     label: "Pyro / Volume",
     meta: "Smoke and heat",
-    description: "Volume, smoke, heat, and atmosphere built for commercial imagery.",
+    description:
+      "Volume, smoke, heat, and atmosphere built for commercial imagery.",
     keywords: ["pyro", "volume", "smoke"],
   },
   {
@@ -57,7 +59,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "05",
     label: "Particles",
     meta: "Point systems",
-    description: "Particle systems for commercial reveal, transition, and identity work.",
+    description:
+      "Particle systems for commercial reveal, transition, and identity work.",
     keywords: ["particles", "trails", "data"],
   },
   {
@@ -65,7 +68,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "06",
     label: "Procedural",
     meta: "Generated motion",
-    description: "Procedural commercial systems for structured motion and repeatable looks.",
+    description:
+      "Procedural commercial systems for structured motion and repeatable looks.",
     keywords: ["procedural", "systems", "motion"],
   },
   {
@@ -73,15 +77,8 @@ export const workCategories: WorkCategoryInfo[] = [
     index: "07",
     label: "RBD / Destruction",
     meta: "Breakage",
-    description: "Rigid-body and destruction work for commercial reveal sequences.",
+    description:
+      "Rigid-body and destruction work for commercial reveal sequences.",
     keywords: ["rbd", "fracture", "destruction"],
-  },
-  {
-    slug: "product",
-    index: "08",
-    label: "Product / Lookdev",
-    meta: "Object studies",
-    description: "Product-facing commercial FX, macro lookdev, and controlled object shots.",
-    keywords: ["product", "lookdev", "macro"],
   },
 ];
