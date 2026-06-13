@@ -1,3 +1,5 @@
+import type { MouseEvent } from "react";
+
 export type ArchiveCategoryEntry<TCategory extends string = string> = {
   slug: TCategory;
   index: string;
@@ -17,6 +19,88 @@ export type ArchiveSidebarItem = {
 
 function getArchiveItemHref(slug: string) {
   return `#archive-item-${slug}`;
+}
+
+const archiveContentRootSelector = "[data-archive-content-root]";
+const archiveScrollStartEvent = "edison:archive-scroll-start";
+const archiveScrollDurationMs = 320;
+let archiveScrollFrameId = 0;
+
+function easeOutCubic(progress: number) {
+  return 1 - (1 - progress) ** 3;
+}
+
+function getHeaderOffset() {
+  const header = document.querySelector("header");
+
+  if (!(header instanceof HTMLElement)) {
+    return 24;
+  }
+
+  return header.getBoundingClientRect().bottom + 24;
+}
+
+function getElementScrollTarget(element: HTMLElement) {
+  return Math.max(
+    0,
+    window.scrollY + element.getBoundingClientRect().top - getHeaderOffset(),
+  );
+}
+
+function animateWindowScrollTo(targetScrollY: number) {
+  window.dispatchEvent(new CustomEvent(archiveScrollStartEvent));
+
+  if (archiveScrollFrameId !== 0) {
+    window.cancelAnimationFrame(archiveScrollFrameId);
+    archiveScrollFrameId = 0;
+  }
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reducedMotion) {
+    window.scrollTo({ top: targetScrollY });
+    return;
+  }
+
+  const startScrollY = window.scrollY;
+  const distance = targetScrollY - startScrollY;
+  const startTime = performance.now();
+
+  const step = () => {
+    const elapsed = performance.now() - startTime;
+    const progress = Math.min(elapsed / archiveScrollDurationMs, 1);
+    const nextScrollY = startScrollY + distance * easeOutCubic(progress);
+
+    window.scrollTo({ top: nextScrollY });
+
+    if (progress >= 1) {
+      window.scrollTo({ top: targetScrollY });
+      archiveScrollFrameId = 0;
+      return;
+    }
+
+    archiveScrollFrameId = window.requestAnimationFrame(step);
+  };
+
+  archiveScrollFrameId = window.requestAnimationFrame(step);
+}
+
+function scrollElementIntoArchiveView(element: HTMLElement) {
+  animateWindowScrollTo(getElementScrollTarget(element));
+}
+
+function scrollToArchiveContentStart() {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(() => {
+      const element = document.querySelector(archiveContentRootSelector);
+
+      if (element instanceof HTMLElement) {
+        scrollElementIntoArchiveView(element);
+      }
+    });
+  });
 }
 
 function SidebarDot() {
@@ -63,6 +147,27 @@ export default function ArchiveSidebar<TCategory extends string>({
     categories.find((category) => category.slug === selectedCategory) ??
     categories[0];
 
+  const handleCategoryClick = (category: TCategory) => {
+    onSelectCategory(category);
+    scrollToArchiveContentStart();
+  };
+
+  const handleItemClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    item: ArchiveSidebarItem,
+  ) => {
+    const targetElement = document.getElementById(`archive-item-${item.slug}`);
+
+    if (!targetElement) {
+      return;
+    }
+
+    event.preventDefault();
+    onSelectItem?.(item.slug);
+    window.history.pushState(null, "", getArchiveItemHref(item.slug));
+    scrollElementIntoArchiveView(targetElement);
+  };
+
   return (
     <nav
       aria-label={`${title} archive index`}
@@ -83,7 +188,7 @@ export default function ArchiveSidebar<TCategory extends string>({
                 <button
                   type="button"
                   aria-current={isSelected ? "page" : undefined}
-                  onClick={() => onSelectCategory(category.slug)}
+                  onClick={() => handleCategoryClick(category.slug)}
                   className={[
                     "grid w-full grid-cols-[0.9rem_1fr] gap-3 text-left leading-[1.3] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     isSelected
@@ -117,7 +222,7 @@ export default function ArchiveSidebar<TCategory extends string>({
                     <a
                       href={getArchiveItemHref(item.slug)}
                       aria-current={isActiveItem ? "location" : undefined}
-                      onClick={() => onSelectItem?.(item.slug)}
+                      onClick={(event) => handleItemClick(event, item)}
                       className="group grid grid-cols-[2.7rem_1fr] gap-2 leading-[1.3] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     >
                       <span

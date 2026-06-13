@@ -286,7 +286,11 @@ export default function ArchiveContent({
   }, [activeItemSlug, items, onActiveItemChange]);
 
   return (
-    <section ref={containerRef} className="min-w-0 text-white">
+    <section
+      ref={containerRef}
+      className="min-w-0 text-white"
+      data-archive-content-root
+    >
       <h2 className="mb-16 max-w-[78rem] text-[clamp(2.95rem,7.35vw,8.4rem)] font-semibold leading-[0.86] 2xl:max-w-none 2xl:text-[clamp(4.9rem,5.75vw,15.4rem)]">
         <VariableProximity
           label={title}

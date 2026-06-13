@@ -16,6 +16,7 @@ const dragHintOffsetX = 20;
 const dragHintOffsetY = 0;
 const dragHintVisibleMs = 3600;
 const dragHintStorageKey = "edison-has-used-drag-scroll";
+const archiveScrollStartEvent = "edison:archive-scroll-start";
 
 function getMaxScrollY() {
   return Math.max(
@@ -357,6 +358,11 @@ export default function ScrollEnhancer() {
       }
     };
 
+    const handleArchiveScrollStart = () => {
+      stopAnimation();
+      targetScrollY = window.scrollY;
+    };
+
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("pointerdown", handlePointerDown);
     window.addEventListener("pointermove", handlePointerMove, {
@@ -366,6 +372,7 @@ export default function ScrollEnhancer() {
     window.addEventListener("pointercancel", resetPointerState);
     window.addEventListener("contextmenu", handleContextMenu);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener(archiveScrollStartEvent, handleArchiveScrollStart);
     window.addEventListener("pointerleave", hideDragHint);
     window.addEventListener("blur", hideDragHint);
 
@@ -379,6 +386,10 @@ export default function ScrollEnhancer() {
       window.removeEventListener("pointercancel", resetPointerState);
       window.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener(
+        archiveScrollStartEvent,
+        handleArchiveScrollStart,
+      );
       window.removeEventListener("pointerleave", hideDragHint);
       window.removeEventListener("blur", hideDragHint);
     };
