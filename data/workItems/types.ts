@@ -1,7 +1,7 @@
 import type { ArchiveMediaItem } from "@/components/archive/ArchiveContent";
 import type { WorkCategory } from "@/data/workCategories";
 
-export type WorkItemCategory = Exclude<WorkCategory, "featured">;
+export type WorkItemCategory = Exclude<WorkCategory, "featured" | "all">;
 
 export type WorkItem = {
   slug: string;

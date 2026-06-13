@@ -12,11 +12,11 @@ export type { WorkItem } from "@/data/workItems/types";
 
 const workGroups: WorkItem[][] = [
   featuredWorks,
+  proceduralWorks,
   clothWorks,
   fluidWorks,
   pyroWorks,
   particlesWorks,
-  proceduralWorks,
   rbdWorks,
 ];
 
@@ -36,6 +36,10 @@ function compareFeaturedWorks(a: WorkItem, b: WorkItem) {
 }
 
 export function getWorksByCategory(category: WorkCategory) {
+  if (category === "all") {
+    return works;
+  }
+
   const filteredWorks = works.filter((work) =>
     category === "featured"
       ? work.featured

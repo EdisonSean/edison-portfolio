@@ -136,7 +136,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   return (
     <video
       ref={videoRef}
-      className="h-auto w-full cursor-pointer"
+      className="h-auto w-full cursor-none"
       src={shouldLoad ? src : undefined}
       poster={shouldLoad ? (poster ?? undefined) : undefined}
       muted

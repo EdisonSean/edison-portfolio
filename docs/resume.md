@@ -18,48 +18,26 @@ His approach combines visual sensitivity with technical problem-solving: buildin
 
 
 
-## Experience / 工作履历
+## CAREER / 工作履历
 
-### Sparker Studio / 啪嚓
+### 2023 - 2026 | Sparker Studio / 啪嚓
 **Senior FX Artist / 高级特效师**
 
-**2023/03 — 2026/05**
 
-Worked as a senior FX artist, mainly responsible for product-oriented Houdini effects. Tasks included cloth, procedural motion, material-driven FX, product reveal shots, and abstract visual systems. Also helped organize and refine the FX pipeline, improving reusable setups and collaboration between design, CG, and compositing workflows.
-
-就任高级特效师，主要负责产品类 Houdini 特效制作，包括布料、程序化动态、材质驱动特效、产品揭示镜头与抽象视觉系统。同时负责特效管线的梳理与优化，沉淀可复用 setup，并提升设计、CG 与后期环节之间的协作效率。
-
-
-### OUTPUT / 视初
+### 2022 — 2023 | OUTPUT / 视初
 
 **3D Designer / 三维设计师**
 
-**2022/12 — 2023/02**
 
-Worked on 3D visual production and motion-related tasks, building a foundation in CG production, rendering, and post-production workflows.
 
-从事 3D 视觉制作与动态相关任务，建立了 CG 制作、渲染与后期流程的基础经验。
-
-### Dotwell DCP / 点维 DCP
+### 2021 — 2022 | Dotwell DCP / 点维 DCP
 
 **FX Artist / 特效师**
 
-**2021/01 — 2022/12**
 
-Focused on abstract FX shots and Houdini-based visual solutions, providing procedural and simulation support for design-driven projects.
-
-负责抽象类特效镜头与 Houdini 视觉方案，为设计型项目提供程序化与模拟特效支持。
-
-
-### Silkroad Visual / 丝路视觉（深圳公司）
+### 2019 — 2021 | Silkroad Visual / 丝路视觉（深圳公司）
 
 **FX Artist / 特效师**
-
-**2019/07 — 2021/01**
-
-Worked on Houdini FX production, including simulation, procedural effects, lighting, shading, and rendering for commercial visual projects.
-
-参与 Houdini 特效制作，内容包括特效解算、程序化效果、灯光、材质与渲染，服务于商业视觉项目。
 
 
 ## Education / 教育背景

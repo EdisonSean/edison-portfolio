@@ -19,33 +19,15 @@ function getArchiveItemHref(slug: string) {
   return `#archive-item-${slug}`;
 }
 
-function toRomanNumeral(value: number) {
-  const numerals = [
-    ["M", 1000],
-    ["CM", 900],
-    ["D", 500],
-    ["CD", 400],
-    ["C", 100],
-    ["XC", 90],
-    ["L", 50],
-    ["XL", 40],
-    ["X", 10],
-    ["IX", 9],
-    ["V", 5],
-    ["IV", 4],
-    ["I", 1],
-  ] as const;
-  let remaining = value;
-  let result = "";
-
-  for (const [roman, arabic] of numerals) {
-    while (remaining >= arabic) {
-      result += roman;
-      remaining -= arabic;
-    }
-  }
-
-  return result;
+function SidebarDot() {
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-[1.3em] items-center justify-center"
+    >
+      <span className="block h-2 w-2 rounded-full bg-current" />
+    </span>
+  );
 }
 
 const sidebarHeadingClass =
@@ -94,26 +76,22 @@ export default function ArchiveSidebar<TCategory extends string>({
         <ol className={`space-y-0 ${sidebarListClass}`}>
           {categories.map((category) => {
             const isSelected = category.slug === selectedCategory;
-            const categoryNumber = Number.parseInt(category.index, 10);
+            const isAllCategory = category.slug === "all";
 
             return (
-              <li key={category.slug}>
+              <li key={category.slug} className={isAllCategory ? "mt-6" : ""}>
                 <button
                   type="button"
                   aria-current={isSelected ? "page" : undefined}
                   onClick={() => onSelectCategory(category.slug)}
                   className={[
-                    "grid w-full grid-cols-[4rem_1fr] gap-4 text-left leading-[1.3] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                    "grid w-full grid-cols-[0.9rem_1fr] gap-3 text-left leading-[1.3] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     isSelected
                       ? "text-white"
                       : "text-zinc-500 hover:text-zinc-200",
                   ].join(" ")}
                 >
-                  <span className="tabular-nums">
-                    {Number.isNaN(categoryNumber)
-                      ? category.index
-                      : `${toRomanNumeral(categoryNumber)}.`}
-                  </span>
+                  <SidebarDot />
                   <span>{category.label}</span>
                 </button>
               </li>
@@ -127,9 +105,7 @@ export default function ArchiveSidebar<TCategory extends string>({
 
         <div className="grid gap-6 pt-6 font-semibold leading-[1.3] 2xl:pt-12">
           <section>
-            <p
-              className={`mb-2 text-zinc-500 ${sidebarSecondaryHeadingClass}`}
-            >
+            <p className={`mb-2 text-zinc-500 ${sidebarSecondaryHeadingClass}`}>
               {activeCategory.label}
             </p>
             <ol className={`space-y-0 ${sidebarSecondaryListClass}`}>
@@ -175,4 +151,3 @@ export default function ArchiveSidebar<TCategory extends string>({
     </nav>
   );
 }
-

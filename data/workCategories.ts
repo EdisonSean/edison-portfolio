@@ -1,5 +1,6 @@
 export type WorkCategory =
   | "featured"
+  | "all"
   | "cloth"
   | "fluid"
   | "pyro"
@@ -28,8 +29,17 @@ export const workCategories: WorkCategoryInfo[] = [
     keywords: ["selected", "commercial", "fx"],
   },
   {
-    slug: "cloth",
+    slug: "procedural",
     index: "02",
+    label: "Procedural",
+    meta: "Generated motion",
+    description:
+      "Procedural commercial systems for structured motion and repeatable looks.",
+    keywords: ["procedural", "systems", "motion"],
+  },
+  {
+    slug: "cloth",
+    index: "03",
     label: "Cloth / Knitting",
     meta: "Fabric systems",
     description:
@@ -38,7 +48,7 @@ export const workCategories: WorkCategoryInfo[] = [
   },
   {
     slug: "fluid",
-    index: "03",
+    index: "04",
     label: "Fluid",
     meta: "Liquid motion",
     description:
@@ -47,7 +57,7 @@ export const workCategories: WorkCategoryInfo[] = [
   },
   {
     slug: "pyro",
-    index: "04",
+    index: "05",
     label: "Pyro / Volume",
     meta: "Smoke and heat",
     description:
@@ -56,21 +66,12 @@ export const workCategories: WorkCategoryInfo[] = [
   },
   {
     slug: "particles",
-    index: "05",
+    index: "06",
     label: "Particles",
     meta: "Point systems",
     description:
       "Particle systems for commercial reveal, transition, and identity work.",
     keywords: ["particles", "trails", "data"],
-  },
-  {
-    slug: "procedural",
-    index: "06",
-    label: "Procedural",
-    meta: "Generated motion",
-    description:
-      "Procedural commercial systems for structured motion and repeatable looks.",
-    keywords: ["procedural", "systems", "motion"],
   },
   {
     slug: "rbd",
@@ -80,5 +81,13 @@ export const workCategories: WorkCategoryInfo[] = [
     description:
       "Rigid-body and destruction work for commercial reveal sequences.",
     keywords: ["rbd", "fracture", "destruction"],
+  },
+  {
+    slug: "all",
+    index: "08",
+    label: "All",
+    meta: "Full work index",
+    description: "The full commercial archive across every work category.",
+    keywords: ["all", "archive", "commercial"],
   },
 ];

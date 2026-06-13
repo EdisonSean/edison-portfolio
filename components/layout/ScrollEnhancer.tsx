@@ -1,15 +1,21 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 const wheelLineHeight = 16;
 const dragThreshold = 4;
+const dragScrollMultiplier = 1.1;
 const smoothStepSizePx = 300;
 const smoothAnimationTimeMs = 400;
 const accelerationDeltaMs = 30;
 const accelerationMax = 20;
 const tailToHeadRatio = 6;
+const dragHintText = "Try holding and dragging";
+const dragHintOffsetX = 20;
+const dragHintOffsetY = 0;
+const dragHintVisibleMs = 3600;
+const dragHintStorageKey = "edison-has-used-drag-scroll";
 
 function getMaxScrollY() {
   return Math.max(
@@ -87,13 +93,44 @@ function hasScrollableAncestor(target: EventTarget | null, deltaY: number) {
   return false;
 }
 
+function getStoredDragUsage() {
+  try {
+    return window.sessionStorage.getItem(dragHintStorageKey) === "true";
+  } catch {
+    return false;
+  }
+}
+
+function setStoredDragUsage(hasUsedDragScroll: boolean) {
+  try {
+    if (hasUsedDragScroll) {
+      window.sessionStorage.setItem(dragHintStorageKey, "true");
+    } else {
+      window.sessionStorage.removeItem(dragHintStorageKey);
+    }
+  } catch {
+    return;
+  }
+}
+
 export default function ScrollEnhancer() {
   const pathname = usePathname();
+  const dragHintRef = useRef<HTMLDivElement | null>(null);
+  const hasUsedDragScrollRef = useRef(false);
 
   useEffect(() => {
+    const dragHint = dragHintRef.current;
+
     if (pathname === "/") {
+      hasUsedDragScrollRef.current = false;
+      setStoredDragUsage(false);
+      if (dragHint) {
+        dragHint.style.opacity = "0";
+      }
       return;
     }
+
+    hasUsedDragScrollRef.current = getStoredDragUsage();
 
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     const reducedMotion = window.matchMedia(
@@ -115,6 +152,56 @@ export default function ScrollEnhancer() {
     let startScrollY = window.scrollY;
     let previousHtmlUserSelect = "";
     let previousBodyUserSelect = "";
+    let isDragHintVisible = false;
+    let dragHintTimeoutId = 0;
+    let pointerX = window.innerWidth / 2;
+    let pointerY = window.innerHeight / 2;
+
+    const positionDragHint = () => {
+      if (!dragHint) {
+        return;
+      }
+
+      dragHint.style.transform = `translate3d(${
+        pointerX + dragHintOffsetX
+      }px, ${pointerY + dragHintOffsetY}px, 0) translateY(-50%)`;
+    };
+
+    const hideDragHint = () => {
+      if (dragHintTimeoutId !== 0) {
+        window.clearTimeout(dragHintTimeoutId);
+        dragHintTimeoutId = 0;
+      }
+
+      isDragHintVisible = false;
+
+      if (dragHint) {
+        dragHint.style.opacity = "0";
+      }
+    };
+
+    const showDragHint = () => {
+      if (
+        !finePointer ||
+        reducedMotion ||
+        hasUsedDragScrollRef.current ||
+        !dragHint
+      ) {
+        return;
+      }
+
+      positionDragHint();
+      dragHint.style.opacity = "1";
+      isDragHintVisible = true;
+
+      if (dragHintTimeoutId !== 0) {
+        window.clearTimeout(dragHintTimeoutId);
+      }
+
+      dragHintTimeoutId = window.setTimeout(() => {
+        hideDragHint();
+      }, dragHintVisibleMs);
+    };
 
     const stopAnimation = () => {
       if (animationFrameId !== 0) {
@@ -163,6 +250,7 @@ export default function ScrollEnhancer() {
 
       event.preventDefault();
       const now = performance.now();
+      showDragHint();
 
       if (now - lastWheelTime <= accelerationDeltaMs) {
         accelerationTicks += 1;
@@ -208,6 +296,13 @@ export default function ScrollEnhancer() {
     };
 
     const handlePointerMove = (event: PointerEvent) => {
+      pointerX = event.clientX;
+      pointerY = event.clientY;
+
+      if (isDragHintVisible) {
+        positionDragHint();
+      }
+
       const pointerButtonMask = pointerButton === 2 ? 2 : 1;
 
       if (!isPointerDown || (event.buttons & pointerButtonMask) === 0) {
@@ -223,6 +318,9 @@ export default function ScrollEnhancer() {
         }
 
         isDragging = true;
+        hasUsedDragScrollRef.current = true;
+        setStoredDragUsage(true);
+        hideDragHint();
         window.getSelection()?.removeAllRanges();
         if (pointerButton === 2) {
           suppressNextContextMenu = true;
@@ -230,7 +328,7 @@ export default function ScrollEnhancer() {
       }
 
       event.preventDefault();
-      const deltaY = startY - event.clientY;
+      const deltaY = (startY - event.clientY) * dragScrollMultiplier;
       targetScrollY = clampScrollY(startScrollY + deltaY);
       window.scrollTo({ top: targetScrollY });
     };
@@ -268,9 +366,12 @@ export default function ScrollEnhancer() {
     window.addEventListener("pointercancel", resetPointerState);
     window.addEventListener("contextmenu", handleContextMenu);
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("pointerleave", hideDragHint);
+    window.addEventListener("blur", hideDragHint);
 
     return () => {
       stopAnimation();
+      hideDragHint();
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("pointermove", handlePointerMove);
@@ -278,8 +379,18 @@ export default function ScrollEnhancer() {
       window.removeEventListener("pointercancel", resetPointerState);
       window.removeEventListener("contextmenu", handleContextMenu);
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("pointerleave", hideDragHint);
+      window.removeEventListener("blur", hideDragHint);
     };
   }, [pathname]);
 
-  return null;
+  return (
+    <div
+      ref={dragHintRef}
+      aria-hidden="true"
+      className="pointer-events-none fixed left-0 top-0 z-[55] max-w-[12rem] text-[0.82rem] font-semibold leading-tight text-white/25 opacity-0 mix-blend-difference transition-opacity duration-200 will-change-transform"
+    >
+      {dragHintText}
+    </div>
+  );
 }

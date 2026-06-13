@@ -36,6 +36,17 @@ const aboutNumberVariableTextSettings = {
   viewportRadiusRatio: 0.42,
 };
 
+function SidebarDot() {
+  return (
+    <span
+      aria-hidden="true"
+      className="flex h-[1.3em] items-center justify-center"
+    >
+      <span className="block h-2 w-2 rounded-full bg-current" />
+    </span>
+  );
+}
+
 function renderInlines(inlines: ResumeInline[]) {
   return inlines.map((inline, index) => {
     if (inline.type === "strong") {
@@ -201,7 +212,7 @@ function AboutSidebar({
 
         {sections.length > 0 ? (
           <ol className="space-y-0 text-[clamp(1.5rem,1.55vw,2.1rem)] font-semibold leading-[1.3]">
-            {sections.map((section, index) => {
+            {sections.map((section) => {
               const isActive = activeSectionId === section.id;
 
               return (
@@ -210,17 +221,17 @@ function AboutSidebar({
                     href={`#${section.id}`}
                     aria-current={isActive ? "location" : undefined}
                     onClick={() => onSelectSection(section.id)}
-                    className="group grid grid-cols-[2.7rem_1fr] gap-2 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="group grid grid-cols-[0.9rem_1fr] gap-3 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <span
                       className={[
-                        "tabular-nums transition-colors duration-150",
+                        "transition-colors duration-150",
                         isActive
                           ? "!text-white"
                           : "text-zinc-700 group-hover:text-zinc-300",
                       ].join(" ")}
                     >
-                      {index + 1}.
+                      <SidebarDot />
                     </span>
                     <span
                       className={[
