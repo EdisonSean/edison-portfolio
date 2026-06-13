@@ -5,6 +5,7 @@ import IndexContentLayout from "@/components/archive/IndexContentLayout";
 import Header from "@/components/layout/Header";
 import VariableProximity from "@/components/typography/VariableProximity";
 import ViewportYVariableText from "@/components/typography/ViewportYVariableText";
+import type { MouseEvent } from "react";
 import type {
   ParsedResume,
   ResumeBlock,
@@ -14,6 +15,17 @@ import type {
 
 type AboutPageProps = {
   resume: ParsedResume;
+};
+
+type ContactCopyTarget = {
+  label: string;
+  value: string;
+  isValue: boolean;
+};
+
+type CopyToastState = {
+  message: string;
+  isVisible: boolean;
 };
 
 const aboutTitleVariableTextSettings = {
@@ -35,6 +47,74 @@ const aboutNumberVariableTextSettings = {
   toFontVariationSettings: "'wght' 1000, 'opsz' 42",
   viewportRadiusRatio: 0.42,
 };
+const aboutScrollStartEvent = "edison:archive-scroll-start";
+const aboutScrollDurationMs = 320;
+let aboutScrollFrameId = 0;
+
+function easeOutCubic(progress: number) {
+  return 1 - (1 - progress) ** 3;
+}
+
+function getHeaderOffset() {
+  const header = document.querySelector("header");
+
+  if (!(header instanceof HTMLElement)) {
+    return 24;
+  }
+
+  return header.getBoundingClientRect().bottom + 24;
+}
+
+function getSectionScrollTarget(element: HTMLElement) {
+  return Math.max(
+    0,
+    window.scrollY + element.getBoundingClientRect().top - getHeaderOffset(),
+  );
+}
+
+function animateWindowScrollTo(targetScrollY: number) {
+  window.dispatchEvent(new CustomEvent(aboutScrollStartEvent));
+
+  if (aboutScrollFrameId !== 0) {
+    window.cancelAnimationFrame(aboutScrollFrameId);
+    aboutScrollFrameId = 0;
+  }
+
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  if (reducedMotion) {
+    window.scrollTo({ top: targetScrollY });
+    return;
+  }
+
+  const startScrollY = window.scrollY;
+  const distance = targetScrollY - startScrollY;
+  const startTime = performance.now();
+
+  const step = () => {
+    const elapsed = performance.now() - startTime;
+    const progress = Math.min(elapsed / aboutScrollDurationMs, 1);
+    const nextScrollY = startScrollY + distance * easeOutCubic(progress);
+
+    window.scrollTo({ top: nextScrollY });
+
+    if (progress >= 1) {
+      window.scrollTo({ top: targetScrollY });
+      aboutScrollFrameId = 0;
+      return;
+    }
+
+    aboutScrollFrameId = window.requestAnimationFrame(step);
+  };
+
+  aboutScrollFrameId = window.requestAnimationFrame(step);
+}
+
+function scrollSectionIntoAboutView(element: HTMLElement) {
+  animateWindowScrollTo(getSectionScrollTarget(element));
+}
 
 function SidebarDot() {
   return (
@@ -47,7 +127,92 @@ function SidebarDot() {
   );
 }
 
-function renderInlines(inlines: ResumeInline[]) {
+function getInlineText(inlines: ResumeInline[]) {
+  return inlines
+    .map((inline) => inline.text)
+    .join("")
+    .trim();
+}
+
+function getBlockText(block: ResumeBlock) {
+  if (block.type === "heading") {
+    return block.text.trim();
+  }
+
+  if (block.type === "paragraph") {
+    return getInlineText(block.inlines);
+  }
+
+  return block.items.map(getInlineText).join(" ").trim();
+}
+
+function getContactLabel(text: string) {
+  const normalizedText = text.toLowerCase();
+
+  if (normalizedText.startsWith("email")) {
+    return "Email";
+  }
+
+  if (normalizedText.startsWith("wechat")) {
+    return "WeChat";
+  }
+
+  return null;
+}
+
+function getContactCopyTarget(
+  section: ResumeSection,
+  blockIndex: number,
+): ContactCopyTarget | null {
+  if (!section.title.toLowerCase().includes("contact")) {
+    return null;
+  }
+
+  const block = section.blocks[blockIndex];
+  const previousBlock = section.blocks[blockIndex - 1];
+  const nextBlock = section.blocks[blockIndex + 1];
+  const currentLabel = getContactLabel(getBlockText(block));
+  const previousLabel = previousBlock
+    ? getContactLabel(getBlockText(previousBlock))
+    : null;
+  const label = currentLabel ?? previousLabel;
+  const valueBlock = currentLabel ? nextBlock : block;
+  const isValue = !currentLabel;
+
+  if (!label || !valueBlock || valueBlock.type === "heading") {
+    return null;
+  }
+
+  const value = getBlockText(valueBlock);
+
+  if (!value) {
+    return null;
+  }
+
+  return { label, value, isValue };
+}
+
+async function copyText(value: string) {
+  if (navigator.clipboard?.writeText) {
+    await navigator.clipboard.writeText(value);
+    return;
+  }
+
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.opacity = "0";
+  document.body.appendChild(textarea);
+  textarea.select();
+  document.execCommand("copy");
+  document.body.removeChild(textarea);
+}
+
+function renderInlines(
+  inlines: ResumeInline[],
+  options: { renderLinksAsText?: boolean } = {},
+) {
   return inlines.map((inline, index) => {
     if (inline.type === "strong") {
       return (
@@ -58,6 +223,10 @@ function renderInlines(inlines: ResumeInline[]) {
     }
 
     if (inline.type === "link") {
+      if (options.renderLinksAsText) {
+        return <span key={index}>{inline.text}</span>;
+      }
+
       return (
         <a
           key={index}
@@ -75,7 +244,15 @@ function renderInlines(inlines: ResumeInline[]) {
   });
 }
 
-function ResumeBlockView({ block }: { block: ResumeBlock }) {
+function ResumeBlockView({
+  block,
+  copyTarget,
+  onCopyContact,
+}: {
+  block: ResumeBlock;
+  copyTarget?: ContactCopyTarget | null;
+  onCopyContact?: (target: ContactCopyTarget) => void;
+}) {
   if (block.type === "heading") {
     const headingClass =
       block.level <= 3
@@ -98,6 +275,30 @@ function ResumeBlockView({ block }: { block: ResumeBlock }) {
     );
   }
 
+  if (copyTarget) {
+    return (
+      <button
+        type="button"
+        aria-label={`Copy ${copyTarget.label}: ${copyTarget.value}`}
+        onClick={() => onCopyContact?.(copyTarget)}
+        className="group mt-5 block max-w-3xl cursor-none text-left text-[0.98rem] font-semibold leading-[1.48] text-zinc-500 transition-colors duration-150 hover:text-zinc-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white md:text-[1.05rem]"
+      >
+        <span
+          className={
+            copyTarget.isValue
+              ? "underline decoration-white/30 underline-offset-4 transition-[text-decoration-color] duration-150 group-hover:decoration-white/70"
+              : ""
+          }
+        >
+          {renderInlines(block.inlines, { renderLinksAsText: true })}
+        </span>
+        <span className="ml-3 align-baseline text-[0.82rem] text-zinc-500 opacity-0 transition-opacity duration-150 group-hover:opacity-100">
+          Click to copy / 点击复制
+        </span>
+      </button>
+    );
+  }
+
   return (
     <p className="mt-5 max-w-3xl text-[0.98rem] font-semibold leading-[1.48] text-zinc-500 md:text-[1.05rem]">
       {renderInlines(block.inlines)}
@@ -108,9 +309,11 @@ function ResumeBlockView({ block }: { block: ResumeBlock }) {
 function AboutContent({
   resume,
   activeSectionId,
+  onCopyContact,
 }: {
   resume: ParsedResume;
   activeSectionId: string | null;
+  onCopyContact: (target: ContactCopyTarget) => void;
 }) {
   const containerRef = useRef<HTMLElement | null>(null);
 
@@ -178,9 +381,21 @@ function AboutContent({
                 </h2>
 
                 <div className="col-start-2">
-                  {section.blocks.map((block, blockIndex) => (
-                    <ResumeBlockView key={blockIndex} block={block} />
-                  ))}
+                  {section.blocks.map((block, blockIndex) => {
+                    const copyTarget = getContactCopyTarget(
+                      section,
+                      blockIndex,
+                    );
+
+                    return (
+                      <ResumeBlockView
+                        key={blockIndex}
+                        block={block}
+                        copyTarget={copyTarget}
+                        onCopyContact={onCopyContact}
+                      />
+                    );
+                  })}
                 </div>
               </article>
             </li>
@@ -200,6 +415,22 @@ function AboutSidebar({
   activeSectionId: string | null;
   onSelectSection: (sectionId: string) => void;
 }) {
+  const handleSectionClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    sectionId: string,
+  ) => {
+    const targetElement = document.getElementById(sectionId);
+
+    if (!targetElement) {
+      return;
+    }
+
+    event.preventDefault();
+    onSelectSection(sectionId);
+    window.history.pushState(null, "", `#${sectionId}`);
+    scrollSectionIntoAboutView(targetElement);
+  };
+
   return (
     <nav
       aria-label="About index"
@@ -220,7 +451,7 @@ function AboutSidebar({
                   <a
                     href={`#${section.id}`}
                     aria-current={isActive ? "location" : undefined}
-                    onClick={() => onSelectSection(section.id)}
+                    onClick={(event) => handleSectionClick(event, section.id)}
                     className="group grid grid-cols-[0.9rem_1fr] gap-3 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <span
@@ -258,10 +489,54 @@ function AboutSidebar({
   );
 }
 
+function CopyToast({ toast }: { toast: CopyToastState | null }) {
+  return (
+    <div
+      aria-live="polite"
+      className={[
+        "pointer-events-none fixed bottom-8 left-1/2 z-[70] -translate-x-1/2 border border-white/15 bg-[#050505]/90 px-4 py-2 text-[0.9rem] font-semibold leading-tight text-white/75 shadow-[0_12px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm transition-opacity duration-300",
+        toast?.isVisible ? "opacity-100" : "opacity-0",
+      ].join(" ")}
+    >
+      {toast?.message ?? ""}
+    </div>
+  );
+}
+
 export default function AboutPage({ resume }: AboutPageProps) {
   const [activeSectionId, setActiveSectionId] = useState<string | null>(
     resume.sections[0]?.id ?? null,
   );
+  const [copyToast, setCopyToast] = useState<CopyToastState | null>(null);
+  const hideCopyToastTimeoutRef = useRef<number | null>(null);
+  const removeCopyToastTimeoutRef = useRef<number | null>(null);
+
+  const handleCopyContact = async (target: ContactCopyTarget) => {
+    await copyText(target.value);
+
+    if (hideCopyToastTimeoutRef.current !== null) {
+      window.clearTimeout(hideCopyToastTimeoutRef.current);
+    }
+
+    if (removeCopyToastTimeoutRef.current !== null) {
+      window.clearTimeout(removeCopyToastTimeoutRef.current);
+    }
+
+    setCopyToast({
+      message: `Copied ${target.label}`,
+      isVisible: true,
+    });
+
+    hideCopyToastTimeoutRef.current = window.setTimeout(() => {
+      setCopyToast((currentToast) =>
+        currentToast ? { ...currentToast, isVisible: false } : currentToast,
+      );
+    }, 1400);
+
+    removeCopyToastTimeoutRef.current = window.setTimeout(() => {
+      setCopyToast(null);
+    }, 1750);
+  };
 
   useEffect(() => {
     if (resume.sections.length === 0) {
@@ -318,6 +593,18 @@ export default function AboutPage({ resume }: AboutPageProps) {
     };
   }, [resume.sections]);
 
+  useEffect(() => {
+    return () => {
+      if (hideCopyToastTimeoutRef.current !== null) {
+        window.clearTimeout(hideCopyToastTimeoutRef.current);
+      }
+
+      if (removeCopyToastTimeoutRef.current !== null) {
+        window.clearTimeout(removeCopyToastTimeoutRef.current);
+      }
+    };
+  }, []);
+
   return (
     <main className="min-h-svh bg-[#050505] px-5 py-5 text-white sm:px-8 sm:py-7 lg:px-10 lg:py-9">
       <Header />
@@ -330,9 +617,14 @@ export default function AboutPage({ resume }: AboutPageProps) {
           />
         }
         content={
-          <AboutContent resume={resume} activeSectionId={activeSectionId} />
+          <AboutContent
+            resume={resume}
+            activeSectionId={activeSectionId}
+            onCopyContact={handleCopyContact}
+          />
         }
       />
+      <CopyToast toast={copyToast} />
     </main>
   );
 }

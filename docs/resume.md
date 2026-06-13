@@ -17,6 +17,20 @@ His approach combines visual sensitivity with technical problem-solving: buildin
 他的创作方式结合视觉判断与技术解决能力：先搭建可控的动态系统，再将其塑造成服务于商业影像的、干净且具备美术方向的运动效果。
 
 
+## Contact / 联系方式
+
+**Email**
+
+[edi3on.xiao@gmail.com](mailto:edi3on.xiao@gmail.com)
+
+**Wechat / 微信**
+
+Edison_Sean
+
+**Location**
+
+China Shanghai / 中国上海
+
 
 ## CAREER / 工作履历
 
@@ -35,7 +49,7 @@ His approach combines visual sensitivity with technical problem-solving: buildin
 **FX Artist / 特效师**
 
 
-### 2019 — 2021 | Silkroad Visual / 丝路视觉（深圳公司）
+### 2019 — 2021 | Silkroad Visual / 丝路视觉
 
 **FX Artist / 特效师**
 
@@ -56,21 +70,3 @@ Graduated in 2019
 2019 年毕业
 
 
-
-## Contact / 联系方式
-
-**Email**
-
-[edi3on.xiao@gmail.com](mailto:edi3on.xiao@gmail.com)
-
-**Wechat / 微信**
-
-Edison_Sean
-
-**Location**
-
-China Shanghai / 中国上海
-
-**Available for**
-
-Commercial product films, Houdini FX, procedural motion, simulation-based visuals, and technical visual development.
