@@ -4,7 +4,6 @@ import { fluidWorks } from "@/data/workItems/fluid";
 import { particlesWorks } from "@/data/workItems/particles";
 import { proceduralWorks } from "@/data/workItems/procedural";
 import { pyroWorks } from "@/data/workItems/pyro";
-import { rbdWorks } from "@/data/workItems/rbd";
 import type { WorkItem } from "@/data/workItems/types";
 import type { WorkCategory } from "@/data/workCategories";
 
@@ -12,12 +11,11 @@ export type { WorkItem } from "@/data/workItems/types";
 
 const workGroups: WorkItem[][] = [
   featuredWorks,
-  proceduralWorks,
   clothWorks,
-  fluidWorks,
-  pyroWorks,
   particlesWorks,
-  rbdWorks,
+  fluidWorks,
+  proceduralWorks,
+  pyroWorks,
 ];
 
 export const works: WorkItem[] = Array.from(
@@ -43,7 +41,9 @@ export function getWorksByCategory(category: WorkCategory) {
   const filteredWorks = works.filter((work) =>
     category === "featured"
       ? work.featured
-      : work.categories.includes(category),
+      : category === "pyro"
+        ? work.categories.includes("pyro") || work.categories.includes("rbd")
+        : work.categories.includes(category),
   );
 
   return category === "featured"

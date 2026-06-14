@@ -12,6 +12,24 @@ import {
 import { getWorksByCategory } from "@/data/works";
 import WorkCategoryView from "@/components/work/WorkCategoryView";
 
+const categoryQueryKey = "category";
+
+function isWorkCategory(value: string | null): value is WorkCategory {
+  return workCategories.some((category) => category.slug === value);
+}
+
+function getCategoryFromCurrentUrl() {
+  if (typeof window === "undefined") {
+    return defaultWorkCategory;
+  }
+
+  const category = new URLSearchParams(window.location.search).get(
+    categoryQueryKey,
+  );
+
+  return isWorkCategory(category) ? category : defaultWorkCategory;
+}
+
 export default function WorkPage() {
   const [selectedCategory, setSelectedCategory] =
     useState<WorkCategory>(defaultWorkCategory);
@@ -24,6 +42,34 @@ export default function WorkPage() {
   useEffect(() => {
     setActiveItemSlug(selectedWorks[0]?.slug ?? null);
   }, [selectedWorks]);
+
+  useEffect(() => {
+    const syncCategoryFromUrl = () => {
+      setSelectedCategory(getCategoryFromCurrentUrl());
+    };
+
+    syncCategoryFromUrl();
+    window.addEventListener("popstate", syncCategoryFromUrl);
+
+    return () => {
+      window.removeEventListener("popstate", syncCategoryFromUrl);
+    };
+  }, []);
+
+  const handleSelectCategory = (category: WorkCategory) => {
+    setSelectedCategory(category);
+
+    const url = new URL(window.location.href);
+
+    if (category === defaultWorkCategory) {
+      url.searchParams.delete(categoryQueryKey);
+    } else {
+      url.searchParams.set(categoryQueryKey, category);
+    }
+
+    url.hash = "";
+    window.history.pushState(null, "", url);
+  };
 
   return (
     <main className="min-h-svh bg-[#050505] px-5 py-5 text-white sm:px-8 sm:py-7 lg:px-10 lg:py-9">
@@ -43,7 +89,7 @@ export default function WorkPage() {
               client: work.client,
             }))}
             activeItemSlug={activeItemSlug}
-            onSelectCategory={setSelectedCategory}
+            onSelectCategory={handleSelectCategory}
             onSelectItem={setActiveItemSlug}
           />
         }

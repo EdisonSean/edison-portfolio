@@ -181,10 +181,17 @@ export default function ArchiveSidebar<TCategory extends string>({
         <ol className={`space-y-0 ${sidebarListClass}`}>
           {categories.map((category) => {
             const isSelected = category.slug === selectedCategory;
+            const isFeaturedCategory = category.slug === "featured";
             const isAllCategory = category.slug === "all";
 
             return (
-              <li key={category.slug} className={isAllCategory ? "mt-6" : ""}>
+              <li
+                key={category.slug}
+                className={[
+                  isFeaturedCategory ? "mb-6" : "",
+                  isAllCategory ? "mt-6" : "",
+                ].join(" ")}
+              >
                 <button
                   type="button"
                   aria-current={isSelected ? "page" : undefined}

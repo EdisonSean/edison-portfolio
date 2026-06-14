@@ -34,24 +34,27 @@ China Shanghai / 中国上海
 
 ## CAREER / 工作履历
 
-### 2023 - 2026 | Sparker Studio / 啪嚓
-**Senior FX Artist / 高级特效师**
+**2023 - 2026 | Sparker Studio / 啪嚓**
 
+#Senior FX Artist / 高级特效师
 
-### 2022 — 2023 | OUTPUT / 视初
+-
 
-**3D Designer / 三维设计师**
+**2022 - 2023 | OUTPUT / 视初**
 
+#3D Designer / 三维设计师
 
+-
 
-### 2021 — 2022 | Dotwell DCP / 点维 DCP
+**2021 - 2022 | Dotwell DCP / 点维 DCP**
 
-**FX Artist / 特效师**
+#FX Artist / 特效师
 
+-
 
-### 2019 — 2021 | Silkroad Visual / 丝路视觉
+**2019 - 2021 | Silkroad Visual / 丝路视觉**
 
-**FX Artist / 特效师**
+#FX Artist / 特效师
 
 
 ## Education / 教育背景

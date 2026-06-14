@@ -125,7 +125,6 @@ data/
     pyro.ts
     particles.ts
     procedural.ts
-    rbd.ts
 ```
 
 新增项目时，放进它最主要的分类文件。比如主方向是布料模拟，就放进
@@ -175,8 +174,11 @@ Featured 的自定义排序用 `featuredOrder` 控制，数字越小越靠前；
 Work 可用分类：
 
 ```txt
-cloth, fluid, pyro, particles, procedural, rbd
+cloth, particles, fluid, procedural, pyro, rbd
 ```
+
+`rbd` 不会出现在右侧单独分类里，它会和 `pyro` 一起显示在
+`Pyro / RBD` 分类下。
 
 ## Lab 项目
 

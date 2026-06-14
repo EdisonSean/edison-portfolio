@@ -5,8 +5,7 @@ export type WorkCategory =
   | "fluid"
   | "pyro"
   | "particles"
-  | "procedural"
-  | "rbd";
+  | "procedural";
 
 export type WorkCategoryInfo = {
   slug: WorkCategory;
@@ -29,22 +28,22 @@ export const workCategories: WorkCategoryInfo[] = [
     keywords: ["selected", "commercial", "fx"],
   },
   {
-    slug: "procedural",
-    index: "02",
-    label: "Procedural",
-    meta: "Generated motion",
-    description:
-      "Procedural commercial systems for structured motion and repeatable looks.",
-    keywords: ["procedural", "systems", "motion"],
-  },
-  {
     slug: "cloth",
-    index: "03",
+    index: "02",
     label: "Cloth / Knitting",
     meta: "Fabric systems",
     description:
       "Commercial cloth, fabric, laces, soft panels, and knitting-led motion.",
     keywords: ["cloth", "knitting", "fabric"],
+  },
+  {
+    slug: "particles",
+    index: "03",
+    label: "Particles",
+    meta: "Point systems",
+    description:
+      "Particle systems for commercial reveal, transition, and identity work.",
+    keywords: ["particles", "trails", "data"],
   },
   {
     slug: "fluid",
@@ -56,35 +55,26 @@ export const workCategories: WorkCategoryInfo[] = [
     keywords: ["fluid", "splash", "macro"],
   },
   {
-    slug: "pyro",
+    slug: "procedural",
     index: "05",
-    label: "Pyro / Volume",
-    meta: "Smoke and heat",
+    label: "Procedural",
+    meta: "Generated motion",
     description:
-      "Volume, smoke, heat, and atmosphere built for commercial imagery.",
-    keywords: ["pyro", "volume", "smoke"],
+      "Procedural commercial systems for structured motion and repeatable looks.",
+    keywords: ["procedural", "systems", "motion"],
   },
   {
-    slug: "particles",
+    slug: "pyro",
     index: "06",
-    label: "Particles",
-    meta: "Point systems",
+    label: "Pyro / RBD",
+    meta: "Smoke, heat, and breakage",
     description:
-      "Particle systems for commercial reveal, transition, and identity work.",
-    keywords: ["particles", "trails", "data"],
-  },
-  {
-    slug: "rbd",
-    index: "07",
-    label: "RBD / Destruction",
-    meta: "Breakage",
-    description:
-      "Rigid-body and destruction work for commercial reveal sequences.",
-    keywords: ["rbd", "fracture", "destruction"],
+      "Volume, smoke, heat, rigid-body, and destruction work for commercial imagery.",
+    keywords: ["pyro", "rbd", "volume", "fracture", "destruction"],
   },
   {
     slug: "all",
-    index: "08",
+    index: "07",
     label: "All",
     meta: "Full work index",
     description: "The full commercial archive across every work category.",

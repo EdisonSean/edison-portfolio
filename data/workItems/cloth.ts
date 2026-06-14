@@ -6,7 +6,7 @@ export const clothWorks: WorkItem[] = [
     title: "Tearing Reveal",
     projectName: "iQOO Pad",
     client: "iQOO",
-    year: 2025,
+    year: 2024,
     categories: ["cloth"],
     media: [
       {
@@ -28,7 +28,7 @@ export const clothWorks: WorkItem[] = [
     description:
       "A product reveal shot built around a tearing surface effect, using ripped material edges and controlled fracture motion to expose the iQOO Pad form and logo.",
     featured: true,
-    featuredOrder: 1,
+    featuredOrder: 2,
   },
 
   {
@@ -56,46 +56,8 @@ export const clothWorks: WorkItem[] = [
     description:
       "A procedural fiber-weaving shot visualizing the material structure of a REDMI phone backplate.",
     featured: true,
-    featuredOrder: 2,
+    featuredOrder: 1,
   },
-
-  {
-    slug: "xiaomi-carbon-fiber-backplate",
-    title: "Carbon Fiber Backplate",
-    projectName: "Xiaomi Carbon Fiber Backplate Film",
-    client: "Xiaomi / 小米",
-    year: 2024,
-    categories: ["cloth"],
-    media: [
-      {
-        type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot04_v05.mp4",
-      },
-      {
-        type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot05_v04.mp4",
-      },
-      {
-        type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot04_KinttingFromCenter_v004_1.mp4",
-        layout: "half",
-      },
-      {
-        type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/Shot03_v02.mp4",
-        layout: "half",
-      },
-    ],
-    role: [
-      "Procedural fiber motion",
-      "Material visualization",
-      "Look development",
-    ],
-    description:
-      "A procedural material shot visualizing carbon-fiber strands flowing, crossing, and settling into a woven phone backplate structure.",
-    featured: false,
-  },
-
   {
     slug: "bananain-cooling-quilt-weave",
     title: "Cooling Weave Structure",
@@ -145,6 +107,45 @@ export const clothWorks: WorkItem[] = [
     featured: true,
     featuredOrder: 3,
   },
+  
+  {
+    slug: "xiaomi-carbon-fiber-backplate",
+    title: "Carbon Fiber Backplate",
+    projectName: "Xiaomi Carbon Fiber Backplate Film",
+    client: "Xiaomi / 小米",
+    year: 2024,
+    categories: ["cloth"],
+    media: [
+      {
+        type: "video",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot04_v05.mp4",
+      },
+      {
+        type: "video",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot05_v04.mp4",
+      },
+      {
+        type: "video",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot04_KinttingFromCenter_v004_1.mp4",
+        layout: "half",
+      },
+      {
+        type: "video",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/Shot03_v02.mp4",
+        layout: "half",
+      },
+    ],
+    role: [
+      "Procedural fiber motion",
+      "Material visualization",
+      "Look development",
+    ],
+    description:
+      "A procedural material shot visualizing carbon-fiber strands flowing, crossing, and settling into a woven phone backplate structure.",
+    featured: false,
+  },
+
+
 
   {
     slug: "bananain-sunshield-fabric-flight",

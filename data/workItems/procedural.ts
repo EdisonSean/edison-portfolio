@@ -6,7 +6,7 @@ export const proceduralWorks: WorkItem[] = [
         title: "Lace Threading System",
         projectName: "adidas CLIMACOOL — Born to Breathe",
         client: "adidas / 阿迪达斯",
-        year: 2024,
+        year: 2026,
         categories: ["procedural"],
         media: [
             {
@@ -28,6 +28,7 @@ export const proceduralWorks: WorkItem[] = [
         featured: true,
         featuredOrder: 4,
     },
+
     {
         slug: "procedural-flower-bloom-system",
         title: "Flower Bloom System",
@@ -62,4 +63,33 @@ export const proceduralWorks: WorkItem[] = [
         "A procedural blooming system built around layered petal unfolding, organic growth timing, and sculptural flower silhouettes for commercial visual sequences.",
         featured: false,
     },
+
+    {
+    slug: "realme-gt-energy-dynamics",
+    title: "Energy Splines and Glitch Dynamics",
+    projectName: "realme GT Commercial Film",
+    client: "realme",
+    year: 2024,
+    categories: ["procedural"],
+    media: [
+        {
+            type: "video",
+            src: "/works/procedural/realme-gt-energy-dynamics/shot04_v008_1.mp4",
+        },
+        {
+            type: "video",
+            src: "/works/procedural/realme-gt-energy-dynamics/shot11_nor_1.mp4",
+            layout: "half",
+        },
+        {
+            type: "video",
+            src: "/works/procedural/realme-gt-energy-dynamics/shot11_all_red.mp4",
+            layout: "half",
+        },
+    ],
+    role: ["Spline simulation", "Motion graphics", "Compositing"],
+    description:
+    "Dynamic vector-driven spline simulations converging into the 'GT' logo, paired with high-energy, kaleidoscopic glitch effects to visualize the device's extreme speed and performance.",
+    featured: false,
+    }
 ];
