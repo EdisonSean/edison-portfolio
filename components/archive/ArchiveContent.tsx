@@ -56,6 +56,7 @@ type ArchiveContentProps = {
   emptyMessage: string;
   activeItemSlug?: string | null;
   onActiveItemChange?: (slug: string) => void;
+  showItemDetails?: boolean;
 };
 
 type ArchiveMediaFrameProps = {
@@ -229,6 +230,7 @@ export default function ArchiveContent({
   emptyMessage,
   activeItemSlug,
   onActiveItemChange,
+  showItemDetails = true,
 }: ArchiveContentProps) {
   const containerRef = useRef<HTMLElement | null>(null);
 
@@ -341,18 +343,25 @@ export default function ArchiveContent({
                   <p className="text-zinc-500 md:text-right">{item.year}</p>
                 </div>
 
-                <div className="col-start-2 mt-8 text-zinc-500">
-                  <p>
-                    <span className="text-zinc-300">Project Name</span>
-                    <br />
-                    {item.projectName ?? item.title}
-                    <br />
-                    <span className="text-zinc-300">Role:</span>{" "}
-                    {item.role.join(" / ")}
-                  </p>
-                </div>
+                {showItemDetails ? (
+                  <div className="col-start-2 mt-8 text-zinc-500">
+                    <p>
+                      <span className="text-zinc-300">Project Name</span>
+                      <br />
+                      {item.projectName ?? item.title}
+                      <br />
+                      <span className="text-zinc-300">Role:</span>{" "}
+                      {item.role.join(" / ")}
+                    </p>
+                  </div>
+                ) : null}
 
-                <div className="col-start-2 mt-12 grid max-w-[72rem] gap-10 md:grid-cols-2">
+                <div
+                  className={[
+                    "col-start-2 grid max-w-[72rem] gap-10 md:grid-cols-2",
+                    showItemDetails ? "mt-12" : "mt-8",
+                  ].join(" ")}
+                >
                   <p className="max-w-2xl text-[0.95rem] font-semibold leading-[1.45] text-zinc-500 md:col-span-2 md:text-[1.02rem]">
                     {item.description}
                   </p>

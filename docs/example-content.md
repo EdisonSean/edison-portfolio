@@ -155,7 +155,7 @@ public/
   slug: "vellum-fold-study",
   title: "Vellum Fold Study",
   year: 2026,
-  categories: ["recent", "simulation", "practice"],
+  categories: ["recent", "vibecoding"],
   media: [
     {
       type: "image",
@@ -164,7 +164,6 @@ public/
     },
   ],
   role: ["simulation study"],
-  status: "study",
   description: "A small cloth study exploring fold scale, stiffness, and art-directable wrinkle behavior.",
 }
 ```
@@ -187,7 +186,7 @@ public/
   slug: "sdf-blur-pointer",
   title: "SDF Blur Pointer",
   year: 2026,
-  categories: ["recent", "rd", "shader"],
+  categories: ["recent", "vibecoding"],
   media: [
     {
       type: "webp",
@@ -195,7 +194,6 @@ public/
     },
   ],
   role: ["Shader R&D"],
-  status: "wip",
   description: "A pointer-driven shader experiment testing soft blur response around a generated field.",
 }
 ```
@@ -218,7 +216,7 @@ public/
   slug: "rbd-fracture-test",
   title: "RBD Fracture Test",
   year: 2025,
-  categories: ["simulation", "practice"],
+  categories: ["vibecoding"],
   media: [
     {
       type: "video",
@@ -227,7 +225,6 @@ public/
     },
   ],
   role: ["RBD exercise"],
-  status: "archive",
   description: "A focused fracture test for timing, secondary debris, and small-scale impact behavior.",
 }
 ```

@@ -3,7 +3,7 @@ import LabPage from "@/components/lab/LabPage";
 
 export const metadata: Metadata = {
   title: "Lab",
-  description: "Non-commercial experiments, R&D, tests, and practice.",
+  description: "Recent lab notes and vibe coding experiments.",
 };
 
 export default function Page() {

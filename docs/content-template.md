@@ -189,30 +189,25 @@ Lab 项目也按右侧 Lab Index 分类拆到不同文件里：
 ```txt
 data/
   labItems/
-    rd.ts
-    simulation.ts
-    shader.ts
-    motion.ts
-    practice.ts
+    vibecoding.ts
 ```
 
-新增项目时，放进它最主要的分类文件。比如主方向是 shader，就放进
-`data/labItems/shader.ts`。如果它也应该出现在 Recent，就在
-`categories` 里加上 `"recent"`：
+新增项目时，放进 `data/labItems/vibecoding.ts`。如果它也应该出现在
+Recent，就在 `categories` 里加上 `"recent"`：
 
 ```ts
-categories: ["recent", "shader"];
+categories: ["recent", "vibecoding"];
 ```
 
-`recent.ts` 和 `all.ts` 是交叉/浏览分类占位文件。一般不要把项目复制到
-这些文件里；Recent 通过 `"recent"` 分类出现，All 会自动包含所有 Lab 项目。
+`recent.ts` 是交叉/浏览分类占位文件。一般不要把项目复制到这个文件里；
+Recent 通过 `"recent"` 分类出现。
 
 ```ts
 {
   slug: "your-lab-slug",
   title: "Display Title",
   year: 2026,
-  categories: ["recent", "rd"],
+  categories: ["recent", "vibecoding"],
   media: [
     {
       type: "video",
@@ -222,7 +217,6 @@ categories: ["recent", "shader"];
     },
   ],
   role: ["R&D note"],
-  status: "wip",
   description: "One short sentence about the whole experiment.",
 }
 ```
@@ -230,8 +224,7 @@ categories: ["recent", "shader"];
 Lab 可用分类：
 
 ```txt
-recent, all, rd, simulation, shader, motion, practice
+recent, vibecoding
 ```
 
-`all` 只作为浏览分类使用。大部分 Lab 项目应该使用 `recent`、`rd`、
-`simulation`、`shader`、`motion` 或 `practice` 这类分类。
+Lab 目前只保留 `recent` 和 `vibecoding` 两个分类。

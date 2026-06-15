@@ -1,3 +1,4 @@
+import Link from "next/link";
 import ShapeBlur from "./ShapeBlur";
 
 export default function InteractiveShowcaseObject() {
@@ -7,7 +8,11 @@ export default function InteractiveShowcaseObject() {
       className="relative flex w-full min-w-0 flex-1 items-center justify-center py-14 sm:py-16 lg:py-8"
       aria-label="Interactive showcase object"
     >
-      <div className="relative h-[240px] w-[min(82vw,760px)] min-w-[260px] max-w-[calc(100vw-2.5rem)] sm:h-[300px] lg:h-[360px]">
+      <Link
+        href="/work"
+        aria-label="Open work archive"
+        className="relative block h-[240px] w-[min(82vw,760px)] min-w-[260px] max-w-[calc(100vw-2.5rem)] cursor-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[300px] lg:h-[360px]"
+      >
         <ShapeBlur
           className="absolute inset-0"
           logoSrc="/assets/logo/LOGO_SVG_horizontal.svg"
@@ -18,7 +23,7 @@ export default function InteractiveShowcaseObject() {
           circleSize={0.05}
           circleEdge={0.3}
         />
-      </div>
+      </Link>
     </section>
   );
 }

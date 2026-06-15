@@ -1,11 +1,4 @@
-export type LabCategory =
-  | "recent"
-  | "all"
-  | "rd"
-  | "simulation"
-  | "shader"
-  | "motion"
-  | "practice";
+export type LabCategory = "recent" | "vibecoding";
 
 export type LabCategoryInfo = {
   slug: LabCategory;
@@ -29,55 +22,12 @@ export const labCategories: LabCategoryInfo[] = [
     keywords: ["recent", "tests", "notes"],
   },
   {
-    slug: "rd",
+    slug: "vibecoding",
     index: "02",
-    label: "R&D",
-    meta: "Research",
+    label: "VibeCoding",
+    meta: "Coding experiments",
     description:
-      "Small research tracks for techniques that may become production tools.",
-    keywords: ["r&d", "systems", "research"],
-  },
-  {
-    slug: "simulation",
-    index: "03",
-    label: "Simulation",
-    meta: "FX tests",
-    description:
-      "Non-commercial simulation tests for motion, behavior, and timing.",
-    keywords: ["sim", "solver", "tests"],
-  },
-  {
-    slug: "shader",
-    index: "04",
-    label: "Shader",
-    meta: "Look tests",
-    description: "Shader, material, SDF, and render experiments.",
-    keywords: ["shader", "sdf", "lookdev"],
-  },
-  {
-    slug: "motion",
-    index: "05",
-    label: "Motion",
-    meta: "Design drills",
-    description: "Short motion studies and procedural animation exercises.",
-    keywords: ["motion", "timing", "animation"],
-  },
-  {
-    slug: "practice",
-    index: "06",
-    label: "Practice",
-    meta: "Exercises",
-    description:
-      "Practice files, small rebuilds, and focused learning sketches.",
-    keywords: ["practice", "sketch", "exercise"],
-  },
-  {
-    slug: "all",
-    index: "07",
-    label: "All",
-    meta: "Full lab index",
-    description:
-      "The full lab index for experiments, R&D, tests, and practice work.",
-    keywords: ["all", "archive", "lab"],
+      "Vibe coding experiments, local tools, UI tests, and small software studies.",
+    keywords: ["vibecoding", "tools", "experiments"],
   },
 ];

@@ -17,10 +17,7 @@ export default function LabPage() {
     useState<LabCategory>(defaultLabCategory);
   const [activeItemSlug, setActiveItemSlug] = useState<string | null>(null);
   const selectedLabs = useMemo(
-    () =>
-      selectedCategory === "all"
-        ? labs
-        : labs.filter((lab) => lab.categories.includes(selectedCategory)),
+    () => labs.filter((lab) => lab.categories.includes(selectedCategory)),
     [selectedCategory],
   );
 
@@ -41,7 +38,6 @@ export default function LabPage() {
             items={selectedLabs.map((lab) => ({
               slug: lab.slug,
               title: lab.title,
-              projectName: lab.status,
               year: lab.year,
             }))}
             activeItemSlug={activeItemSlug}

@@ -1,7 +1,7 @@
 import type { ArchiveMediaItem } from "@/components/archive/ArchiveContent";
 import type { LabCategory } from "@/data/labCategories";
 
-export type LabItemCategory = Exclude<LabCategory, "all">;
+export type LabItemCategory = LabCategory;
 
 export type LabItem = {
   slug: string;
@@ -10,6 +10,5 @@ export type LabItem = {
   categories: LabItemCategory[];
   media: ArchiveMediaItem[];
   role: string[];
-  status: "note" | "wip" | "study" | "archive";
   description: string;
 };

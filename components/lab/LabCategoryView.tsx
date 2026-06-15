@@ -16,22 +16,20 @@ export default function LabCategoryView({
   const category =
     labCategories.find((item) => item.slug === selectedCategory) ??
     labCategories[0];
-  const filteredLabs =
-    selectedCategory === "all"
-      ? labs
-      : labs.filter((lab) => lab.categories.includes(selectedCategory));
+  const filteredLabs = labs.filter((lab) =>
+    lab.categories.includes(selectedCategory),
+  );
   const title = selectedCategory === "recent" ? "Recent Lab" : category.label;
 
   return (
     <ArchiveContent
       title={title}
-      meta="Experiments, R&D, tests, and practice"
+      meta="Recent lab notes and vibe coding experiments"
       description={category.description}
       keywords={category.keywords}
       items={filteredLabs.map((lab) => ({
         slug: lab.slug,
         title: lab.title,
-        projectName: lab.status,
         year: lab.year,
         role: lab.role,
         media: lab.media,
@@ -40,6 +38,7 @@ export default function LabCategoryView({
       emptyMessage="No lab entries in this category yet."
       activeItemSlug={activeItemSlug}
       onActiveItemChange={onActiveItemChange}
+      showItemDetails={false}
     />
   );
 }
