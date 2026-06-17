@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import CustomCursor from "@/components/layout/CustomCursor";
-import PageTransition from "@/components/layout/PageTransition";
 import ScrollEnhancer from "@/components/layout/ScrollEnhancer";
 import "./globals.css";
 
@@ -18,7 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <PageTransition>{children}</PageTransition>
+        {children}
         <ScrollEnhancer />
         <CustomCursor />
       </body>

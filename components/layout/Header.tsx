@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import VariableProximity from "@/components/typography/VariableProximity";
@@ -81,7 +82,7 @@ export default function Header() {
         isCompressed ? "gap-5" : "",
       ].join(" ")}
     >
-      <a
+      <Link
         className={`block w-fit ${currentHeadingTextClass} transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white`}
         href="/"
         aria-label="Home"
@@ -92,7 +93,7 @@ export default function Header() {
           containerRef={containerRef}
           {...brandVariableTextSettings}
         />
-      </a>
+      </Link>
 
       <nav
         aria-label="Primary navigation"
@@ -105,7 +106,7 @@ export default function Header() {
 
             return (
               <li key={item.label} className="min-w-0">
-                <a
+                <Link
                   className={[
                     "block transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     currentHeadingTextClass,
@@ -122,7 +123,7 @@ export default function Header() {
                     containerRef={containerRef}
                     {...navVariableTextSettings}
                   />
-                </a>
+                </Link>
               </li>
             );
           })}
