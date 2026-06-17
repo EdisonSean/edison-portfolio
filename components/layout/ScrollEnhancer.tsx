@@ -12,6 +12,7 @@ const accelerationDeltaMs = 30;
 const accelerationMax = 20;
 const tailToHeadRatio = 6;
 const dragHintText = "Try holding and dragging";
+const dragHintTextZh = "尝试按住并拖拽";
 const dragHintOffsetX = 20;
 const dragHintOffsetY = 0;
 const dragHintVisibleMs = 3600;
@@ -429,7 +430,8 @@ export default function ScrollEnhancer() {
       aria-hidden="true"
       className="pointer-events-none fixed left-0 top-0 z-[55] max-w-[12rem] text-[0.82rem] font-semibold leading-tight text-white/25 opacity-0 mix-blend-difference transition-opacity duration-200 will-change-transform"
     >
-      {dragHintText}
+      <span className="block">{dragHintText}</span>
+      <span className="block">{dragHintTextZh}</span>
     </div>
   );
 }
