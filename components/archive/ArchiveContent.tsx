@@ -1,6 +1,8 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import { useEffect, useRef, useState } from "react";
+import { mediaDimensions } from "@/data/mediaDimensions";
 import VariableProximity from "@/components/typography/VariableProximity";
 import ViewportYVariableText from "@/components/typography/ViewportYVariableText";
 
@@ -73,8 +75,47 @@ type ViewportVideoProps = {
   shouldLoad: boolean;
 };
 
+const fallbackMediaDimensions = {
+  width: 16,
+  height: 9,
+};
+
+function getMediaDimensions(src: string) {
+  return mediaDimensions[src] ?? fallbackMediaDimensions;
+}
+
+function getMediaFrameStyle(src: string): CSSProperties {
+  const dimensions = getMediaDimensions(src);
+
+  return {
+    aspectRatio: `${dimensions.width} / ${dimensions.height}`,
+  };
+}
+
+function getBufferedProgress(videoElement: HTMLVideoElement) {
+  const { duration, buffered } = videoElement;
+
+  if (!Number.isFinite(duration) || duration <= 0 || buffered.length === 0) {
+    return 0;
+  }
+
+  try {
+    let bufferedEnd = 0;
+
+    for (let index = 0; index < buffered.length; index += 1) {
+      bufferedEnd = Math.max(bufferedEnd, buffered.end(index));
+    }
+
+    return Math.min(Math.max(bufferedEnd / duration, 0), 1);
+  } catch {
+    return 0;
+  }
+}
+
 function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [isReadyToPlay, setIsReadyToPlay] = useState(false);
 
   const togglePlayback = () => {
     const videoElement = videoRef.current;
@@ -83,6 +124,10 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
     }
 
     if (videoElement.paused) {
+      if (!isReadyToPlay) {
+        return;
+      }
+
       const playPromise = videoElement.play();
 
       if (playPromise) {
@@ -96,6 +141,44 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   };
 
   useEffect(() => {
+    setLoadProgress(0);
+    setIsReadyToPlay(false);
+  }, [src]);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement || !shouldLoad) {
+      return;
+    }
+
+    const updateLoadProgress = () => {
+      setLoadProgress(getBufferedProgress(videoElement));
+      setIsReadyToPlay(videoElement.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA);
+    };
+
+    const progressEvents = [
+      "durationchange",
+      "loadedmetadata",
+      "loadeddata",
+      "progress",
+      "canplay",
+      "canplaythrough",
+      "playing",
+    ];
+
+    updateLoadProgress();
+    progressEvents.forEach((eventName) => {
+      videoElement.addEventListener(eventName, updateLoadProgress);
+    });
+
+    return () => {
+      progressEvents.forEach((eventName) => {
+        videoElement.removeEventListener(eventName, updateLoadProgress);
+      });
+    };
+  }, [shouldLoad, src]);
+
+  useEffect(() => {
     const videoElement = videoRef.current;
     if (!videoElement) {
       return;
@@ -105,6 +188,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       ([entry]) => {
         if (
           shouldLoad &&
+          isReadyToPlay &&
           entry.isIntersecting &&
           entry.intersectionRatio >= 0.35
         ) {
@@ -132,28 +216,42 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       observer.disconnect();
       videoElement.pause();
     };
-  }, [shouldLoad]);
+  }, [isReadyToPlay, shouldLoad]);
 
   return (
-    <video
-      ref={videoRef}
-      className="h-auto w-full cursor-none"
-      src={shouldLoad ? src : undefined}
-      poster={shouldLoad ? (poster ?? undefined) : undefined}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-      aria-label="Double click to toggle video playback"
-      tabIndex={0}
-      onDoubleClick={togglePlayback}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          togglePlayback();
-        }
-      }}
-    />
+    <>
+      <video
+        ref={videoRef}
+        className="absolute inset-0 h-full w-full cursor-none object-contain"
+        src={shouldLoad ? src : undefined}
+        poster={shouldLoad ? (poster ?? undefined) : undefined}
+        muted
+        loop
+        playsInline
+        preload="auto"
+        aria-label="Double click to toggle video playback"
+        tabIndex={0}
+        onDoubleClick={togglePlayback}
+        onKeyDown={(event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            togglePlayback();
+          }
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className={[
+          "pointer-events-none absolute left-1/2 top-1/2 h-1.5 w-[min(12rem,46%)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-zinc-700/80 transition-opacity duration-300",
+          isReadyToPlay ? "opacity-0" : "opacity-100",
+        ].join(" ")}
+      >
+        <div
+          className="h-full origin-left rounded-full bg-zinc-300 transition-transform duration-200 ease-out will-change-transform"
+          style={{ transform: `scaleX(${loadProgress})` }}
+        />
+      </div>
+    </>
   );
 }
 
@@ -198,28 +296,32 @@ function ArchiveMediaFrame({
   poster,
   className = "",
 }: ArchiveMediaFrameProps) {
-  const frameClassName = ["overflow-hidden bg-[#111]", className].join(" ");
+  const frameClassName = ["relative w-full overflow-hidden bg-[#111]", className]
+    .filter(Boolean)
+    .join(" ");
+  const frameStyle = getMediaFrameStyle(src);
   const { mediaRootRef, shouldLoad } = useLazyMediaLoad();
 
   if (type === "video") {
     return (
-      <div ref={mediaRootRef} className={frameClassName}>
+      <div ref={mediaRootRef} className={frameClassName} style={frameStyle}>
         {shouldLoad ? (
           <ViewportVideo src={src} poster={poster} shouldLoad={shouldLoad} />
-        ) : (
-          <div className="aspect-video w-full" aria-hidden="true" />
-        )}
+        ) : null}
       </div>
     );
   }
 
   return (
-    <div ref={mediaRootRef} className={frameClassName}>
+    <div ref={mediaRootRef} className={frameClassName} style={frameStyle}>
       {shouldLoad ? (
-        <img className="h-auto w-full" src={src} alt={alt} loading="lazy" />
-      ) : (
-        <div className="aspect-video w-full" aria-hidden="true" />
-      )}
+        <img
+          className="absolute inset-0 block h-full w-full object-contain"
+          src={src}
+          alt={alt}
+          loading="lazy"
+        />
+      ) : null}
     </div>
   );
 }

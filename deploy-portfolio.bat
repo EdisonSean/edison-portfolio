@@ -5,27 +5,32 @@ cd /d F:\MyDesign\Website
 if errorlevel 1 goto error
 
 echo.
-echo [1/5] Building portfolio...
+echo [1/6] Updating media dimensions...
+call npm run update-media-dimensions
+if errorlevel 1 goto error
+
+echo.
+echo [2/6] Building portfolio...
 call npm run build
 if errorlevel 1 goto error
 
 echo.
-echo [2/5] Checking git status...
+echo [3/6] Checking git status...
 git status
 if errorlevel 1 goto error
 
 echo.
-echo [3/5] Staging changes...
+echo [4/6] Staging changes...
 git add -A
 if errorlevel 1 goto error
 
 echo.
-echo [4/5] Creating commit...
+echo [5/6] Creating commit...
 git commit -m "Update portfolio"
 if errorlevel 1 goto error
 
 echo.
-echo [5/5] Pushing to remote...
+echo [6/6] Pushing to remote...
 git push
 if errorlevel 1 goto error
 
