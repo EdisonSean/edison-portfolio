@@ -14,7 +14,7 @@
 }
 
 :root {
-  color-scheme: dark;
+  color-scheme: only dark;
   background: #050505;
   color: #ffffff;
 }

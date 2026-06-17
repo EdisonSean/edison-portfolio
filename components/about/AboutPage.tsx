@@ -451,7 +451,9 @@ function AboutSidebar({
                   <a
                     href={`#${section.id}`}
                     aria-current={isActive ? "location" : undefined}
+                    draggable={false}
                     onClick={(event) => handleSectionClick(event, section.id)}
+                    onDragStart={(event) => event.preventDefault()}
                     className="group grid grid-cols-[0.9rem_1fr] gap-3 transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                   >
                     <span

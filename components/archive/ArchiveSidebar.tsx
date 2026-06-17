@@ -229,7 +229,9 @@ export default function ArchiveSidebar<TCategory extends string>({
                     <a
                       href={getArchiveItemHref(item.slug)}
                       aria-current={isActiveItem ? "location" : undefined}
+                      draggable={false}
                       onClick={(event) => handleItemClick(event, item)}
+                      onDragStart={(event) => event.preventDefault()}
                       className="group grid grid-cols-[2.7rem_1fr] gap-2 leading-[1.3] transition-colors duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
                     >
                       <span

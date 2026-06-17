@@ -9,6 +9,7 @@ export const metadata: Metadata = {
   description:
     "Portfolio homepage for a Houdini FX and motion designer focused on procedural systems and simulation-driven visuals.",
   other: {
+    "darkreader-lock": "true",
     google: "notranslate",
   },
 };
