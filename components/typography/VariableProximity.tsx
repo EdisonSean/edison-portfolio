@@ -204,14 +204,16 @@ const VariableProximity = forwardRef<HTMLSpanElement, VariableProximityProps>(
     return (
       <span
         ref={ref}
-        className={`${className} variable-proximity`}
+        className={`${className} variable-proximity notranslate`}
         onClick={onClick}
         style={{ display: "inline", ...style }}
+        translate="no"
         {...restProps}
       >
         {words.map((word, wordIndex) => (
           <span
             key={wordIndex}
+            lang="zxx"
             style={{ display: "inline-block", whiteSpace: "nowrap" }}
           >
             {word.split("").map((letter) => {

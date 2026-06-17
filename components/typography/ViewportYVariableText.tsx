@@ -108,8 +108,10 @@ export default function ViewportYVariableText({
   return (
     <span
       ref={textRef}
-      className={`${className} variable-proximity`}
+      className={`${className} variable-proximity notranslate`}
       style={{ fontVariationSettings: fromFontVariationSettings }}
+      lang="zxx"
+      translate="no"
     >
       {label}
     </span>
