@@ -127,11 +127,12 @@ function shouldUseNativeScroll() {
   const userAgent = navigator.userAgent;
   const isMac = /Mac/i.test(platform) || /Macintosh/i.test(userAgent);
   const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
-  const hasTouch = navigator.maxTouchPoints > 0;
+  const hasFinePointer = window.matchMedia("(pointer: fine)").matches;
+  const isPureTouchDevice = hasCoarsePointer && !hasFinePointer;
   const isMobileUserAgent =
     /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(userAgent);
 
-  return isMac || hasCoarsePointer || hasTouch || isMobileUserAgent;
+  return isMac || isPureTouchDevice || isMobileUserAgent;
 }
 
 export default function ScrollEnhancer() {

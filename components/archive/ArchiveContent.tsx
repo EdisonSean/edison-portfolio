@@ -144,9 +144,9 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       loop
       playsInline
       preload="metadata"
-      aria-label="Toggle video playback"
+      aria-label="Double click to toggle video playback"
       tabIndex={0}
-      onClick={togglePlayback}
+      onDoubleClick={togglePlayback}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
