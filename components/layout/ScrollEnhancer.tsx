@@ -428,7 +428,7 @@ export default function ScrollEnhancer() {
     <div
       ref={dragHintRef}
       aria-hidden="true"
-      className="pointer-events-none fixed left-0 top-0 z-[55] max-w-[12rem] text-[0.82rem] font-semibold leading-tight text-white/25 opacity-0 mix-blend-difference transition-opacity duration-200 will-change-transform"
+      className="pointer-events-none fixed left-0 top-0 z-[55] max-w-[12rem] text-[0.82rem] font-semibold leading-tight text-white/55 opacity-0 mix-blend-difference transition-opacity duration-200 will-change-transform"
     >
       <span className="block">{dragHintText}</span>
       <span className="block">{dragHintTextZh}</span>
