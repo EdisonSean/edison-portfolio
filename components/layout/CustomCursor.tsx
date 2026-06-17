@@ -31,13 +31,8 @@ export default function CustomCursor() {
         [
           {
             offset: 0,
-            transform: "scale(0.82)",
-            easing: "cubic-bezier(0.2, 0.75, 0.2, 1)",
-          },
-          {
-            offset: 0.36,
-            transform: "scale(1.45)",
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
+            transform: "scale(1)",
+            easing: "cubic-bezier(0.2, 0.8, 0.2, 1)",
           },
           {
             offset: 1,
@@ -58,12 +53,7 @@ export default function CustomCursor() {
           {
             offset: 0,
             transform: "scale(1.28)",
-            easing: "cubic-bezier(0.16, 1, 0.3, 1)",
-          },
-          {
-            offset: 0.58,
-            transform: "scale(0.92)",
-            easing: "cubic-bezier(0.24, 0.8, 0.28, 1)",
+            easing: "cubic-bezier(0.3, 0, 0.2, 1)",
           },
           {
             offset: 1,
@@ -71,7 +61,7 @@ export default function CustomCursor() {
           },
         ],
         {
-          duration: 280,
+          duration: 160,
           fill: "none",
         },
       );
