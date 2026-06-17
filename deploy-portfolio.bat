@@ -6,7 +6,7 @@ if errorlevel 1 goto error
 
 echo.
 echo [1/5] Building portfolio...
-npm run build
+call npm run build
 if errorlevel 1 goto error
 
 echo.
@@ -30,7 +30,8 @@ git push
 if errorlevel 1 goto error
 
 echo.
-echo Done.
+echo Deploy finished successfully.
+echo Your latest commit has been pushed to the remote repository.
 pause
 exit /b 0
 
