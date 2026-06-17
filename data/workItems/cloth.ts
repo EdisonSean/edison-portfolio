@@ -49,7 +49,7 @@ export const clothWorks: WorkItem[] = [
       },
       {
         type: "video",
-        src: "/works/cloth/redmi-woven-backplate-flow/REDMI-P16U  Director Cut_1.mp4",
+        src: "/works/cloth/redmi-woven-backplate-flow/web/REDMI-P16U  Director Cut_1.mp4",
       },
     ],
     role: ["Procedural fiber motion", "Weave structure"],

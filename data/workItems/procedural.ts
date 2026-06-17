@@ -49,7 +49,7 @@ export const proceduralWorks: WorkItem[] = [
             },
             {
                 type: "video",
-                src: "/works/procedural/procedural-flower-bloom-system/shot06_v004.mp4",
+                src: "/works/procedural/procedural-flower-bloom-system/web/shot06_v004.mp4",
                 layout: "half",
             },
             {

@@ -53,13 +53,13 @@ export const particlesWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/particles/continental-circular-concept/benecke_product_pv (1080p)_1.mp4",
+        src: "/works/particles/continental-circular-concept/web/benecke_product_pv (1080p)_1.mp4",
         description:
           "Decomposition of organic leaf textures and synthetic waffle-like structures into colorful granular particles over an arid, desert-like dune landscape.",
       },
       {
         type: "video",
-        src: "/works/particles/continental-circular-concept/shot03_v003_1.mp4",
+        src: "/works/particles/continental-circular-concept/web/shot03_v003_1.mp4",
       },
       {
         type: "video",
@@ -73,11 +73,11 @@ export const particlesWorks: WorkItem[] = [
       },
       {
         type: "video",
-        src: "/works/particles/continental-circular-concept/benecke_product_pv (1080p)_1_1.mp4",
+        src: "/works/particles/continental-circular-concept/web/benecke_product_pv (1080p)_1_1.mp4",
       },
       {
         type: "video",
-        src: "/works/particles/continental-circular-concept/shot_ending_v010_1.mp4",
+        src: "/works/particles/continental-circular-concept/web/shot_ending_v010_1.mp4",
       },
     ],
     role: ["Particle simulation"],

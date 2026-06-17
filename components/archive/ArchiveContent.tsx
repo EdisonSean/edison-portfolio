@@ -153,7 +153,9 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
 
     const updateLoadProgress = () => {
       setLoadProgress(getBufferedProgress(videoElement));
-      setIsReadyToPlay(videoElement.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA);
+      setIsReadyToPlay(
+        videoElement.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA,
+      );
     };
 
     const progressEvents = [
@@ -222,7 +224,10 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
     <>
       <video
         ref={videoRef}
-        className="absolute inset-0 h-full w-full cursor-none object-contain"
+        className={[
+          "absolute inset-0 h-full w-full cursor-none object-contain transition-[filter] duration-300",
+          isReadyToPlay ? "brightness-100" : "brightness-50",
+        ].join(" ")}
         src={shouldLoad ? src : undefined}
         poster={shouldLoad ? (poster ?? undefined) : undefined}
         muted
@@ -255,7 +260,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   );
 }
 
-function useLazyMediaLoad(rootMargin = "850px 0px") {
+function useLazyMediaLoad(rootMargin = "450px 0px") {
   const mediaRootRef = useRef<HTMLDivElement | null>(null);
   const [shouldLoad, setShouldLoad] = useState(false);
 

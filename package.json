@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "encode-video-preview": "node scripts/encode-video-preview.mjs",
     "update-media-dimensions": "node scripts/update-media-dimensions.mjs",
     "build": "next build",
     "start": "next start"

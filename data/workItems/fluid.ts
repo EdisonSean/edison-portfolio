@@ -123,7 +123,7 @@ export const fluidWorks: WorkItem[] = [
   media: [
   {
   type: "video",
-  src: "/works/fluid/vivo-fluid-lift-reveal/fluid_phone_01_v006.mp4",
+  src: "/works/fluid/vivo-fluid-lift-reveal/web/fluid_phone_01_v006.mp4",
   description: "Fluid mass lifting and wrapping around the phone body.",
   },
   ],
