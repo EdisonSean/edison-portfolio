@@ -114,6 +114,26 @@ function setStoredDragUsage(hasUsedDragScroll: boolean) {
   }
 }
 
+function getNavigatorPlatform() {
+  const userAgentData = navigator as Navigator & {
+    userAgentData?: { platform?: string };
+  };
+
+  return userAgentData.userAgentData?.platform ?? navigator.platform ?? "";
+}
+
+function shouldUseNativeScroll() {
+  const platform = getNavigatorPlatform();
+  const userAgent = navigator.userAgent;
+  const isMac = /Mac/i.test(platform) || /Macintosh/i.test(userAgent);
+  const hasCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
+  const hasTouch = navigator.maxTouchPoints > 0;
+  const isMobileUserAgent =
+    /Android|iPhone|iPad|iPod|Mobile|Windows Phone/i.test(userAgent);
+
+  return isMac || hasCoarsePointer || hasTouch || isMobileUserAgent;
+}
+
 export default function ScrollEnhancer() {
   const pathname = usePathname();
   const dragHintRef = useRef<HTMLDivElement | null>(null);
@@ -132,6 +152,13 @@ export default function ScrollEnhancer() {
     }
 
     hasUsedDragScrollRef.current = getStoredDragUsage();
+
+    if (shouldUseNativeScroll()) {
+      if (dragHint) {
+        dragHint.style.opacity = "0";
+      }
+      return;
+    }
 
     const finePointer = window.matchMedia("(pointer: fine)").matches;
     const reducedMotion = window.matchMedia(
