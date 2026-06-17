@@ -80,6 +80,8 @@ const fallbackMediaDimensions = {
   height: 9,
 };
 
+const loadedArchiveMediaSources = new Set<string>();
+
 function getMediaDimensions(src: string) {
   return mediaDimensions[src] ?? fallbackMediaDimensions;
 }
@@ -260,9 +262,12 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   );
 }
 
-function useLazyMediaLoad(rootMargin = "450px 0px") {
+function useLazyMediaLoad(src: string, rootMargin = "450px 0px") {
   const mediaRootRef = useRef<HTMLDivElement | null>(null);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  const [loadedSource, setLoadedSource] = useState<string | null>(() =>
+    loadedArchiveMediaSources.has(src) ? src : null,
+  );
+  const shouldLoad = loadedSource === src || loadedArchiveMediaSources.has(src);
 
   useEffect(() => {
     const mediaRoot = mediaRootRef.current;
@@ -273,7 +278,8 @@ function useLazyMediaLoad(rootMargin = "450px 0px") {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setShouldLoad(true);
+          loadedArchiveMediaSources.add(src);
+          setLoadedSource(src);
           observer.disconnect();
         }
       },
@@ -289,7 +295,7 @@ function useLazyMediaLoad(rootMargin = "450px 0px") {
     return () => {
       observer.disconnect();
     };
-  }, [rootMargin, shouldLoad]);
+  }, [rootMargin, shouldLoad, src]);
 
   return { mediaRootRef, shouldLoad };
 }
@@ -305,7 +311,7 @@ function ArchiveMediaFrame({
     .filter(Boolean)
     .join(" ");
   const frameStyle = getMediaFrameStyle(src);
-  const { mediaRootRef, shouldLoad } = useLazyMediaLoad();
+  const { mediaRootRef, shouldLoad } = useLazyMediaLoad(src);
 
   if (type === "video") {
     return (
