@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollEnhancer from "@/components/layout/ScrollEnhancer";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
         <ScrollEnhancer />
         <CustomCursor />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
