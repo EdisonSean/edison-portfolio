@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import CustomCursor from "@/components/layout/CustomCursor";
 import ScrollEnhancer from "@/components/layout/ScrollEnhancer";
 import "./globals.css";
@@ -20,6 +21,7 @@ export default function RootLayout({
         {children}
         <ScrollEnhancer />
         <CustomCursor />
+        <Analytics />
       </body>
     </html>
   );
