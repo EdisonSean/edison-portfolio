@@ -27,12 +27,15 @@ if errorlevel 1 goto error
 echo.
 echo [5/6] Creating commit...
 git commit -m "Update portfolio"
-if errorlevel 1 goto error
+if errorlevel 1 (
+  echo.
+  echo No new staged changes to commit. Continuing to push any existing local commits...
+)
 
 echo.
 echo [6/6] Pushing to remote...
 git push
-if errorlevel 1 goto error
+if errorlevel 1 goto push_check
 
 echo.
 echo Deploy finished successfully.
@@ -43,5 +46,21 @@ exit /b 0
 :error
 echo.
 echo Deploy failed. Check the message above.
+pause
+exit /b 1
+
+:push_check
+echo.
+echo Push did not complete. Checking whether there is anything to deploy...
+git status -sb
+git status -sb | findstr /C:"ahead" >nul
+if errorlevel 1 (
+  echo.
+  echo Nothing to deploy. Your branch does not appear to be ahead of the remote.
+  pause
+  exit /b 0
+)
+echo.
+echo Deploy failed during git push. Check the message above.
 pause
 exit /b 1
