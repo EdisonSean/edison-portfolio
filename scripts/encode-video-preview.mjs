@@ -3,15 +3,26 @@ import { promises as fs } from "node:fs";
 import path from "node:path";
 
 const videoExtensions = new Set([".mp4", ".m4v", ".mov", ".webm"]);
-const outputFolderName = "web";
+const skippedDirectoryNames = new Set([
+  "wechat",
+  "node_modules",
+  ".git",
+  ".next",
+]);
+let temporaryFileIndex = 0;
 
 function isVideoFile(filePath) {
-  return videoExtensions.has(path.extname(filePath).toLowerCase());
+  const fileName = path.basename(filePath);
+
+  return (
+    videoExtensions.has(path.extname(filePath).toLowerCase()) &&
+    !fileName.includes(".encoding-")
+  );
 }
 
 function shouldSkipDirectory(directoryPath) {
   const name = path.basename(directoryPath).toLowerCase();
-  return name === outputFolderName || name === "node_modules" || name === ".git";
+  return skippedDirectoryNames.has(name);
 }
 
 async function collectVideos(inputPath) {
@@ -44,13 +55,98 @@ async function collectVideos(inputPath) {
 
 function getOutputPath(inputPath) {
   const parsedPath = path.parse(inputPath);
-  return path.join(parsedPath.dir, outputFolderName, `${parsedPath.name}.mp4`);
+  return path.join(parsedPath.dir, `${parsedPath.name}.mp4`);
+}
+
+function getTemporaryPath(inputPath) {
+  const parsedPath = path.parse(inputPath);
+  temporaryFileIndex += 1;
+
+  return path.join(
+    parsedPath.dir,
+    `.${parsedPath.name}.encoding-${process.pid}-${temporaryFileIndex}.mp4`,
+  );
+}
+
+function pathsAreEqual(firstPath, secondPath) {
+  const firstResolvedPath = path.resolve(firstPath);
+  const secondResolvedPath = path.resolve(secondPath);
+
+  return process.platform === "win32"
+    ? firstResolvedPath.toLowerCase() === secondResolvedPath.toLowerCase()
+    : firstResolvedPath === secondResolvedPath;
+}
+
+async function pathExists(filePath) {
+  try {
+    await fs.access(filePath);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function replaceSourceVideo(inputPath, temporaryPath, outputPath) {
+  const token = `${process.pid}-${Date.now()}`;
+  const inputBackupPath = `${inputPath}.encode-backup-${token}`;
+  const outputBackupPath = `${outputPath}.encode-backup-${token}`;
+  const outputIsInput = pathsAreEqual(inputPath, outputPath);
+  let inputWasMoved = false;
+  let outputWasMoved = false;
+  let outputWasInstalled = false;
+
+  try {
+    if (!outputIsInput && (await pathExists(outputPath))) {
+      await fs.rename(outputPath, outputBackupPath);
+      outputWasMoved = true;
+    }
+
+    await fs.rename(inputPath, inputBackupPath);
+    inputWasMoved = true;
+    await fs.rename(temporaryPath, outputPath);
+    outputWasInstalled = true;
+  } catch (error) {
+    if (outputWasInstalled) {
+      await fs.rm(outputPath, { force: true });
+    }
+
+    if (inputWasMoved && (await pathExists(inputBackupPath))) {
+      await fs.rename(inputBackupPath, inputPath);
+    }
+
+    if (outputWasMoved && (await pathExists(outputBackupPath))) {
+      await fs.rename(outputBackupPath, outputPath);
+    }
+
+    throw error;
+  }
+
+  const cleanupPaths = [
+    temporaryPath,
+    inputBackupPath,
+    ...(outputWasMoved ? [outputBackupPath] : []),
+  ];
+
+  for (const cleanupPath of cleanupPaths) {
+    try {
+      await fs.rm(cleanupPath, { force: true });
+    } catch (error) {
+      console.warn(
+        `Could not remove backup ${cleanupPath}: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
+    }
+  }
 }
 
 function runFfmpeg(inputPath, outputPath) {
   return new Promise((resolve, reject) => {
     const args = [
       "-hide_banner",
+      "-loglevel",
+      "error",
+      "-nostdin",
       "-y",
       "-i",
       inputPath,
@@ -58,7 +154,7 @@ function runFfmpeg(inputPath, outputPath) {
       "0:v:0",
       "-an",
       "-vf",
-      "scale='if(gte(iw,ih),min(iw,1920),-2)':'if(gte(iw,ih),-2,min(ih,1920))'",
+      "scale='if(gte(iw,ih),min(iw,1920),-2)':'if(gte(iw,ih),-2,min(ih,1920))':in_range=auto:out_range=tv,format=yuv420p",
       "-c:v",
       "libx264",
       "-preset",
@@ -81,7 +177,7 @@ function runFfmpeg(inputPath, outputPath) {
     ];
     const child = spawn("ffmpeg", args, {
       stdio: ["ignore", "inherit", "inherit"],
-      windowsHide: false,
+      windowsHide: true,
     });
 
     child.on("error", reject);
@@ -100,7 +196,7 @@ const inputs = process.argv.slice(2);
 
 if (inputs.length === 0) {
   console.log("Drag video files or folders onto encode-video-preview.bat.");
-  console.log("Output goes into a web folder next to each source file.");
+  console.log("Encoded MP4 files replace the source videos in place.");
   process.exit(1);
 }
 
@@ -128,6 +224,32 @@ if (videos.length === 0) {
   process.exit(1);
 }
 
+const outputGroups = new Map();
+
+for (const videoPath of videos) {
+  const outputPath = getOutputPath(videoPath);
+  const outputKey =
+    process.platform === "win32" ? outputPath.toLowerCase() : outputPath;
+  const group = outputGroups.get(outputKey) ?? [];
+
+  group.push(videoPath);
+  outputGroups.set(outputKey, group);
+}
+
+const outputConflicts = [...outputGroups.values()].filter(
+  (group) => group.length > 1,
+);
+
+if (outputConflicts.length > 0) {
+  console.error("Multiple source videos would replace the same MP4 file:");
+
+  for (const group of outputConflicts) {
+    console.error(`- ${group.join(", ")}`);
+  }
+
+  process.exit(1);
+}
+
 console.log(`Found ${videos.length} video file(s).`);
 
 let completed = 0;
@@ -135,16 +257,25 @@ const failures = [];
 
 for (const videoPath of videos) {
   const outputPath = getOutputPath(videoPath);
+  const temporaryPath = getTemporaryPath(videoPath);
   completed += 1;
 
   console.log("");
   console.log(`[${completed}/${videos.length}] ${videoPath}`);
-  console.log(`Output: ${outputPath}`);
+  console.log(`Replacing with: ${outputPath}`);
 
   try {
-    await fs.mkdir(path.dirname(outputPath), { recursive: true });
-    await runFfmpeg(videoPath, outputPath);
+    await runFfmpeg(videoPath, temporaryPath);
+
+    const encodedStat = await fs.stat(temporaryPath);
+
+    if (encodedStat.size === 0) {
+      throw new Error("Encoded output is empty.");
+    }
+
+    await replaceSourceVideo(videoPath, temporaryPath, outputPath);
   } catch (error) {
+    await fs.rm(temporaryPath, { force: true });
     failures.push({
       videoPath,
       message: error instanceof Error ? error.message : String(error),
@@ -164,4 +295,4 @@ if (failures.length > 0) {
   process.exit(1);
 }
 
-console.log("All videos encoded successfully.");
+console.log("All videos encoded and replaced successfully.");

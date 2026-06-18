@@ -41,15 +41,15 @@ export const clothWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/cloth/redmi-woven-backplate-flow/web/REDMI-P16U  Director Cut_1_1.mp4",
+        src: "/works/cloth/redmi-woven-backplate-flow/REDMI-P16U  Director Cut_1_1.mp4",
       },
       {
         type: "video",
-        src: "/works/cloth/redmi-woven-backplate-flow/web/s02_v020_1.mp4",
+        src: "/works/cloth/redmi-woven-backplate-flow/s02_v020_1.mp4",
       },
       {
         type: "video",
-        src: "/works/cloth/redmi-woven-backplate-flow/web/REDMI-P16U  Director Cut_1.mp4",
+        src: "/works/cloth/redmi-woven-backplate-flow/REDMI-P16U  Director Cut_1.mp4",
       },
     ],
     role: ["Procedural fiber motion", "Weave structure"],
@@ -118,11 +118,11 @@ export const clothWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/web/shot04_v05.mp4",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot04_v05.mp4",
       },
       {
         type: "video",
-        src: "/works/cloth/xiaomi-carbon-fiber-backplate/web/shot05_v04.mp4",
+        src: "/works/cloth/xiaomi-carbon-fiber-backplate/shot05_v04.mp4",
       },
       {
         type: "video",
@@ -157,7 +157,7 @@ export const clothWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/cloth/bananain-sunshield-fabric-flight/web/sleeve_flying_test_v009.mp4",
+        src: "/works/cloth/bananain-sunshield-fabric-flight/sleeve_flying_test_v009.mp4",
         description: "Cloth motion test for the sun-protective jacket sleeve.",
       },
       {

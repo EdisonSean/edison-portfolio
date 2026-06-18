@@ -86,7 +86,7 @@ export const fluidWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/fluid/beatbot-aquasense-2-pro-aqua-flow/web/shot08.mp4",
+        src: "/works/fluid/beatbot-aquasense-2-pro-aqua-flow/shot08.mp4",
         description: "Fluid animation showing dirty water being pulled into the robot intake system.",
       },
       {
@@ -123,7 +123,7 @@ export const fluidWorks: WorkItem[] = [
   media: [
   {
   type: "video",
-  src: "/works/fluid/vivo-fluid-lift-reveal/web/fluid_phone_01_v006.mp4",
+  src: "/works/fluid/vivo-fluid-lift-reveal/fluid_phone_01_v006.mp4",
   description: "Fluid mass lifting and wrapping around the phone body.",
   },
   ],
@@ -143,7 +143,7 @@ export const fluidWorks: WorkItem[] = [
   media: [
   {
   type: "video",
-  src: "/works/fluid/cosmetic-lotion-creep-flow/shot_fluid_01_v005.m4v",
+  src: "/works/fluid/cosmetic-lotion-creep-flow/shot_fluid_01_v005.mp4",
   },
   ],
   role: ["Fluid simulation"],

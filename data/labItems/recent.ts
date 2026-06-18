@@ -9,7 +9,7 @@ export const recentLabs: LabItem[] = [
     media: [
       {
         type: "video",
-        src: "/lab/recent/output-opencall-poster/web/opencall_mainvision_shot_v02.mp4",
+        src: "/lab/recent/output-opencall-poster/opencall_mainvision_shot_v02.mp4",
       },
     ],
     role: ["Visual exploration"],
