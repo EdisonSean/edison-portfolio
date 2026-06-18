@@ -7,6 +7,8 @@ type FeaturedWorkVideoPreloaderProps = {
 };
 
 const preloadedVideos = new Map<string, HTMLVideoElement>();
+const constrainedMediaQuery =
+  "(max-width: 767px), (hover: none) and (pointer: coarse)";
 
 function preloadVideo(src: string) {
   if (preloadedVideos.has(src)) {
@@ -27,6 +29,10 @@ export default function FeaturedWorkVideoPreloader({
   sources,
 }: FeaturedWorkVideoPreloaderProps) {
   useEffect(() => {
+    if (window.matchMedia(constrainedMediaQuery).matches) {
+      return;
+    }
+
     const timers = sources.map((src, index) =>
       window.setTimeout(() => {
         preloadVideo(src);

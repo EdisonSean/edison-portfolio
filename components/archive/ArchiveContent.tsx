@@ -80,6 +80,10 @@ const fallbackMediaDimensions = {
   height: 9,
 };
 
+const constrainedMediaQuery =
+  "(max-width: 767px), (hover: none) and (pointer: coarse)";
+const desktopLazyLoadRootMargin = "450px 0px";
+const constrainedLazyLoadRootMargin = "150px 0px";
 const loadedArchiveMediaSources = new Set<string>();
 
 function getMediaDimensions(src: string) {
@@ -118,6 +122,10 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [loadProgress, setLoadProgress] = useState(0);
   const [isReadyToPlay, setIsReadyToPlay] = useState(false);
+  const [usesConstrainedLoading, setUsesConstrainedLoading] = useState(true);
+  const [shouldBufferForPlayback, setShouldBufferForPlayback] = useState(false);
+  const preloadMode =
+    usesConstrainedLoading && !shouldBufferForPlayback ? "metadata" : "auto";
 
   const togglePlayback = () => {
     const videoElement = videoRef.current;
@@ -145,7 +153,14 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   useEffect(() => {
     setLoadProgress(0);
     setIsReadyToPlay(false);
+    setShouldBufferForPlayback(false);
   }, [src]);
+
+  useEffect(() => {
+    setUsesConstrainedLoading(
+      window.matchMedia(constrainedMediaQuery).matches,
+    );
+  }, []);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -190,11 +205,23 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
+        const isInPlaybackRange =
+          entry.isIntersecting && entry.intersectionRatio >= 0.35;
+
+        if (
+          usesConstrainedLoading &&
+          !shouldBufferForPlayback &&
+          isInPlaybackRange
+        ) {
+          setShouldBufferForPlayback(true);
+          videoElement.preload = "auto";
+          videoElement.load();
+        }
+
         if (
           shouldLoad &&
           isReadyToPlay &&
-          entry.isIntersecting &&
-          entry.intersectionRatio >= 0.35
+          isInPlaybackRange
         ) {
           const playPromise = videoElement.play();
 
@@ -220,7 +247,12 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       observer.disconnect();
       videoElement.pause();
     };
-  }, [isReadyToPlay, shouldLoad]);
+  }, [
+    isReadyToPlay,
+    shouldBufferForPlayback,
+    shouldLoad,
+    usesConstrainedLoading,
+  ]);
 
   return (
     <>
@@ -235,7 +267,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
         muted
         loop
         playsInline
-        preload="auto"
+        preload={preloadMode}
         aria-label="Double click to toggle video playback"
         tabIndex={0}
         onDoubleClick={togglePlayback}
@@ -262,7 +294,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   );
 }
 
-function useLazyMediaLoad(src: string, rootMargin = "450px 0px") {
+function useLazyMediaLoad(src: string) {
   const mediaRootRef = useRef<HTMLDivElement | null>(null);
   const [loadedSource, setLoadedSource] = useState<string | null>(() =>
     loadedArchiveMediaSources.has(src) ? src : null,
@@ -274,6 +306,9 @@ function useLazyMediaLoad(src: string, rootMargin = "450px 0px") {
     if (!mediaRoot || shouldLoad) {
       return;
     }
+    const rootMargin = window.matchMedia(constrainedMediaQuery).matches
+      ? constrainedLazyLoadRootMargin
+      : desktopLazyLoadRootMargin;
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -295,7 +330,7 @@ function useLazyMediaLoad(src: string, rootMargin = "450px 0px") {
     return () => {
       observer.disconnect();
     };
-  }, [rootMargin, shouldLoad, src]);
+  }, [shouldLoad, src]);
 
   return { mediaRootRef, shouldLoad };
 }
