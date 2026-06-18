@@ -73,6 +73,7 @@ type ViewportVideoProps = {
   src: string;
   poster?: string | null;
   shouldLoad: boolean;
+  isWeChatBrowser: boolean;
 };
 
 const fallbackMediaDimensions = {
@@ -85,6 +86,17 @@ const constrainedMediaQuery =
 const desktopLazyLoadRootMargin = "450px 0px";
 const constrainedLazyLoadRootMargin = "150px 0px";
 const loadedArchiveMediaSources = new Set<string>();
+
+function getWeChatVideoSource(src: string) {
+  const lastSlashIndex = src.lastIndexOf("/");
+  const directory = src.slice(0, lastSlashIndex);
+  const fileName = src.slice(lastSlashIndex + 1);
+  const extensionIndex = fileName.lastIndexOf(".");
+  const baseName =
+    extensionIndex >= 0 ? fileName.slice(0, extensionIndex) : fileName;
+
+  return `${directory}/wechat/${baseName}.mp4`;
+}
 
 function getMediaDimensions(src: string) {
   return mediaDimensions[src] ?? fallbackMediaDimensions;
@@ -118,8 +130,14 @@ function getBufferedProgress(videoElement: HTMLVideoElement) {
   }
 }
 
-function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
+function ViewportVideo({
+  src,
+  poster,
+  shouldLoad,
+  isWeChatBrowser,
+}: ViewportVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const isInPlaybackRangeRef = useRef(false);
   const [loadProgress, setLoadProgress] = useState(0);
   const [isReadyToPlay, setIsReadyToPlay] = useState(false);
   const [usesConstrainedLoading, setUsesConstrainedLoading] = useState(true);
@@ -154,6 +172,49 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       window.matchMedia(constrainedMediaQuery).matches,
     );
   }, []);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (!videoElement || !isWeChatBrowser) {
+      return;
+    }
+
+    videoElement.setAttribute("webkit-playsinline", "true");
+    videoElement.setAttribute("x5-playsinline", "true");
+    videoElement.setAttribute("x5-video-player-type", "h5");
+    videoElement.setAttribute("x5-video-player-fullscreen", "false");
+
+    const retryVisiblePlayback = () => {
+      if (!isInPlaybackRangeRef.current) {
+        return;
+      }
+
+      const playPromise = videoElement.play();
+
+      if (playPromise) {
+        playPromise.catch(() => {
+          videoElement.pause();
+        });
+      }
+    };
+
+    document.addEventListener("WeixinJSBridgeReady", retryVisiblePlayback);
+    window.addEventListener("touchstart", retryVisiblePlayback, {
+      passive: true,
+    });
+
+    if ("WeixinJSBridge" in window) {
+      retryVisiblePlayback();
+    }
+
+    return () => {
+      document.removeEventListener(
+        "WeixinJSBridgeReady",
+        retryVisiblePlayback,
+      );
+      window.removeEventListener("touchstart", retryVisiblePlayback);
+    };
+  }, [isWeChatBrowser, src]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -200,6 +261,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       ([entry]) => {
         const isInPlaybackRange =
           entry.isIntersecting && entry.intersectionRatio >= 0.35;
+        isInPlaybackRangeRef.current = isInPlaybackRange;
 
         if (shouldLoad && isInPlaybackRange) {
           const playPromise = videoElement.play();
@@ -223,6 +285,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
     observer.observe(videoElement);
 
     return () => {
+      isInPlaybackRangeRef.current = false;
       observer.disconnect();
       videoElement.pause();
     };
@@ -321,12 +384,30 @@ function ArchiveMediaFrame({
     .join(" ");
   const frameStyle = getMediaFrameStyle(src);
   const { mediaRootRef, shouldLoad } = useLazyMediaLoad(src);
+  const [videoEnvironment, setVideoEnvironment] = useState<{
+    src: string;
+    isWeChatBrowser: boolean;
+  } | null>(null);
+
+  useEffect(() => {
+    const isWeChatBrowser = /MicroMessenger/i.test(navigator.userAgent);
+
+    setVideoEnvironment({
+      src: isWeChatBrowser ? getWeChatVideoSource(src) : src,
+      isWeChatBrowser,
+    });
+  }, [src]);
 
   if (type === "video") {
     return (
       <div ref={mediaRootRef} className={frameClassName} style={frameStyle}>
-        {shouldLoad ? (
-          <ViewportVideo src={src} poster={poster} shouldLoad={shouldLoad} />
+        {shouldLoad && videoEnvironment ? (
+          <ViewportVideo
+            src={videoEnvironment.src}
+            poster={poster}
+            shouldLoad={shouldLoad}
+            isWeChatBrowser={videoEnvironment.isWeChatBrowser}
+          />
         ) : null}
       </div>
     );

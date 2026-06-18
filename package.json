@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "encode-video-preview": "node scripts/encode-video-preview.mjs",
+    "encode-wechat-video-previews": "node scripts/encode-wechat-video-previews.mjs",
     "update-media-dimensions": "node scripts/update-media-dimensions.mjs",
     "build": "next build",
     "start": "next start"
