@@ -86,7 +86,7 @@ export const fluidWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/fluid/beatbot-aquasense-2-pro-aqua-flow/shot08.mp4",
+        src: "/works/fluid/beatbot-aquasense-2-pro-aqua-flow/web/shot08.mp4",
         description: "Fluid animation showing dirty water being pulled into the robot intake system.",
       },
       {

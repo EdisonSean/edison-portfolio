@@ -11,13 +11,13 @@ export const proceduralWorks: WorkItem[] = [
         media: [
             {
             type: "video",
-            src: "/works/procedural/adidas-climacool-lace-threading/s19_v1.1_flipbook_v003_1.mp4",
+            src: "/works/procedural/adidas-climacool-lace-threading/web/s19_v1.1_flipbook_v003_1.mp4",
             description:
                 "Viewport flipbook showing the lace path animation and shoe structure.",
             },
             {
             type: "video",
-            src: "/works/procedural/adidas-climacool-lace-threading/s19_1.mp4",
+            src: "/works/procedural/adidas-climacool-lace-threading/web/s19_1.mp4",
             description:
                 "Final shot of the shoelace threading through the CLIMACOOL upper structure.",
             },

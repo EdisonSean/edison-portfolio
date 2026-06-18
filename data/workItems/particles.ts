@@ -11,28 +11,28 @@ export const particlesWorks: WorkItem[] = [
     media: [
       {
         type: "video",
-        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/shot19_phone_1.mp4",
+        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/web/shot19_phone_1.mp4",
         description:
           "Particle explosion effect highlighting the premium titanium-inspired finish of the device.",
       },
       {
         type: "video",
-        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/shot19_nophone_convert_1.mp4",
+        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/web/shot19_nophone_convert_1.mp4",
         layout: "half",
       },
       {
         type: "video",
-        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/shot19_first_version_1.mp4",
+        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/web/shot19_first_version_1.mp4",
         layout: "half",
       },
       {
         type: "video",
-        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/shot06_v005_1.mp4",
+        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/web/shot06_v005_1.mp4",
         layout: "half",
       },
       {
         type: "video",
-        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/shot02_v008_1.mp4",
+        src: "/works/particles/xiaomi14-ultra-titanium-particle-burst/web/shot02_v008_1.mp4",
         layout: "half",
       },
     ],
