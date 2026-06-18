@@ -39,6 +39,9 @@ if errorlevel 1 (
 
 echo.
 echo [7/7] Pushing to remote...
+set "HTTP_PROXY="
+set "HTTPS_PROXY="
+set "ALL_PROXY="
 git push
 if errorlevel 1 goto push_check
 
