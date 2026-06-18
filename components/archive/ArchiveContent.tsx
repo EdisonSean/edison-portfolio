@@ -123,9 +123,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   const [loadProgress, setLoadProgress] = useState(0);
   const [isReadyToPlay, setIsReadyToPlay] = useState(false);
   const [usesConstrainedLoading, setUsesConstrainedLoading] = useState(true);
-  const [shouldBufferForPlayback, setShouldBufferForPlayback] = useState(false);
-  const preloadMode =
-    usesConstrainedLoading && !shouldBufferForPlayback ? "metadata" : "auto";
+  const preloadMode = usesConstrainedLoading ? "metadata" : "auto";
 
   const togglePlayback = () => {
     const videoElement = videoRef.current;
@@ -134,10 +132,6 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
     }
 
     if (videoElement.paused) {
-      if (!isReadyToPlay) {
-        return;
-      }
-
       const playPromise = videoElement.play();
 
       if (playPromise) {
@@ -153,7 +147,6 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
   useEffect(() => {
     setLoadProgress(0);
     setIsReadyToPlay(false);
-    setShouldBufferForPlayback(false);
   }, [src]);
 
   useEffect(() => {
@@ -208,21 +201,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
         const isInPlaybackRange =
           entry.isIntersecting && entry.intersectionRatio >= 0.35;
 
-        if (
-          usesConstrainedLoading &&
-          !shouldBufferForPlayback &&
-          isInPlaybackRange
-        ) {
-          setShouldBufferForPlayback(true);
-          videoElement.preload = "auto";
-          videoElement.load();
-        }
-
-        if (
-          shouldLoad &&
-          isReadyToPlay &&
-          isInPlaybackRange
-        ) {
+        if (shouldLoad && isInPlaybackRange) {
           const playPromise = videoElement.play();
 
           if (playPromise) {
@@ -247,12 +226,7 @@ function ViewportVideo({ src, poster, shouldLoad }: ViewportVideoProps) {
       observer.disconnect();
       videoElement.pause();
     };
-  }, [
-    isReadyToPlay,
-    shouldBufferForPlayback,
-    shouldLoad,
-    usesConstrainedLoading,
-  ]);
+  }, [shouldLoad]);
 
   return (
     <>
