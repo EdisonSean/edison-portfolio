@@ -45,6 +45,13 @@ function useMousePositionRef(containerRef?: RefObject<HTMLElement | null>) {
   });
 
   useEffect(() => {
+    const resetPosition = () => {
+      positionRef.current = {
+        x: Number.POSITIVE_INFINITY,
+        y: Number.POSITIVE_INFINITY,
+      };
+    };
+
     const updatePosition = (x: number, y: number) => {
       if (containerRef?.current) {
         const rect = containerRef.current.getBoundingClientRect();
@@ -62,6 +69,24 @@ function useMousePositionRef(containerRef?: RefObject<HTMLElement | null>) {
       updatePosition(event.clientX, event.clientY);
     };
 
+    const handlePointerDown = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") {
+        updatePosition(event.clientX, event.clientY);
+      }
+    };
+
+    const handlePointerEnd = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") {
+        resetPosition();
+      }
+    };
+
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updatePosition(touch.clientX, touch.clientY);
+    };
+
     const handleTouchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
       if (!touch) return;
@@ -69,13 +94,29 @@ function useMousePositionRef(containerRef?: RefObject<HTMLElement | null>) {
     };
 
     window.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerdown", handlePointerDown);
+    window.addEventListener("pointerup", handlePointerEnd);
+    window.addEventListener("pointercancel", handlePointerEnd);
     window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("touchmove", handleTouchMove);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
+    window.addEventListener("touchend", resetPosition);
+    window.addEventListener("touchcancel", resetPosition);
+    window.addEventListener("blur", resetPosition);
+    window.addEventListener("pagehide", resetPosition);
 
     return () => {
       window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerdown", handlePointerDown);
+      window.removeEventListener("pointerup", handlePointerEnd);
+      window.removeEventListener("pointercancel", handlePointerEnd);
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("touchstart", handleTouchStart);
       window.removeEventListener("touchmove", handleTouchMove);
+      window.removeEventListener("touchend", resetPosition);
+      window.removeEventListener("touchcancel", resetPosition);
+      window.removeEventListener("blur", resetPosition);
+      window.removeEventListener("pagehide", resetPosition);
     };
   }, [containerRef]);
 

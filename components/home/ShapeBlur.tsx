@@ -375,6 +375,7 @@ export default function ShapeBlur({
     let animationFrameId: number | null = null;
     let lastTime = 0;
 
+    const inactivePointerPosition = -10000;
     const vMouse = new THREE.Vector2(-10000, -10000);
     const vMouseDamp = new THREE.Vector2(-10000, -10000);
     const vResolution = new THREE.Vector2();
@@ -445,14 +446,45 @@ export default function ShapeBlur({
     const quad = new THREE.Mesh(geo, material);
     scene.add(quad);
 
-    const onPointerMove = (event: MouseEvent | PointerEvent) => {
+    const resetPointer = () => {
+      vMouse.set(inactivePointerPosition, inactivePointerPosition);
+      hasPointer = false;
+    };
+
+    const updatePointer = (clientX: number, clientY: number) => {
       const rect = mount.getBoundingClientRect();
-      vMouse.set(event.clientX - rect.left, event.clientY - rect.top);
+      vMouse.set(clientX - rect.left, clientY - rect.top);
 
       if (!hasPointer) {
         vMouseDamp.copy(vMouse);
         hasPointer = true;
       }
+    };
+
+    const onPointerMove = (event: MouseEvent | PointerEvent) => {
+      updatePointer(event.clientX, event.clientY);
+    };
+
+    const onPointerDown = (event: PointerEvent) => {
+      updatePointer(event.clientX, event.clientY);
+    };
+
+    const onPointerEnd = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") {
+        resetPointer();
+      }
+    };
+
+    const onTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updatePointer(touch.clientX, touch.clientY);
+    };
+
+    const onTouchMove = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (!touch) return;
+      updatePointer(touch.clientX, touch.clientY);
     };
 
     const resize = () => {
@@ -477,8 +509,17 @@ export default function ShapeBlur({
     };
 
     document.addEventListener("mousemove", onPointerMove);
+    document.addEventListener("pointerdown", onPointerDown);
     document.addEventListener("pointermove", onPointerMove);
+    document.addEventListener("pointerup", onPointerEnd);
+    document.addEventListener("pointercancel", onPointerEnd);
+    document.addEventListener("touchstart", onTouchStart, { passive: true });
+    document.addEventListener("touchmove", onTouchMove, { passive: true });
+    document.addEventListener("touchend", resetPointer);
+    document.addEventListener("touchcancel", resetPointer);
     window.addEventListener("resize", resize);
+    window.addEventListener("blur", resetPointer);
+    window.addEventListener("pagehide", resetPointer);
 
     const resizeObserver = new ResizeObserver(resize);
     resizeObserver.observe(mount);
@@ -509,8 +550,17 @@ export default function ShapeBlur({
 
       resizeObserver.disconnect();
       window.removeEventListener("resize", resize);
+      window.removeEventListener("blur", resetPointer);
+      window.removeEventListener("pagehide", resetPointer);
       document.removeEventListener("mousemove", onPointerMove);
+      document.removeEventListener("pointerdown", onPointerDown);
       document.removeEventListener("pointermove", onPointerMove);
+      document.removeEventListener("pointerup", onPointerEnd);
+      document.removeEventListener("pointercancel", onPointerEnd);
+      document.removeEventListener("touchstart", onTouchStart);
+      document.removeEventListener("touchmove", onTouchMove);
+      document.removeEventListener("touchend", resetPointer);
+      document.removeEventListener("touchcancel", resetPointer);
 
       scene.remove(quad);
       geo.dispose();
