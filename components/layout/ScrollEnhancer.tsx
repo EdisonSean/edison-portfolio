@@ -6,6 +6,12 @@ import { useEffect, useRef } from "react";
 const wheelLineHeight = 16;
 const dragThreshold = 4;
 const dragScrollMultiplier = 1.1;
+const dragInertiaMinVelocity = 0.12;
+const dragInertiaMaxVelocity = 4;
+const dragInertiaStopVelocity = 0.018;
+const dragInertiaFriction = 0.004;
+const dragInertiaMaxFrameMs = 32;
+const dragVelocitySampleMaxAgeMs = 120;
 const smoothStepSizePx = 300;
 const smoothAnimationTimeMs = 400;
 const accelerationDeltaMs = 30;
@@ -168,6 +174,9 @@ export default function ScrollEnhancer() {
     ).matches;
 
     let animationFrameId = 0;
+    let dragInertiaFrameId = 0;
+    let dragInertiaVelocity = 0;
+    let dragInertiaLastTime = 0;
     let targetScrollY = window.scrollY;
     let animationStartY = window.scrollY;
     let animationStartTime = 0;
@@ -186,6 +195,9 @@ export default function ScrollEnhancer() {
     let dragHintTimeoutId = 0;
     let pointerX = window.innerWidth / 2;
     let pointerY = window.innerHeight / 2;
+    let dragLastMoveTime = 0;
+    let dragLastScrollY = window.scrollY;
+    let dragScrollVelocity = 0;
 
     const positionDragHint = () => {
       if (!dragHint) {
@@ -233,11 +245,22 @@ export default function ScrollEnhancer() {
       }, dragHintVisibleMs);
     };
 
+    const stopDragInertia = () => {
+      if (dragInertiaFrameId !== 0) {
+        window.cancelAnimationFrame(dragInertiaFrameId);
+        dragInertiaFrameId = 0;
+      }
+
+      dragInertiaVelocity = 0;
+    };
+
     const stopAnimation = () => {
       if (animationFrameId !== 0) {
         window.cancelAnimationFrame(animationFrameId);
         animationFrameId = 0;
       }
+
+      stopDragInertia();
     };
 
     const animateScroll = () => {
@@ -256,6 +279,55 @@ export default function ScrollEnhancer() {
       }
 
       animationFrameId = window.requestAnimationFrame(animateScroll);
+    };
+
+    const animateDragInertia = () => {
+      const now = performance.now();
+      const elapsed = Math.min(
+        Math.max(now - dragInertiaLastTime, 0),
+        dragInertiaMaxFrameMs,
+      );
+      const decay = Math.exp(-dragInertiaFriction * elapsed);
+      const nextVelocity = dragInertiaVelocity * decay;
+      const averageVelocity = (dragInertiaVelocity + nextVelocity) / 2;
+      const unclampedScrollY = window.scrollY + averageVelocity * elapsed;
+      const nextScrollY = clampScrollY(unclampedScrollY);
+
+      window.scrollTo({ top: nextScrollY });
+
+      if (
+        nextScrollY !== unclampedScrollY ||
+        Math.abs(nextVelocity) < dragInertiaStopVelocity
+      ) {
+        dragInertiaFrameId = 0;
+        dragInertiaVelocity = 0;
+        targetScrollY = nextScrollY;
+        return;
+      }
+
+      dragInertiaVelocity = nextVelocity;
+      dragInertiaLastTime = now;
+      targetScrollY = nextScrollY;
+      dragInertiaFrameId = window.requestAnimationFrame(animateDragInertia);
+    };
+
+    const startDragInertia = () => {
+      const now = performance.now();
+
+      if (
+        now - dragLastMoveTime > dragVelocitySampleMaxAgeMs ||
+        Math.abs(dragScrollVelocity) < dragInertiaMinVelocity
+      ) {
+        dragScrollVelocity = 0;
+        return;
+      }
+
+      dragInertiaVelocity = Math.min(
+        dragInertiaMaxVelocity,
+        Math.max(-dragInertiaMaxVelocity, dragScrollVelocity),
+      );
+      dragInertiaLastTime = now;
+      dragInertiaFrameId = window.requestAnimationFrame(animateDragInertia);
     };
 
     const scheduleScroll = () => {
@@ -281,6 +353,7 @@ export default function ScrollEnhancer() {
       event.preventDefault();
       const now = performance.now();
       showDragHint();
+      stopDragInertia();
 
       if (now - lastWheelTime <= accelerationDeltaMs) {
         accelerationTicks += 1;
@@ -322,6 +395,9 @@ export default function ScrollEnhancer() {
       startY = event.clientY;
       startScrollY = window.scrollY;
       targetScrollY = window.scrollY;
+      dragLastMoveTime = 0;
+      dragLastScrollY = window.scrollY;
+      dragScrollVelocity = 0;
       stopAnimation();
     };
 
@@ -358,18 +434,45 @@ export default function ScrollEnhancer() {
       }
 
       event.preventDefault();
+      const now = performance.now();
       const deltaY = (startY - event.clientY) * dragScrollMultiplier;
-      targetScrollY = clampScrollY(startScrollY + deltaY);
+      const nextScrollY = clampScrollY(startScrollY + deltaY);
+
+      if (dragLastMoveTime !== 0) {
+        const elapsed = now - dragLastMoveTime;
+
+        if (elapsed > 0 && elapsed <= dragVelocitySampleMaxAgeMs) {
+          const nextVelocity = (nextScrollY - dragLastScrollY) / elapsed;
+          const clampedVelocity = Math.min(
+            dragInertiaMaxVelocity,
+            Math.max(-dragInertiaMaxVelocity, nextVelocity),
+          );
+          dragScrollVelocity =
+            dragScrollVelocity * 0.55 + clampedVelocity * 0.45;
+        } else {
+          dragScrollVelocity = 0;
+        }
+      }
+
+      dragLastMoveTime = now;
+      dragLastScrollY = nextScrollY;
+      targetScrollY = nextScrollY;
       window.scrollTo({ top: targetScrollY });
     };
 
     const resetPointerState = () => {
+      const shouldStartInertia = isDragging;
+
       document.documentElement.style.userSelect = previousHtmlUserSelect;
       document.body.style.userSelect = previousBodyUserSelect;
       isPointerDown = false;
       isDragging = false;
       pointerButton = -1;
       targetScrollY = window.scrollY;
+
+      if (shouldStartInertia) {
+        startDragInertia();
+      }
     };
 
     const handleContextMenu = (event: MouseEvent) => {
@@ -382,7 +485,11 @@ export default function ScrollEnhancer() {
     };
 
     const handleScroll = () => {
-      if (!isPointerDown && animationFrameId === 0) {
+      if (
+        !isPointerDown &&
+        animationFrameId === 0 &&
+        dragInertiaFrameId === 0
+      ) {
         targetScrollY = window.scrollY;
       }
     };
