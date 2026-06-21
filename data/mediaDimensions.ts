@@ -4,7 +4,6 @@ export type MediaDimensions = {
 };
 
 export const mediaDimensions: Record<string, MediaDimensions> = {
-  "/assets/logo/LOGO_white_alpha.png": { width: 163, height: 1591 },
   "/lab/recent/abstract-wallpaper-visual/test5_v1.png": { width: 1920, height: 1920 },
   "/lab/recent/abstract-wallpaper-visual/test5_v4_16_9.png": { width: 1920, height: 1080 },
   "/lab/recent/abstract-wallpaper-visual/test5_v5_16_9.png": { width: 1920, height: 1080 },
@@ -15,6 +14,9 @@ export const mediaDimensions: Record<string, MediaDimensions> = {
   "/lab/recent/metal-liquid-flow-study/metal_shaping_v009_1.mp4": { width: 1372, height: 1096 },
   "/lab/recent/metal-liquid-flow-study/metal_shaping_v010_1.mp4": { width: 1920, height: 1080 },
   "/lab/recent/output-opencall-poster/opencall_mainvision_shot_v02.mp4": { width: 1920, height: 1920 },
+  "/lab/vibecoding/vibe-coded-portfolio-website/github_repo_overview.webp": { width: 955, height: 1050 },
+  "/lab/vibecoding/vibe-coded-portfolio-website/portfolio_walkthrough.mp4": { width: 1920, height: 964 },
+  "/lab/vibecoding/vibe-coded-portfolio-website/vibecoding_process.webp": { width: 1506, height: 1389 },
   "/works/cloth/bananain-cooling-quilt-weave/亚朵夏凉被_shot10_v1_1.mp4": { width: 1920, height: 1920 },
   "/works/cloth/bananain-cooling-quilt-weave/breakdown_knitting_v001_1.mp4": { width: 1920, height: 1080 },
   "/works/cloth/bananain-cooling-quilt-weave/breakdown_knitting_v003_1.mp4": { width: 1920, height: 1080 },

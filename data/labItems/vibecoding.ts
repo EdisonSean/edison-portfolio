@@ -2,18 +2,26 @@ import type { LabItem } from "@/data/labItems/types";
 
 export const vibeCodingLabs: LabItem[] = [
   {
-    slug: "example-lab-study",
-    title: "Example Lab Study",
+    slug: "vibe-coded-portfolio-website",
+    title: "Vibe-Coded Portfolio Website",
     year: 2026,
     categories: ["vibecoding"],
     media: [
       {
+        type: "video",
+        src: "/lab/vibecoding/vibe-coded-portfolio-website/portfolio_walkthrough.mp4",
+      },
+      {
         type: "image",
-        src: "/assets/logo/LOGO_white_alpha.png",
-        description: "Optional description for this image or video.",
+        src: "/lab/vibecoding/vibe-coded-portfolio-website/github_repo_overview.webp",
+      },
+      {
+        type: "image",
+        src: "/lab/vibecoding/vibe-coded-portfolio-website/vibecoding_process.webp",
       },
     ],
-    role: ["Vibe coding note"],
-    description: "One short sentence about what this experiment is testing.",
+    role: ["Vibe coding"],
+    description:
+      "A self-directed portfolio website built through a Vibe Coding workflow, covering visual direction, archive structure, interactive homepage design, media optimization, GitHub versioning, and Vercel deployment.",
   },
 ];
