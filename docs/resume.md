@@ -4,17 +4,18 @@
 
 **Houdini FX Artist / CG Artist**
 
-Edison Xiao is a Houdini FX artist focused on procedural motion, product-driven visual effects, and simulation-based design. 
+Edison Xiao is a Houdini FX artist focused on procedural motion, product-driven visual effects, and simulation-based design.
 
 冠森是一名 Houdini 特效师，专注于程序化动态、产品特效与基于模拟的视觉设计。
 
-He works mainly on product-oriented FX shots, including fabric motion, material reveals, woven structures, fluid systems, particle fields, and abstract procedural visuals. Besides shot production, he also takes part in organizing FX workflows, building reusable setups, and improving production efficiency for design and CG teams.
+His work centers on product-oriented FX shots, including fabric motion, material reveals, woven structures, fluid systems, particle fields, and abstract procedural visuals. Beyond shot production, he also contributes to FX workflow organization, reusable setup development, and production efficiency across design and CG teams.
 
-他主要负责产品视觉中的特效镜头，包括布料运动、材质揭示、编织结构、流体系统、粒子场以及抽象程序化视觉。除了镜头制作，他也参与特效流程梳理、可复用 setup 搭建，以及为设计与 CG 团队优化制作效率。
+主要负责产品视觉中的特效镜头，包括布料运动、材质揭示、编织结构、流体系统、粒子场以及抽象程序化视觉。除了镜头制作，也参与特效流程梳理、可复用 setup 搭建，并协助设计与 CG 团队提升制作效率。
 
 His approach combines visual sensitivity with technical problem-solving: building controllable systems first, then shaping them into clean, art-directed motion for commercial films.
 
-他的创作方式结合视觉判断与技术解决能力：先搭建可控的动态系统，再将其塑造成服务于商业影像的、干净且具备美术方向的运动效果。
+创作方式结合视觉判断与技术解决能力：先搭建可控的动态系统，再将其塑造成服务于商业影像的、干净且具备美术方向的运动效果。
+
 
 
 ## Contact / 联系方式
