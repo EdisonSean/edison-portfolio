@@ -32,6 +32,7 @@ const socialLinks = [
   },
 ] as const;
 const weChatId = "Edison_Sean";
+const weChatQrSrc = "/assets/contact/wechat-qr.jpg";
 const headingTextClass = "text-[clamp(1.55rem,2.7vw,2.9rem)] leading-[0.92]";
 const compressedHeadingTextClass =
   "text-[clamp(1.1rem,1.72vw,1.9rem)] leading-[0.92]";
@@ -273,7 +274,10 @@ export default function Header() {
           />
         </Link>
 
-        <nav aria-label="Social links" className="flex items-center gap-1.5 sm:gap-2">
+        <nav
+          aria-label="Social links"
+          className="flex items-center gap-1.5 sm:gap-2"
+        >
           {socialLinks.map((link) => (
             "href" in link ? (
               <a
@@ -309,7 +313,7 @@ export default function Header() {
 
                 <div
                   className={[
-                    "absolute left-1/2 top-full z-50 mt-3 w-52 -translate-x-1/2 border border-zinc-700/80 bg-[#050505]/95 p-3 text-left shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-sm transition-all duration-200",
+                    "absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2 border border-zinc-700/80 bg-[#050505]/95 p-3 text-left shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-sm transition-all duration-200",
                     isWeChatOpen
                       ? "pointer-events-auto translate-y-0 opacity-100"
                       : "pointer-events-none -translate-y-1 opacity-0",
@@ -318,6 +322,12 @@ export default function Header() {
                   <p className="text-[0.72rem] font-semibold uppercase leading-none tracking-normal text-zinc-500">
                     WeChat
                   </p>
+                  <img
+                    src={weChatQrSrc}
+                    alt="WeChat QR code"
+                    className="mt-3 block aspect-square w-full select-none bg-white object-cover"
+                    draggable={false}
+                  />
                   <p className="mt-2 select-text text-[0.95rem] font-semibold leading-tight text-zinc-200">
                     {weChatId}
                   </p>
