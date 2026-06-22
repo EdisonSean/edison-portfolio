@@ -34,6 +34,7 @@ export default function LabCategoryView({
         role: lab.role,
         media: lab.media,
         description: lab.description,
+        githubUrl: lab.githubUrl,
       }))}
       emptyMessage="No lab entries in this category yet."
       activeItemSlug={activeItemSlug}

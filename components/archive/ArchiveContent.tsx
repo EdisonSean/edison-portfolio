@@ -25,6 +25,7 @@ export type ArchiveProjectEntry = {
   role: string[];
   media: ArchiveMediaItem[];
   description: string;
+  githubUrl?: string;
 };
 
 export function getArchiveItemId(slug: string) {
@@ -613,6 +614,18 @@ export default function ArchiveContent({
                   <p className="max-w-2xl text-[0.95rem] font-semibold leading-[1.45] text-zinc-500 md:col-span-2 md:text-[1.02rem]">
                     {item.description}
                   </p>
+                  {item.githubUrl ? (
+                    <p className="-mt-7 max-w-2xl text-[0.9rem] font-semibold leading-[1.45] text-zinc-500 md:col-span-2 md:text-[0.98rem]">
+                      <a
+                        className="underline decoration-zinc-700 underline-offset-4 transition-colors duration-200 hover:text-zinc-200 hover:decoration-zinc-300"
+                        href={item.githubUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        GitHub Repository
+                      </a>
+                    </p>
+                  ) : null}
 
                   {item.media.map((mediaItem, mediaIndex) => (
                     <figure

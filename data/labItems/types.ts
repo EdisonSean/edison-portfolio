@@ -11,4 +11,5 @@ export type LabItem = {
   media: ArchiveMediaItem[];
   role: string[];
   description: string;
+  githubUrl?: string;
 };
