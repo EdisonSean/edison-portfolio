@@ -20,6 +20,11 @@ call npm run build
 if errorlevel 1 goto error
 
 echo.
+echo Restoring generated Next.js environment file...
+git restore -- next-env.d.ts
+if errorlevel 1 goto error
+
+echo.
 echo [4/7] Checking git status...
 git status
 if errorlevel 1 goto error
