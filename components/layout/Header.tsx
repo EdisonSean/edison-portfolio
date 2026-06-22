@@ -143,6 +143,8 @@ export function SocialContactLinks({
   const weChatRootRef = useRef<HTMLDivElement | null>(null);
   const [isWeChatOpen, setIsWeChatOpen] = useState(false);
   const [hasCopiedWeChat, setHasCopiedWeChat] = useState(false);
+  const socialIconToneClass =
+    "text-zinc-400 transition-colors duration-300 group-hover:text-white group-focus-visible:text-white";
 
   useEffect(() => {
     if (!isWeChatOpen) {
@@ -197,11 +199,13 @@ export function SocialContactLinks({
             rel={link.href.startsWith("http") ? "noreferrer" : undefined}
             aria-label={link.label}
             className={[
-              "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+              "group flex items-center justify-center border border-zinc-700/80 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
               linkSizeClass,
             ].join(" ")}
           >
-            <SocialIcon icon={link.icon} />
+            <span className={socialIconToneClass}>
+              <SocialIcon icon={link.icon} />
+            </span>
           </a>
         ) : (
           <div key={link.label} ref={weChatRootRef} className="relative">
@@ -211,12 +215,18 @@ export function SocialContactLinks({
               aria-expanded={isWeChatOpen}
               onClick={() => setIsWeChatOpen((isOpen) => !isOpen)}
               className={[
-                "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                isWeChatOpen ? "border-zinc-200 bg-zinc-900/70 text-white" : "",
+                "group flex items-center justify-center border border-zinc-700/80 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                isWeChatOpen ? "border-zinc-200 bg-zinc-900/70" : "",
                 linkSizeClass,
               ].join(" ")}
             >
-              <SocialIcon icon={link.icon} />
+              <span
+                className={
+                  isWeChatOpen ? "text-white" : socialIconToneClass
+                }
+              >
+                <SocialIcon icon={link.icon} />
+              </span>
             </button>
 
             <div
