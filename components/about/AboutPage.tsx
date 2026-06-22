@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import IndexContentLayout from "@/components/archive/IndexContentLayout";
-import Header from "@/components/layout/Header";
+import Header, { SocialContactLinks } from "@/components/layout/Header";
 import VariableProximity from "@/components/typography/VariableProximity";
 import ViewportYVariableText from "@/components/typography/ViewportYVariableText";
 import type { MouseEvent } from "react";
@@ -381,6 +381,13 @@ function AboutContent({
                 </h2>
 
                 <div className="col-start-2">
+                  {section.title.toLowerCase().includes("contact") ? (
+                    <SocialContactLinks
+                      className="mb-8 flex items-center gap-2"
+                      linkSizeClass="h-10 w-10 text-[0.95rem]"
+                    />
+                  ) : null}
+
                   {section.blocks.map((block, blockIndex) => {
                     const copyTarget = getContactCopyTarget(
                       section,

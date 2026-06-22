@@ -49,7 +49,15 @@ const navVariableTextSettings = {
   falloff: "gaussian" as const,
 };
 
-function SocialIcon({ icon }: { icon: (typeof socialLinks)[number]["icon"] }) {
+type SocialIconName = (typeof socialLinks)[number]["icon"];
+
+type SocialContactLinksProps = {
+  className?: string;
+  linkSizeClass: string;
+  popoverClassName?: string;
+};
+
+function SocialIcon({ icon }: { icon: SocialIconName }) {
   if (icon === "behance") {
     return (
       <span
@@ -156,53 +164,14 @@ async function copyText(value: string) {
   document.body.removeChild(textarea);
 }
 
-export default function Header() {
-  const containerRef = useRef<HTMLElement | null>(null);
+export function SocialContactLinks({
+  className = "flex items-center gap-1.5 sm:gap-2",
+  linkSizeClass,
+  popoverClassName = "",
+}: SocialContactLinksProps) {
   const weChatRootRef = useRef<HTMLDivElement | null>(null);
-  const pathname = usePathname();
-  const [isCompressed, setIsCompressed] = useState(false);
   const [isWeChatOpen, setIsWeChatOpen] = useState(false);
   const [hasCopiedWeChat, setHasCopiedWeChat] = useState(false);
-  const isHome = pathname === "/";
-  const currentHeadingTextClass = isCompressed
-    ? compressedHeadingTextClass
-    : headingTextClass;
-  const socialLinkSizeClass = isCompressed
-    ? "h-8 w-8 text-[0.82rem]"
-    : "h-9 w-9 text-[0.88rem] sm:h-10 sm:w-10 sm:text-[0.95rem]";
-
-  useEffect(() => {
-    if (isHome) {
-      setIsCompressed(false);
-      return;
-    }
-
-    let animationFrameId = 0;
-
-    const updateHeaderState = () => {
-      animationFrameId = 0;
-      setIsCompressed(window.scrollY > 24);
-    };
-
-    const scheduleHeaderStateUpdate = () => {
-      if (animationFrameId === 0) {
-        animationFrameId = window.requestAnimationFrame(updateHeaderState);
-      }
-    };
-
-    updateHeaderState();
-    window.addEventListener("scroll", scheduleHeaderStateUpdate, {
-      passive: true,
-    });
-
-    return () => {
-      if (animationFrameId !== 0) {
-        window.cancelAnimationFrame(animationFrameId);
-      }
-
-      window.removeEventListener("scroll", scheduleHeaderStateUpdate);
-    };
-  }, [isHome]);
 
   useEffect(() => {
     if (!isWeChatOpen) {
@@ -247,6 +216,120 @@ export default function Header() {
   };
 
   return (
+    <nav aria-label="Social links" className={className}>
+      {socialLinks.map((link) =>
+        "href" in link ? (
+          <a
+            key={link.label}
+            href={link.href}
+            target={link.href.startsWith("http") ? "_blank" : undefined}
+            rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+            aria-label={link.label}
+            className={[
+              "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+              linkSizeClass,
+            ].join(" ")}
+          >
+            <SocialIcon icon={link.icon} />
+          </a>
+        ) : (
+          <div key={link.label} ref={weChatRootRef} className="relative">
+            <button
+              type="button"
+              aria-label="WeChat"
+              aria-expanded={isWeChatOpen}
+              onClick={() => setIsWeChatOpen((isOpen) => !isOpen)}
+              className={[
+                "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                isWeChatOpen ? "border-zinc-200 bg-zinc-900/70 text-white" : "",
+                linkSizeClass,
+              ].join(" ")}
+            >
+              <SocialIcon icon={link.icon} />
+            </button>
+
+            <div
+              className={[
+                "absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2 border border-zinc-700/80 bg-[#050505]/95 p-3 text-left shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-sm transition-all duration-200",
+                isWeChatOpen
+                  ? "pointer-events-auto translate-y-0 opacity-100"
+                  : "pointer-events-none -translate-y-1 opacity-0",
+                popoverClassName,
+              ].join(" ")}
+            >
+              <p className="text-[0.72rem] font-semibold uppercase leading-none tracking-normal text-zinc-500">
+                WeChat
+              </p>
+              <img
+                src={weChatQrSrc}
+                alt="WeChat QR code"
+                className="mt-3 block aspect-square w-full select-none bg-white object-cover"
+                draggable={false}
+              />
+              <p className="mt-2 select-text text-[0.95rem] font-semibold leading-tight text-zinc-200">
+                {weChatId}
+              </p>
+              <button
+                type="button"
+                onClick={handleCopyWeChatId}
+                className="mt-3 w-full border border-zinc-700/80 px-3 py-2 text-[0.78rem] font-semibold leading-none text-zinc-300 transition-colors duration-200 hover:border-zinc-200 hover:bg-zinc-900/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              >
+                {hasCopiedWeChat ? "Copied" : "Copy WeChat ID"}
+              </button>
+            </div>
+          </div>
+        ),
+      )}
+    </nav>
+  );
+}
+
+export default function Header() {
+  const containerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
+  const [isCompressed, setIsCompressed] = useState(false);
+  const isHome = pathname === "/";
+  const currentHeadingTextClass = isCompressed
+    ? compressedHeadingTextClass
+    : headingTextClass;
+  const socialLinkSizeClass = isCompressed
+    ? "h-8 w-8 text-[0.82rem]"
+    : "h-9 w-9 text-[0.88rem] sm:h-10 sm:w-10 sm:text-[0.95rem]";
+
+  useEffect(() => {
+    if (isHome) {
+      setIsCompressed(false);
+      return;
+    }
+
+    let animationFrameId = 0;
+
+    const updateHeaderState = () => {
+      animationFrameId = 0;
+      setIsCompressed(window.scrollY > 24);
+    };
+
+    const scheduleHeaderStateUpdate = () => {
+      if (animationFrameId === 0) {
+        animationFrameId = window.requestAnimationFrame(updateHeaderState);
+      }
+    };
+
+    updateHeaderState();
+    window.addEventListener("scroll", scheduleHeaderStateUpdate, {
+      passive: true,
+    });
+
+    return () => {
+      if (animationFrameId !== 0) {
+        window.cancelAnimationFrame(animationFrameId);
+      }
+
+      window.removeEventListener("scroll", scheduleHeaderStateUpdate);
+    };
+  }, [isHome]);
+
+  return (
     <header
       ref={containerRef}
       className={[
@@ -274,75 +357,7 @@ export default function Header() {
           />
         </Link>
 
-        <nav
-          aria-label="Social links"
-          className="flex items-center gap-1.5 sm:gap-2"
-        >
-          {socialLinks.map((link) => (
-            "href" in link ? (
-              <a
-                key={link.label}
-                href={link.href}
-                target={link.href.startsWith("http") ? "_blank" : undefined}
-                rel={link.href.startsWith("http") ? "noreferrer" : undefined}
-                aria-label={link.label}
-                className={[
-                  "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                  socialLinkSizeClass,
-                ].join(" ")}
-              >
-                <SocialIcon icon={link.icon} />
-              </a>
-            ) : (
-              <div key={link.label} ref={weChatRootRef} className="relative">
-                <button
-                  type="button"
-                  aria-label="WeChat"
-                  aria-expanded={isWeChatOpen}
-                  onClick={() => setIsWeChatOpen((isOpen) => !isOpen)}
-                  className={[
-                    "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                    isWeChatOpen
-                      ? "border-zinc-200 bg-zinc-900/70 text-white"
-                      : "",
-                    socialLinkSizeClass,
-                  ].join(" ")}
-                >
-                  <SocialIcon icon={link.icon} />
-                </button>
-
-                <div
-                  className={[
-                    "absolute left-1/2 top-full z-50 mt-3 w-56 -translate-x-1/2 border border-zinc-700/80 bg-[#050505]/95 p-3 text-left shadow-[0_18px_60px_rgba(0,0,0,0.42)] backdrop-blur-sm transition-all duration-200",
-                    isWeChatOpen
-                      ? "pointer-events-auto translate-y-0 opacity-100"
-                      : "pointer-events-none -translate-y-1 opacity-0",
-                  ].join(" ")}
-                >
-                  <p className="text-[0.72rem] font-semibold uppercase leading-none tracking-normal text-zinc-500">
-                    WeChat
-                  </p>
-                  <img
-                    src={weChatQrSrc}
-                    alt="WeChat QR code"
-                    className="mt-3 block aspect-square w-full select-none bg-white object-cover"
-                    draggable={false}
-                  />
-                  <p className="mt-2 select-text text-[0.95rem] font-semibold leading-tight text-zinc-200">
-                    {weChatId}
-                  </p>
-                  <button
-                    type="button"
-                    onClick={handleCopyWeChatId}
-                    className="mt-3 w-full border border-zinc-700/80 px-3 py-2 text-[0.78rem] font-semibold leading-none text-zinc-300 transition-colors duration-200 hover:border-zinc-200 hover:bg-zinc-900/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-                  >
-                    {hasCopiedWeChat ? "Copied" : "Copy WeChat ID"}
-                  </button>
-                </div>
-              </div>
-            )
-          ))}
-        </nav>
+        <SocialContactLinks linkSizeClass={socialLinkSizeClass} />
       </div>
 
       <nav

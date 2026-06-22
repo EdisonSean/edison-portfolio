@@ -19,14 +19,6 @@ His approach combines visual sensitivity with technical problem-solving: buildin
 
 ## Contact / 联系方式
 
-**Email**
-
-[edi3on.xiao@gmail.com](mailto:edi3on.xiao@gmail.com)
-
-**Wechat / 微信**
-
-Edison_Sean
-
 **Location**
 
 China Shanghai / 中国上海
