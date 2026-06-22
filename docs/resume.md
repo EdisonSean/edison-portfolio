@@ -19,7 +19,7 @@ His approach combines visual sensitivity with technical problem-solving: buildin
 
 ## Contact / 联系方式
 
-**Location**
+**Location / 地点**
 
 China Shanghai / 中国上海
 
