@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { mediaDimensions, type MediaDimensions } from "@/data/mediaDimensions";
+import { getMediaSrc } from "@/lib/media";
 import VariableProximity from "@/components/typography/VariableProximity";
 import ViewportYVariableText from "@/components/typography/ViewportYVariableText";
 
@@ -403,6 +404,7 @@ function ArchiveMediaFrame({
     isWeChatBrowser: boolean;
   } | null>(null);
   const frameStyle = getMediaFrameStyle(frameDimensions);
+  const resolvedPoster = poster ? getMediaSrc(poster) : poster;
 
   const updateFrameDimensions = useCallback((dimensions: MediaDimensions) => {
     if (
@@ -430,7 +432,7 @@ function ArchiveMediaFrame({
     const isWeChatBrowser = /MicroMessenger/i.test(navigator.userAgent);
 
     setVideoEnvironment({
-      src: isWeChatBrowser ? getWeChatVideoSource(src) : src,
+      src: getMediaSrc(isWeChatBrowser ? getWeChatVideoSource(src) : src),
       isWeChatBrowser,
     });
   }, [src]);
@@ -441,7 +443,7 @@ function ArchiveMediaFrame({
         {shouldLoad && videoEnvironment ? (
           <ViewportVideo
             src={videoEnvironment.src}
-            poster={poster}
+            poster={resolvedPoster}
             shouldLoad={shouldLoad}
             isWeChatBrowser={videoEnvironment.isWeChatBrowser}
             onDimensionsChange={updateFrameDimensions}
@@ -456,7 +458,7 @@ function ArchiveMediaFrame({
       {shouldLoad ? (
         <img
           className="absolute inset-0 block h-full w-full select-none object-contain"
-          src={src}
+          src={getMediaSrc(src)}
           alt={alt}
           draggable={false}
           loading="lazy"

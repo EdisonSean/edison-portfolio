@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { getMediaSrc } from "@/lib/media";
 
 type FeaturedWorkVideoPreloaderProps = {
   sources: string[];
@@ -19,7 +20,7 @@ function preloadVideo(src: string) {
   video.muted = true;
   video.playsInline = true;
   video.preload = "auto";
-  video.src = src;
+  video.src = getMediaSrc(src);
   video.load();
 
   preloadedVideos.set(src, video);
