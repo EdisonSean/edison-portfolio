@@ -417,10 +417,12 @@ function ArchiveMediaFrame({
     <div ref={mediaRootRef} className={frameClassName} style={frameStyle}>
       {shouldLoad ? (
         <img
-          className="absolute inset-0 block h-full w-full object-contain"
+          className="absolute inset-0 block h-full w-full select-none object-contain"
           src={src}
           alt={alt}
+          draggable={false}
           loading="lazy"
+          onDragStart={(event) => event.preventDefault()}
         />
       ) : null}
     </div>
