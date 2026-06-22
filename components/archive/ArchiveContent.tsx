@@ -1,8 +1,8 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useEffect, useRef, useState } from "react";
-import { mediaDimensions } from "@/data/mediaDimensions";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { mediaDimensions, type MediaDimensions } from "@/data/mediaDimensions";
 import VariableProximity from "@/components/typography/VariableProximity";
 import ViewportYVariableText from "@/components/typography/ViewportYVariableText";
 
@@ -74,6 +74,7 @@ type ViewportVideoProps = {
   poster?: string | null;
   shouldLoad: boolean;
   isWeChatBrowser: boolean;
+  onDimensionsChange?: (dimensions: MediaDimensions) => void;
 };
 
 const fallbackMediaDimensions = {
@@ -98,13 +99,15 @@ function getWeChatVideoSource(src: string) {
   return `${directory}/wechat/${baseName}.mp4`;
 }
 
-function getMediaDimensions(src: string) {
-  return mediaDimensions[src] ?? fallbackMediaDimensions;
+function getStaticMediaDimensions(src: string): MediaDimensions | null {
+  const dimensions = (
+    mediaDimensions as Partial<Record<string, MediaDimensions>>
+  )[src];
+
+  return dimensions ?? null;
 }
 
-function getMediaFrameStyle(src: string): CSSProperties {
-  const dimensions = getMediaDimensions(src);
-
+function getMediaFrameStyle(dimensions: MediaDimensions): CSSProperties {
   return {
     aspectRatio: `${dimensions.width} / ${dimensions.height}`,
   };
@@ -135,6 +138,7 @@ function ViewportVideo({
   poster,
   shouldLoad,
   isWeChatBrowser,
+  onDimensionsChange,
 }: ViewportVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const isInPlaybackRangeRef = useRef(false);
@@ -227,6 +231,13 @@ function ViewportVideo({
       setIsReadyToPlay(
         videoElement.readyState >= HTMLMediaElement.HAVE_FUTURE_DATA,
       );
+
+      if (videoElement.videoWidth > 0 && videoElement.videoHeight > 0) {
+        onDimensionsChange?.({
+          width: videoElement.videoWidth,
+          height: videoElement.videoHeight,
+        });
+      }
     };
 
     const progressEvents = [
@@ -249,7 +260,7 @@ function ViewportVideo({
         videoElement.removeEventListener(eventName, updateLoadProgress);
       });
     };
-  }, [shouldLoad, src]);
+  }, [onDimensionsChange, shouldLoad, src]);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -382,12 +393,37 @@ function ArchiveMediaFrame({
   const frameClassName = ["relative w-full overflow-hidden bg-[#111]", className]
     .filter(Boolean)
     .join(" ");
-  const frameStyle = getMediaFrameStyle(src);
   const { mediaRootRef, shouldLoad } = useLazyMediaLoad(src);
+  const [frameDimensions, setFrameDimensions] = useState<MediaDimensions>(
+    () => getStaticMediaDimensions(src) ?? fallbackMediaDimensions,
+  );
   const [videoEnvironment, setVideoEnvironment] = useState<{
     src: string;
     isWeChatBrowser: boolean;
   } | null>(null);
+  const frameStyle = getMediaFrameStyle(frameDimensions);
+
+  const updateFrameDimensions = useCallback((dimensions: MediaDimensions) => {
+    if (
+      !Number.isFinite(dimensions.width) ||
+      !Number.isFinite(dimensions.height) ||
+      dimensions.width <= 0 ||
+      dimensions.height <= 0
+    ) {
+      return;
+    }
+
+    setFrameDimensions((currentDimensions) =>
+      currentDimensions.width === dimensions.width &&
+      currentDimensions.height === dimensions.height
+        ? currentDimensions
+        : dimensions,
+    );
+  }, []);
+
+  useEffect(() => {
+    setFrameDimensions(getStaticMediaDimensions(src) ?? fallbackMediaDimensions);
+  }, [src]);
 
   useEffect(() => {
     const isWeChatBrowser = /MicroMessenger/i.test(navigator.userAgent);
@@ -407,6 +443,7 @@ function ArchiveMediaFrame({
             poster={poster}
             shouldLoad={shouldLoad}
             isWeChatBrowser={videoEnvironment.isWeChatBrowser}
+            onDimensionsChange={updateFrameDimensions}
           />
         ) : null}
       </div>
@@ -422,6 +459,12 @@ function ArchiveMediaFrame({
           alt={alt}
           draggable={false}
           loading="lazy"
+          onLoad={(event) => {
+            updateFrameDimensions({
+              width: event.currentTarget.naturalWidth,
+              height: event.currentTarget.naturalHeight,
+            });
+          }}
           onDragStart={(event) => event.preventDefault()}
         />
       ) : null}
