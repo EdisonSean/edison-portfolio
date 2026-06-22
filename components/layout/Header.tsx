@@ -197,7 +197,7 @@ export function SocialContactLinks({
             rel={link.href.startsWith("http") ? "noreferrer" : undefined}
             aria-label={link.label}
             className={[
-              "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+              "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
               linkSizeClass,
             ].join(" ")}
           >
@@ -211,8 +211,8 @@ export function SocialContactLinks({
               aria-expanded={isWeChatOpen}
               onClick={() => setIsWeChatOpen((isOpen) => !isOpen)}
               className={[
-                "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
-                isWeChatOpen ? "border-zinc-200 bg-zinc-900/70" : "",
+                "flex items-center justify-center border border-zinc-700/80 text-zinc-400 transition-all duration-300 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
+                isWeChatOpen ? "border-zinc-200 bg-zinc-900/70 text-white" : "",
                 linkSizeClass,
               ].join(" ")}
             >
