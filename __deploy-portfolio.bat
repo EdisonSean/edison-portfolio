@@ -44,9 +44,6 @@ if errorlevel 1 (
 
 echo.
 echo [7/7] Pushing to remote...
-set "HTTP_PROXY="
-set "HTTPS_PROXY="
-set "ALL_PROXY="
 git -c http.version=HTTP/1.1 -c http.postBuffer=524288000 -c http.lowSpeedLimit=0 -c http.lowSpeedTime=999999 push
 if errorlevel 1 goto push_check
 
