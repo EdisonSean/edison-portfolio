@@ -402,6 +402,9 @@ export default function ShapeBlur({
     renderer.domElement.style.display = "block";
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
+    renderer.domElement.style.userSelect = "none";
+    renderer.domElement.style.setProperty("-webkit-user-select", "none");
+    renderer.domElement.style.setProperty("-webkit-touch-callout", "none");
     mount.appendChild(renderer.domElement);
 
     const geo = new THREE.PlaneGeometry(1, 1);

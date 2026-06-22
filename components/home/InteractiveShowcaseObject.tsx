@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import type {
+  CSSProperties,
   MouseEvent as ReactMouseEvent,
   PointerEvent as ReactPointerEvent,
 } from "react";
@@ -12,7 +13,15 @@ const dragClickThreshold = 8;
 const constrainedPointerQuery =
   "(max-width: 767px), (hover: none) and (pointer: coarse)";
 const logoFrameClassName =
-  "relative block h-[240px] w-[min(82vw,760px)] min-w-[260px] max-w-[calc(100vw-2.5rem)] cursor-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[300px] lg:h-[360px]";
+  "relative block h-[240px] w-[min(82vw,760px)] min-w-[260px] max-w-[calc(100vw-2.5rem)] select-none cursor-none focus:outline-none focus-visible:ring-2 focus-visible:ring-white sm:h-[300px] lg:h-[360px]";
+
+const interactionSurfaceStyle: CSSProperties & {
+  WebkitTouchCallout?: string;
+} = {
+  WebkitTouchCallout: "none",
+  WebkitUserSelect: "none",
+  userSelect: "none",
+};
 
 type PointerIntent = {
   pointerId: number;
@@ -110,6 +119,7 @@ export default function InteractiveShowcaseObject() {
           href="/work"
           aria-label="Open work archive"
           className={logoFrameClassName}
+          style={interactionSurfaceStyle}
           onClick={handleClick}
           onPointerCancel={handlePointerCancel}
           onPointerDown={handlePointerDown}
@@ -120,6 +130,7 @@ export default function InteractiveShowcaseObject() {
       ) : (
         <div
           className={logoFrameClassName}
+          style={interactionSurfaceStyle}
           aria-hidden="true"
           onPointerCancel={handlePointerCancel}
           onPointerDown={handlePointerDown}
