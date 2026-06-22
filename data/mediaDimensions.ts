@@ -5,8 +5,8 @@ export type MediaDimensions = {
 
 export const mediaDimensions: Record<string, MediaDimensions> = {
   "/lab/recent/abstract-wallpaper-visual/test5_v1.png": { width: 1920, height: 1920 },
-  "/lab/recent/abstract-wallpaper-visual/test5_v4_16_9.png": { width: 1920, height: 1080 },
-  "/lab/recent/abstract-wallpaper-visual/test5_v5_16_9.png": { width: 1920, height: 1080 },
+  "/lab/recent/abstract-wallpaper-visual/test5_v4_16_9.png": { width: 1120, height: 630 },
+  "/lab/recent/abstract-wallpaper-visual/test5_v5_16_9.png": { width: 1120, height: 630 },
   "/lab/recent/abstract-wallpaper-visual/test5_v7_9_16.png": { width: 1920, height: 1920 },
   "/lab/recent/abstract-wave-visual/wave_01_v006.mp4": { width: 1920, height: 1080 },
   "/lab/recent/abstract-wave-visual/wave_01_v008.mp4": { width: 1920, height: 1080 },
