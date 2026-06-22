@@ -615,14 +615,20 @@ export default function ArchiveContent({
                     {item.description}
                   </p>
                   {item.githubUrl ? (
-                    <p className="-mt-7 max-w-2xl text-[0.9rem] font-semibold leading-[1.45] text-zinc-500 md:col-span-2 md:text-[0.98rem]">
+                    <p className="-mt-7 max-w-2xl text-[0.9rem] font-semibold leading-[1.45] md:col-span-2 md:text-[0.98rem]">
                       <a
-                        className="underline decoration-zinc-700 underline-offset-4 transition-colors duration-200 hover:text-zinc-200 hover:decoration-zinc-300"
+                        className="group inline-flex items-center gap-2 border border-zinc-700/80 px-3 py-1.5 text-zinc-300 transition-colors duration-200 hover:border-zinc-200 hover:bg-zinc-900/70 hover:text-white"
                         href={item.githubUrl}
                         target="_blank"
                         rel="noreferrer"
                       >
-                        GitHub Repository
+                        <span>GitHub Repository</span>
+                        <span
+                          aria-hidden="true"
+                          className="text-zinc-500 transition-colors duration-200 group-hover:text-zinc-200"
+                        >
+                          -&gt;
+                        </span>
                       </a>
                     </p>
                   ) : null}
