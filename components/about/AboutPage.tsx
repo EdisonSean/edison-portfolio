@@ -28,13 +28,6 @@ type CopyToastState = {
   isVisible: boolean;
 };
 
-const aboutTitleVariableTextSettings = {
-  fromFontVariationSettings: "'wght' 600, 'opsz' 14",
-  toFontVariationSettings: "'wght' 1000, 'opsz' 42",
-  radius: 140,
-  falloff: "gaussian" as const,
-};
-
 const sectionTitleVariableTextSettings = {
   fromFontVariationSettings: "'wght' 650, 'opsz' 14",
   toFontVariationSettings: "'wght' 1000, 'opsz' 42",
@@ -319,15 +312,6 @@ function AboutContent({
 
   return (
     <section ref={containerRef} className="min-w-0 text-white">
-      <h1 className="mb-16 max-w-[78rem] text-[clamp(2.95rem,7.35vw,8.4rem)] font-semibold leading-[0.86] 2xl:max-w-none 2xl:text-[clamp(4.9rem,5.75vw,15.4rem)]">
-        <VariableProximity
-          label={resume.title}
-          className="block"
-          containerRef={containerRef}
-          {...aboutTitleVariableTextSettings}
-        />
-      </h1>
-
       {resume.isEmpty ? (
         <p className="max-w-2xl text-[1.05rem] font-semibold leading-[1.48] text-zinc-500">
           `docs/resume.md` is empty. Add Markdown headings and content there to
