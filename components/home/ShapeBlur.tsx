@@ -376,6 +376,12 @@ type PointerPosition = {
   rangeRadius: number;
 };
 
+type LogoEnvelopePointer = {
+  nearestX: number;
+  nearestY: number;
+  outsideDistance: number;
+};
+
 type SdfDistanceField = {
   distanceData: Float32Array;
   height: number;
@@ -533,11 +539,11 @@ export default function ShapeBlur({
       }
     };
 
-    const getLogoEnvelopeOutsideDistance = (
+    const getLogoEnvelopePointer = (
       localX: number,
       localY: number,
       rect: DOMRect,
-    ) => {
+    ): LogoEnvelopePointer => {
       const canvasAspect = rect.width / rect.height;
       const uvX = localX / rect.width;
       const uvY = 1 - localY / rect.height;
@@ -558,8 +564,20 @@ export default function ShapeBlur({
       const outsideLogoX = (fittedX - clampedFittedX) * rect.width * shapeSize;
       const outsideLogoY =
         (fittedY - clampedFittedY) * rect.height * shapeSize;
+      let nearestUvX = (clampedFittedX - 0.5) * shapeSize + 0.5;
+      let nearestUvY = (clampedFittedY - 0.5) * shapeSize + 0.5;
 
-      return Math.hypot(outsideLogoX, outsideLogoY);
+      if (canvasAspect > logoAspect) {
+        nearestUvX = (nearestUvX - 0.5) * logoAspect / canvasAspect + 0.5;
+      } else {
+        nearestUvY = (nearestUvY - 0.5) * canvasAspect / logoAspect + 0.5;
+      }
+
+      return {
+        nearestX: nearestUvX * rect.width,
+        nearestY: (1 - nearestUvY) * rect.height,
+        outsideDistance: Math.hypot(outsideLogoX, outsideLogoY),
+      };
     };
 
     const getMappedPointerPosition = (
@@ -584,11 +602,12 @@ export default function ShapeBlur({
 
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
       const falloffDistance = Math.max(1, outerPointerRange * minDimension);
-      const logoOutsideDistance = getLogoEnvelopeOutsideDistance(
+      const logoEnvelopePointer = getLogoEnvelopePointer(
         localX,
         localY,
         rect,
       );
+      const logoOutsideDistance = logoEnvelopePointer.outsideDistance;
       const cappedPointerDistance =
         outerPointerResponseDistance > 0
           ? Math.min(logoOutsideDistance, outerPointerResponseDistance)
@@ -605,9 +624,11 @@ export default function ShapeBlur({
       const proximityProgress =
         1 -
         THREE.MathUtils.clamp(logoOutsideDistance / responseDistance, 0, 1);
-      const circleProgress = Math.pow(proximityProgress, 2.25);
-      const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
-      const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
+      const farCircleProgress = 0.28;
+      const circleProgress =
+        farCircleProgress * Math.pow(1 - proximityProgress, 0.65);
+      const nearestX = logoEnvelopePointer.nearestX;
+      const nearestY = logoEnvelopePointer.nearestY;
       const outsideX = localX - nearestX;
       const outsideY = localY - nearestY;
       const outsideDistance = Math.hypot(outsideX, outsideY);
@@ -615,10 +636,14 @@ export default function ShapeBlur({
         outerPointerResponseDistance > 0
           ? outerPointerResponseDistance * 0.42
           : outsideDistance;
-      const mappedOutsideDistance = Math.min(
-        outsideDistance,
-        maxMappedOutsideDistance,
+      const outsideProgress = THREE.MathUtils.clamp(
+        outsideDistance / responseDistance,
+        0,
+        1,
       );
+      const mappedOutsideDistance =
+        maxMappedOutsideDistance *
+        (1 - Math.pow(1 - outsideProgress, 2.25));
       const outsideScale =
         outsideDistance > 0 ? mappedOutsideDistance / outsideDistance : 0;
       const mappedX = nearestX + outsideX * outsideScale;
