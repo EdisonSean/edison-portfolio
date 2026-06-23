@@ -371,6 +371,7 @@ type ShapeBlurProps = {
 type PointerPosition = {
   x: number;
   y: number;
+  circleProgress: number;
   distanceProgress: number;
   rangeRadius: number;
 };
@@ -575,6 +576,7 @@ export default function ShapeBlur({
         return {
           x: localX,
           y: localY,
+          circleProgress: 0,
           distanceProgress: 0,
           rangeRadius: (circleSize + circleEdge) * minDimension,
         };
@@ -591,11 +593,19 @@ export default function ShapeBlur({
         outerPointerResponseDistance > 0
           ? Math.min(logoOutsideDistance, outerPointerResponseDistance)
           : logoOutsideDistance;
+      const responseDistance =
+        outerPointerResponseDistance > 0
+          ? outerPointerResponseDistance
+          : falloffDistance;
       const distanceProgress = THREE.MathUtils.clamp(
         cappedPointerDistance / falloffDistance,
         0,
         1,
       );
+      const proximityProgress =
+        1 -
+        THREE.MathUtils.clamp(logoOutsideDistance / responseDistance, 0, 1);
+      const circleProgress = Math.pow(proximityProgress, 2.25);
       const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
       const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
       const outsideX = localX - nearestX;
@@ -616,17 +626,18 @@ export default function ShapeBlur({
       const activeCircleSize = THREE.MathUtils.lerp(
         circleSize,
         outerPointerCircleSize,
-        distanceProgress,
+        circleProgress,
       );
       const activeCircleEdge = THREE.MathUtils.lerp(
         circleEdge,
         outerPointerCircleEdge,
-        distanceProgress,
+        circleProgress,
       );
 
       return {
         x: mappedX,
         y: mappedY,
+        circleProgress,
         distanceProgress,
         rangeRadius: (activeCircleSize + activeCircleEdge) * minDimension,
       };
@@ -643,12 +654,12 @@ export default function ShapeBlur({
       material.uniforms.u_circleSize.value = THREE.MathUtils.lerp(
         circleSize,
         outerPointerCircleSize,
-        pointerPosition.distanceProgress,
+        pointerPosition.circleProgress,
       );
       material.uniforms.u_circleEdge.value = THREE.MathUtils.lerp(
         circleEdge,
         outerPointerCircleEdge,
-        pointerPosition.distanceProgress,
+        pointerPosition.circleProgress,
       );
 
       if (pointerRangeGuide) {
