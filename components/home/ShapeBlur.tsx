@@ -396,8 +396,8 @@ export default function ShapeBlur({
   outerPointerRange = 0,
   outerPointerResponseDistance = 200,
   outerPointerBlurRadius = 24,
-  outerPointerCircleSize = 0.58,
-  outerPointerCircleEdge = 0.85,
+  outerPointerCircleSize = 0.4,
+  outerPointerCircleEdge = 1.3,
   showPointerRangeGuide = false,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
