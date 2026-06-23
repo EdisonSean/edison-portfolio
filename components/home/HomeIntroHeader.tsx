@@ -10,8 +10,8 @@ const useBrowserLayoutEffect =
 
 const headerIntroInitial = {
   opacity: 0,
-  y: -24,
-  filter: "blur(4px)",
+  y: -44,
+  filter: "blur(8px)",
 };
 
 const headerIntroAnimate = {
@@ -21,8 +21,8 @@ const headerIntroAnimate = {
 };
 
 const headerIntroTransition = {
-  duration: 0.75,
-  delay: 0.1,
+  duration: 1.05,
+  delay: 0.12,
   ease: [0.22, 1, 0.36, 1],
 } as const;
 

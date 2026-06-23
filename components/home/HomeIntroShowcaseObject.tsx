@@ -10,8 +10,8 @@ const useBrowserLayoutEffect =
 
 const showcaseIntroInitial = {
   opacity: 0,
-  scale: 0.96,
-  filter: "blur(16px)",
+  scale: 0.92,
+  filter: "blur(26px)",
 };
 
 const showcaseIntroAnimate = {
@@ -21,8 +21,8 @@ const showcaseIntroAnimate = {
 };
 
 const showcaseIntroTransition = {
-  duration: 1.1,
-  delay: 0.25,
+  duration: 1.55,
+  delay: 0.3,
   ease: [0.22, 1, 0.36, 1],
 } as const;
 
