@@ -352,6 +352,9 @@ type ShapeBlurProps = {
   blurRadius?: number;
   circleSize?: number;
   circleEdge?: number;
+  outerPointerRange?: number;
+  outerPointerNearDistance?: number;
+  outerPointerWeakDistance?: number;
 };
 
 export default function ShapeBlur({
@@ -364,6 +367,9 @@ export default function ShapeBlur({
   blurRadius = 86,
   circleSize = 0.16,
   circleEdge = 0.22,
+  outerPointerRange = 0,
+  outerPointerNearDistance = 0.16,
+  outerPointerWeakDistance = 0.31,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -454,9 +460,55 @@ export default function ShapeBlur({
       hasPointer = false;
     };
 
-    const updatePointer = (clientX: number, clientY: number) => {
+    const getMappedPointerPosition = (clientX: number, clientY: number) => {
       const rect = mount.getBoundingClientRect();
-      vMouse.set(clientX - rect.left, clientY - rect.top);
+      const localX = clientX - rect.left;
+      const localY = clientY - rect.top;
+
+      if (outerPointerRange <= 0) {
+        return { x: localX, y: localY };
+      }
+
+      const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
+      const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
+      const outsideX = localX - nearestX;
+      const outsideY = localY - nearestY;
+      const outsideDistance = Math.hypot(outsideX, outsideY);
+
+      if (outsideDistance === 0) {
+        return { x: localX, y: localY };
+      }
+
+      const minDimension = Math.max(1, Math.min(rect.width, rect.height));
+      const nearDistance = outerPointerNearDistance * minDimension;
+      const rangeDistance = outerPointerRange * minDimension;
+      const weakDistance = outerPointerWeakDistance * minDimension;
+
+      if (outsideDistance <= nearDistance || rangeDistance <= nearDistance) {
+        return { x: localX, y: localY };
+      }
+
+      const rangeProgress = THREE.MathUtils.smoothstep(
+        outsideDistance,
+        nearDistance,
+        rangeDistance,
+      );
+      const mappedDistance = THREE.MathUtils.lerp(
+        outsideDistance,
+        weakDistance,
+        rangeProgress,
+      );
+      const scale = mappedDistance / outsideDistance;
+
+      return {
+        x: nearestX + outsideX * scale,
+        y: nearestY + outsideY * scale,
+      };
+    };
+
+    const updatePointer = (clientX: number, clientY: number) => {
+      const pointerPosition = getMappedPointerPosition(clientX, clientY);
+      vMouse.set(pointerPosition.x, pointerPosition.y);
 
       if (!hasPointer) {
         vMouseDamp.copy(vMouse);
@@ -586,6 +638,9 @@ export default function ShapeBlur({
     blurRadius,
     circleSize,
     circleEdge,
+    outerPointerRange,
+    outerPointerNearDistance,
+    outerPointerWeakDistance,
   ]);
 
   return <div className={className} ref={mountRef} />;

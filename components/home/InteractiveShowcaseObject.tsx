@@ -105,6 +105,7 @@ export default function InteractiveShowcaseObject() {
       blurRadius={86}
       circleSize={0.05}
       circleEdge={0.3}
+      outerPointerRange={2.1}
     />
   );
 
@@ -118,6 +119,7 @@ export default function InteractiveShowcaseObject() {
         <Link
           href="/work"
           aria-label="Open work archive"
+          data-home-icon-parallax-target
           className={logoFrameClassName}
           style={interactionSurfaceStyle}
           onClick={handleClick}
@@ -129,6 +131,7 @@ export default function InteractiveShowcaseObject() {
         </Link>
       ) : (
         <div
+          data-home-icon-parallax-target
           className={logoFrameClassName}
           style={interactionSurfaceStyle}
           aria-hidden="true"
