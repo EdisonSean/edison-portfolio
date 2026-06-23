@@ -119,7 +119,6 @@ export default function InteractiveShowcaseObject() {
         <Link
           href="/work"
           aria-label="Open work archive"
-          data-home-icon-parallax-target
           className={logoFrameClassName}
           style={interactionSurfaceStyle}
           onClick={handleClick}
@@ -131,7 +130,6 @@ export default function InteractiveShowcaseObject() {
         </Link>
       ) : (
         <div
-          data-home-icon-parallax-target
           className={logoFrameClassName}
           style={interactionSurfaceStyle}
           aria-hidden="true"
