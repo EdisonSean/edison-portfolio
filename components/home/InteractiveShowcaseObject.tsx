@@ -107,6 +107,7 @@ export default function InteractiveShowcaseObject() {
       circleEdge={0.3}
       outerPointerRange={2.1}
       outerPointerResponseDistance={200}
+      showPointerRangeGuide
     />
   );
 

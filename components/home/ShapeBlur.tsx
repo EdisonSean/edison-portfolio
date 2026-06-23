@@ -365,12 +365,14 @@ type ShapeBlurProps = {
   outerPointerBlurRadius?: number;
   outerPointerCircleSize?: number;
   outerPointerCircleEdge?: number;
+  showPointerRangeGuide?: boolean;
 };
 
 type PointerPosition = {
   x: number;
   y: number;
   distanceProgress: number;
+  rangeRadius: number;
 };
 
 type SdfDistanceField = {
@@ -396,6 +398,7 @@ export default function ShapeBlur({
   outerPointerBlurRadius = 24,
   outerPointerCircleSize = 0.58,
   outerPointerCircleEdge = 0.85,
+  showPointerRangeGuide = false,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -435,10 +438,36 @@ export default function ShapeBlur({
     renderer.domElement.style.display = "block";
     renderer.domElement.style.width = "100%";
     renderer.domElement.style.height = "100%";
+    renderer.domElement.style.position = "relative";
+    renderer.domElement.style.zIndex = "1";
     renderer.domElement.style.userSelect = "none";
     renderer.domElement.style.setProperty("-webkit-user-select", "none");
     renderer.domElement.style.setProperty("-webkit-touch-callout", "none");
     mount.appendChild(renderer.domElement);
+
+    const pointerRangeGuide = showPointerRangeGuide
+      ? document.createElement("div")
+      : null;
+
+    if (pointerRangeGuide) {
+      Object.assign(pointerRangeGuide.style, {
+        background: "rgba(255, 255, 255, 0.08)",
+        border: "1px solid rgba(255, 255, 255, 0.46)",
+        borderRadius: "9999px",
+        boxShadow: "0 0 18px rgba(255, 255, 255, 0.18)",
+        height: "0px",
+        left: "0",
+        mixBlendMode: "screen",
+        opacity: "0",
+        pointerEvents: "none",
+        position: "absolute",
+        top: "0",
+        transform: "translate3d(-9999px, -9999px, 0)",
+        width: "0px",
+        zIndex: "2",
+      });
+      mount.appendChild(pointerRangeGuide);
+    }
 
     const geo = new THREE.PlaneGeometry(1, 1);
     const material = new THREE.ShaderMaterial({
@@ -495,6 +524,12 @@ export default function ShapeBlur({
       material.uniforms.u_blurRadius.value = blurRadius;
       material.uniforms.u_circleSize.value = circleSize;
       material.uniforms.u_circleEdge.value = circleEdge;
+
+      if (pointerRangeGuide) {
+        pointerRangeGuide.style.opacity = "0";
+        pointerRangeGuide.style.transform =
+          "translate3d(-9999px, -9999px, 0)";
+      }
     };
 
     const sampleSdfDistance = (x: number, y: number) => {
@@ -557,17 +592,21 @@ export default function ShapeBlur({
       const sdfUvX = field.uvMin.x + fittedX * field.uvScale.x;
       const sdfUvY = field.uvMin.y + fittedY * field.uvScale.y;
       const localDistanceScale = (rect.width * shapeSize) / SDF_TEXTURE_WIDTH;
-
-      if (sdfUvX < 0 || sdfUvX > 1 || sdfUvY < 0 || sdfUvY > 1) {
-        return SDF_SPREAD * localDistanceScale;
-      }
+      const clampedSdfUvX = THREE.MathUtils.clamp(sdfUvX, 0, 1);
+      const clampedSdfUvY = THREE.MathUtils.clamp(sdfUvY, 0, 1);
 
       const signedDistance = sampleSdfDistance(
-        sdfUvX * (field.width - 1),
-        sdfUvY * (field.height - 1),
+        clampedSdfUvX * (field.width - 1),
+        clampedSdfUvY * (field.height - 1),
+      );
+      const outsideSdfDistance = Math.hypot(
+        (sdfUvX - clampedSdfUvX) * field.width,
+        (sdfUvY - clampedSdfUvY) * field.height,
       );
 
-      return Math.max(0, signedDistance) * localDistanceScale;
+      return (
+        Math.max(0, signedDistance + outsideSdfDistance) * localDistanceScale
+      );
     };
 
     const getMappedPointerPosition = (
@@ -579,41 +618,61 @@ export default function ShapeBlur({
       const localY = clientY - rect.top;
 
       if (outerPointerRange <= 0) {
-        return { x: localX, y: localY, distanceProgress: 0 };
+        const minDimension = Math.max(1, Math.min(rect.width, rect.height));
+
+        return {
+          x: localX,
+          y: localY,
+          distanceProgress: 0,
+          rangeRadius: (circleSize + circleEdge) * minDimension,
+        };
       }
 
-      const outsideDistance = Math.hypot(
-        Math.max(rect.left - clientX, 0, clientX - rect.right),
-        Math.max(rect.top - clientY, 0, clientY - rect.bottom),
-      );
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
-      const rangeDistance =
-        outerPointerResponseDistance > 0
-          ? outerPointerResponseDistance
-          : outerPointerRange * minDimension;
+      const falloffDistance = Math.max(1, outerPointerRange * minDimension);
       const logoOutsideDistance = getLogoOutsideDistance(localX, localY, rect);
-      const pointerDistance = logoOutsideDistance + outsideDistance * 0.7;
+      const cappedPointerDistance =
+        outerPointerResponseDistance > 0
+          ? Math.min(logoOutsideDistance, outerPointerResponseDistance)
+          : logoOutsideDistance;
       const distanceProgress = THREE.MathUtils.clamp(
-        Math.min(pointerDistance, rangeDistance) / rangeDistance,
+        cappedPointerDistance / falloffDistance,
         0,
         1,
       );
       const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
       const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const toCenterX = centerX - nearestX;
-      const toCenterY = centerY - nearestY;
-      const toCenterLength = Math.max(1, Math.hypot(toCenterX, toCenterY));
-      const inwardOffset =
-        THREE.MathUtils.lerp(0.08, 0.34, distanceProgress) * minDimension;
-      const innerX = nearestX + (toCenterX / toCenterLength) * inwardOffset;
-      const innerY = nearestY + (toCenterY / toCenterLength) * inwardOffset;
+      const outsideX = localX - nearestX;
+      const outsideY = localY - nearestY;
+      const outsideDistance = Math.hypot(outsideX, outsideY);
+      const maxMappedOutsideDistance =
+        outerPointerResponseDistance > 0
+          ? outerPointerResponseDistance * 0.42
+          : outsideDistance;
+      const mappedOutsideDistance = Math.min(
+        outsideDistance,
+        maxMappedOutsideDistance,
+      );
+      const outsideScale =
+        outsideDistance > 0 ? mappedOutsideDistance / outsideDistance : 0;
+      const mappedX = nearestX + outsideX * outsideScale;
+      const mappedY = nearestY + outsideY * outsideScale;
+      const activeCircleSize = THREE.MathUtils.lerp(
+        circleSize,
+        outerPointerCircleSize,
+        distanceProgress,
+      );
+      const activeCircleEdge = THREE.MathUtils.lerp(
+        circleEdge,
+        outerPointerCircleEdge,
+        distanceProgress,
+      );
 
       return {
-        x: THREE.MathUtils.lerp(localX, innerX, distanceProgress),
-        y: THREE.MathUtils.lerp(localY, innerY, distanceProgress),
+        x: mappedX,
+        y: mappedY,
         distanceProgress,
+        rangeRadius: (activeCircleSize + activeCircleEdge) * minDimension,
       };
     };
 
@@ -635,6 +694,16 @@ export default function ShapeBlur({
         outerPointerCircleEdge,
         pointerPosition.distanceProgress,
       );
+
+      if (pointerRangeGuide) {
+        const diameter = pointerPosition.rangeRadius * 2;
+        pointerRangeGuide.style.height = `${diameter.toFixed(2)}px`;
+        pointerRangeGuide.style.width = `${diameter.toFixed(2)}px`;
+        pointerRangeGuide.style.opacity = "1";
+        pointerRangeGuide.style.transform = `translate3d(${(
+          pointerPosition.x - pointerPosition.rangeRadius
+        ).toFixed(2)}px, ${(pointerPosition.y - pointerPosition.rangeRadius).toFixed(2)}px, 0)`;
+      }
 
       if (!hasPointer) {
         vMouseDamp.copy(vMouse);
@@ -752,6 +821,9 @@ export default function ShapeBlur({
       if (mount.contains(renderer.domElement)) {
         mount.removeChild(renderer.domElement);
       }
+      if (pointerRangeGuide && mount.contains(pointerRangeGuide)) {
+        mount.removeChild(pointerRangeGuide);
+      }
       renderer.dispose();
       renderer.forceContextLoss();
     };
@@ -769,6 +841,7 @@ export default function ShapeBlur({
     outerPointerBlurRadius,
     outerPointerCircleSize,
     outerPointerCircleEdge,
+    showPointerRangeGuide,
   ]);
 
   return <div className={className} ref={mountRef} />;
