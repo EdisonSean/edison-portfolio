@@ -532,48 +532,11 @@ export default function ShapeBlur({
       }
     };
 
-    const sampleSdfDistance = (x: number, y: number) => {
-      const field = logoDistanceField;
-
-      if (!field) {
-        return SDF_SPREAD;
-      }
-
-      const clampedX = THREE.MathUtils.clamp(x, 0, field.width - 1);
-      const clampedY = THREE.MathUtils.clamp(y, 0, field.height - 1);
-      const x0 = Math.floor(clampedX);
-      const y0 = Math.floor(clampedY);
-      const x1 = Math.min(x0 + 1, field.width - 1);
-      const y1 = Math.min(y0 + 1, field.height - 1);
-      const tx = clampedX - x0;
-      const ty = clampedY - y0;
-      const row0 = y0 * field.width;
-      const row1 = y1 * field.width;
-      const top = THREE.MathUtils.lerp(
-        field.distanceData[row0 + x0],
-        field.distanceData[row0 + x1],
-        tx,
-      );
-      const bottom = THREE.MathUtils.lerp(
-        field.distanceData[row1 + x0],
-        field.distanceData[row1 + x1],
-        tx,
-      );
-
-      return THREE.MathUtils.lerp(top, bottom, ty);
-    };
-
-    const getLogoOutsideDistance = (
+    const getLogoEnvelopeOutsideDistance = (
       localX: number,
       localY: number,
       rect: DOMRect,
     ) => {
-      const field = logoDistanceField;
-
-      if (!field) {
-        return Math.hypot(localX - rect.width / 2, localY - rect.height / 2);
-      }
-
       const canvasAspect = rect.width / rect.height;
       const uvX = localX / rect.width;
       const uvY = 1 - localY / rect.height;
@@ -589,24 +552,13 @@ export default function ShapeBlur({
       fittedX = (fittedX - 0.5) / shapeSize + 0.5;
       fittedY = (fittedY - 0.5) / shapeSize + 0.5;
 
-      const sdfUvX = field.uvMin.x + fittedX * field.uvScale.x;
-      const sdfUvY = field.uvMin.y + fittedY * field.uvScale.y;
-      const localDistanceScale = (rect.width * shapeSize) / SDF_TEXTURE_WIDTH;
-      const clampedSdfUvX = THREE.MathUtils.clamp(sdfUvX, 0, 1);
-      const clampedSdfUvY = THREE.MathUtils.clamp(sdfUvY, 0, 1);
+      const clampedFittedX = THREE.MathUtils.clamp(fittedX, 0, 1);
+      const clampedFittedY = THREE.MathUtils.clamp(fittedY, 0, 1);
+      const outsideLogoX = (fittedX - clampedFittedX) * rect.width * shapeSize;
+      const outsideLogoY =
+        (fittedY - clampedFittedY) * rect.height * shapeSize;
 
-      const signedDistance = sampleSdfDistance(
-        clampedSdfUvX * (field.width - 1),
-        clampedSdfUvY * (field.height - 1),
-      );
-      const outsideSdfDistance = Math.hypot(
-        (sdfUvX - clampedSdfUvX) * field.width,
-        (sdfUvY - clampedSdfUvY) * field.height,
-      );
-
-      return (
-        Math.max(0, signedDistance + outsideSdfDistance) * localDistanceScale
-      );
+      return Math.hypot(outsideLogoX, outsideLogoY);
     };
 
     const getMappedPointerPosition = (
@@ -630,7 +582,11 @@ export default function ShapeBlur({
 
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
       const falloffDistance = Math.max(1, outerPointerRange * minDimension);
-      const logoOutsideDistance = getLogoOutsideDistance(localX, localY, rect);
+      const logoOutsideDistance = getLogoEnvelopeOutsideDistance(
+        localX,
+        localY,
+        rect,
+      );
       const cappedPointerDistance =
         outerPointerResponseDistance > 0
           ? Math.min(logoOutsideDistance, outerPointerResponseDistance)
