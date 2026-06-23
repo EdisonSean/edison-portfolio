@@ -353,8 +353,8 @@ type ShapeBlurProps = {
   circleSize?: number;
   circleEdge?: number;
   outerPointerRange?: number;
-  outerPointerNearDistance?: number;
-  outerPointerWeakDistance?: number;
+  outerPointerNearOffset?: number;
+  outerPointerWeakOffset?: number;
 };
 
 export default function ShapeBlur({
@@ -368,8 +368,8 @@ export default function ShapeBlur({
   circleSize = 0.16,
   circleEdge = 0.22,
   outerPointerRange = 0,
-  outerPointerNearDistance = 0.16,
-  outerPointerWeakDistance = 0.31,
+  outerPointerNearOffset = 0.34,
+  outerPointerWeakOffset = 0.22,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -469,40 +469,45 @@ export default function ShapeBlur({
         return { x: localX, y: localY };
       }
 
-      const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
-      const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
-      const outsideX = localX - nearestX;
-      const outsideY = localY - nearestY;
-      const outsideDistance = Math.hypot(outsideX, outsideY);
+      const outsideDistance = Math.hypot(
+        Math.max(rect.left - clientX, 0, clientX - rect.right),
+        Math.max(rect.top - clientY, 0, clientY - rect.bottom),
+      );
 
       if (outsideDistance === 0) {
         return { x: localX, y: localY };
       }
 
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      const directionX = localX - centerX;
+      const directionY = localY - centerY;
+      const directionLength = Math.max(
+        1,
+        Math.hypot(directionX, directionY),
+      );
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
-      const nearDistance = outerPointerNearDistance * minDimension;
       const rangeDistance = outerPointerRange * minDimension;
-      const weakDistance = outerPointerWeakDistance * minDimension;
-
-      if (outsideDistance <= nearDistance || rangeDistance <= nearDistance) {
-        return { x: localX, y: localY };
-      }
-
       const rangeProgress = THREE.MathUtils.smoothstep(
         outsideDistance,
-        nearDistance,
+        0,
         rangeDistance,
       );
-      const mappedDistance = THREE.MathUtils.lerp(
-        outsideDistance,
-        weakDistance,
+      const offsetX = THREE.MathUtils.lerp(
+        outerPointerNearOffset,
+        outerPointerWeakOffset,
         rangeProgress,
       );
-      const scale = mappedDistance / outsideDistance;
+      const offsetY =
+        THREE.MathUtils.lerp(
+          outerPointerNearOffset,
+          outerPointerWeakOffset,
+          rangeProgress,
+        ) * 0.66;
 
       return {
-        x: nearestX + outsideX * scale,
-        y: nearestY + outsideY * scale,
+        x: centerX + (directionX / directionLength) * rect.width * offsetX,
+        y: centerY + (directionY / directionLength) * rect.height * offsetY,
       };
     };
 
@@ -639,8 +644,8 @@ export default function ShapeBlur({
     circleSize,
     circleEdge,
     outerPointerRange,
-    outerPointerNearDistance,
-    outerPointerWeakDistance,
+    outerPointerNearOffset,
+    outerPointerWeakOffset,
   ]);
 
   return <div className={className} ref={mountRef} />;
