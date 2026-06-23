@@ -7,7 +7,7 @@ type FeaturedWorkVideoBackgroundProps = {
   sources: string[];
 };
 
-const carouselIntervalMs = 11000;
+const maxVideoDwellMs = 18000;
 
 function shuffleSources(sources: string[]) {
   const shuffledSources = [...sources];
@@ -44,15 +44,15 @@ export default function FeaturedWorkVideoBackground({
       return;
     }
 
-    const interval = window.setInterval(() => {
+    const timeout = window.setTimeout(() => {
       setIsVideoReady(false);
       setActiveIndex((currentIndex) => (currentIndex + 1) % playlist.length);
-    }, carouselIntervalMs);
+    }, maxVideoDwellMs);
 
     return () => {
-      window.clearInterval(interval);
+      window.clearTimeout(timeout);
     };
-  }, [playlist.length]);
+  }, [activeIndex, playlist.length]);
 
   const showNextVideo = () => {
     if (playlist.length <= 1) {
@@ -78,10 +78,10 @@ export default function FeaturedWorkVideoBackground({
           src={resolvedSource}
           autoPlay
           muted
-          loop
           playsInline
           preload="auto"
           onCanPlay={() => setIsVideoReady(true)}
+          onEnded={showNextVideo}
           onError={showNextVideo}
         />
       ) : null}
