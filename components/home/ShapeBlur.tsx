@@ -368,8 +368,8 @@ export default function ShapeBlur({
   circleSize = 0.16,
   circleEdge = 0.22,
   outerPointerRange = 0,
-  outerPointerNearOffset = 0.34,
-  outerPointerWeakOffset = 0.22,
+  outerPointerNearOffset = 0.1,
+  outerPointerWeakOffset = 0.38,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -478,36 +478,30 @@ export default function ShapeBlur({
         return { x: localX, y: localY };
       }
 
+      const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
+      const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
       const centerX = rect.width / 2;
       const centerY = rect.height / 2;
-      const directionX = localX - centerX;
-      const directionY = localY - centerY;
-      const directionLength = Math.max(
-        1,
-        Math.hypot(directionX, directionY),
-      );
+      const toCenterX = centerX - nearestX;
+      const toCenterY = centerY - nearestY;
+      const toCenterLength = Math.max(1, Math.hypot(toCenterX, toCenterY));
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
       const rangeDistance = outerPointerRange * minDimension;
-      const rangeProgress = THREE.MathUtils.smoothstep(
-        outsideDistance,
-        0,
-        rangeDistance,
+      const rangeProgress = Math.sqrt(
+        THREE.MathUtils.smoothstep(outsideDistance, 0, rangeDistance),
       );
-      const offsetX = THREE.MathUtils.lerp(
-        outerPointerNearOffset,
-        outerPointerWeakOffset,
-        rangeProgress,
-      );
-      const offsetY =
+      const inwardOffset =
         THREE.MathUtils.lerp(
           outerPointerNearOffset,
           outerPointerWeakOffset,
           rangeProgress,
-        ) * 0.66;
+        ) * minDimension;
+      const innerX = nearestX + (toCenterX / toCenterLength) * inwardOffset;
+      const innerY = nearestY + (toCenterY / toCenterLength) * inwardOffset;
 
       return {
-        x: centerX - (directionX / directionLength) * rect.width * offsetX,
-        y: centerY - (directionY / directionLength) * rect.height * offsetY,
+        x: THREE.MathUtils.lerp(localX, innerX, rangeProgress),
+        y: THREE.MathUtils.lerp(localY, innerY, rangeProgress),
       };
     };
 
