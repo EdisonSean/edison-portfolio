@@ -77,7 +77,7 @@ export default function FeaturedWorkVideoBackground({
           ].join(" ")}
           style={{
             transform:
-              "translate3d(var(--home-video-parallax-x, 0px), var(--home-video-parallax-y, 0px), 0) scale(1.06)",
+              "translate3d(var(--home-video-parallax-x, 0px), var(--home-video-parallax-y, 0px), 0) scale(1.1)",
             transformOrigin: "center",
             transitionProperty: "opacity",
             transitionDuration: "700ms",

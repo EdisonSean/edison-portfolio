@@ -361,6 +361,7 @@ type ShapeBlurProps = {
   circleSize?: number;
   circleEdge?: number;
   outerPointerRange?: number;
+  outerPointerResponseDistance?: number;
   outerPointerBlurRadius?: number;
   outerPointerCircleSize?: number;
   outerPointerCircleEdge?: number;
@@ -391,6 +392,7 @@ export default function ShapeBlur({
   circleSize = 0.16,
   circleEdge = 0.22,
   outerPointerRange = 0,
+  outerPointerResponseDistance = 200,
   outerPointerBlurRadius = 24,
   outerPointerCircleSize = 0.58,
   outerPointerCircleEdge = 0.85,
@@ -585,10 +587,14 @@ export default function ShapeBlur({
         Math.max(rect.top - clientY, 0, clientY - rect.bottom),
       );
       const minDimension = Math.max(1, Math.min(rect.width, rect.height));
-      const rangeDistance = outerPointerRange * minDimension;
+      const rangeDistance =
+        outerPointerResponseDistance > 0
+          ? outerPointerResponseDistance
+          : outerPointerRange * minDimension;
       const logoOutsideDistance = getLogoOutsideDistance(localX, localY, rect);
+      const pointerDistance = logoOutsideDistance + outsideDistance * 0.7;
       const distanceProgress = THREE.MathUtils.clamp(
-        (logoOutsideDistance + outsideDistance * 0.7) / rangeDistance,
+        Math.min(pointerDistance, rangeDistance) / rangeDistance,
         0,
         1,
       );
@@ -759,6 +765,7 @@ export default function ShapeBlur({
     circleSize,
     circleEdge,
     outerPointerRange,
+    outerPointerResponseDistance,
     outerPointerBlurRadius,
     outerPointerCircleSize,
     outerPointerCircleEdge,

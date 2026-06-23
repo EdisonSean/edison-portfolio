@@ -5,10 +5,8 @@ import { useEffect } from "react";
 const reducedMotionQuery = "(prefers-reduced-motion: reduce)";
 const constrainedPointerQuery =
   "(max-width: 767px), (hover: none) and (pointer: coarse)";
-const videoParallaxX = 20;
-const videoParallaxY = 14;
-const iconParallaxX = 32;
-const iconParallaxY = 22;
+const videoParallaxX = 38;
+const videoParallaxY = 28;
 const smoothing = 0.12;
 
 type ParallaxPosition = {
@@ -24,14 +22,6 @@ function setParallaxVariables(position: ParallaxPosition) {
   document.documentElement.style.setProperty(
     "--home-video-parallax-y",
     `${(-position.y * videoParallaxY).toFixed(2)}px`,
-  );
-  document.documentElement.style.setProperty(
-    "--home-icon-parallax-x",
-    `${(position.x * iconParallaxX).toFixed(2)}px`,
-  );
-  document.documentElement.style.setProperty(
-    "--home-icon-parallax-y",
-    `${(position.y * iconParallaxY).toFixed(2)}px`,
   );
 }
 
