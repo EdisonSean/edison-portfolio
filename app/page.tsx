@@ -1,7 +1,7 @@
 import FeaturedWorkVideoBackground from "@/components/home/FeaturedWorkVideoBackground";
 import FeaturedWorkVideoPreloader from "@/components/home/FeaturedWorkVideoPreloader";
-import InteractiveShowcaseObject from "@/components/home/InteractiveShowcaseObject";
-import Header from "@/components/layout/Header";
+import HomeIntroHeader from "@/components/home/HomeIntroHeader";
+import HomeIntroShowcaseObject from "@/components/home/HomeIntroShowcaseObject";
 import { labs } from "@/data/labs";
 import { getWorksByCategory } from "@/data/works";
 
@@ -32,8 +32,8 @@ export default function Home() {
     <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-[#050505] px-5 py-5 text-white sm:px-8 sm:py-7 lg:px-10 lg:py-9">
       <FeaturedWorkVideoBackground sources={featuredVideoSources} />
       <FeaturedWorkVideoPreloader sources={preloadVideoSources} />
-      <Header />
-      <InteractiveShowcaseObject />
+      <HomeIntroHeader />
+      <HomeIntroShowcaseObject />
     </main>
   );
 }
