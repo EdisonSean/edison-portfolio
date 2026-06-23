@@ -506,8 +506,8 @@ export default function ShapeBlur({
         ) * 0.66;
 
       return {
-        x: centerX + (directionX / directionLength) * rect.width * offsetX,
-        y: centerY + (directionY / directionLength) * rect.height * offsetY,
+        x: centerX - (directionX / directionLength) * rect.width * offsetX,
+        y: centerY - (directionY / directionLength) * rect.height * offsetY,
       };
     };
 
