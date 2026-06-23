@@ -8,11 +8,9 @@ import { getWorksByCategory } from "@/data/works";
 function getFeaturedVideoSources() {
   return Array.from(
     new Set(
-      getWorksByCategory("featured").flatMap((work) =>
-        work.media
-          .filter((media) => media.type === "video")
-          .map((media) => media.src),
-      ),
+      getWorksByCategory("featured")
+        .map((work) => work.media.find((media) => media.type === "video")?.src)
+        .filter((src): src is string => Boolean(src)),
     ),
   );
 }
