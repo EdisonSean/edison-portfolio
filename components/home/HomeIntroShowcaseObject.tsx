@@ -60,7 +60,16 @@ export default function HomeIntroShowcaseObject() {
       initial={false}
       animate={controls}
     >
-      <InteractiveShowcaseObject />
+      <div
+        className="relative flex min-w-0 flex-1"
+        style={{
+          transform:
+            "translate3d(var(--home-icon-parallax-x, 0px), var(--home-icon-parallax-y, 0px), 0)",
+          willChange: "transform",
+        }}
+      >
+        <InteractiveShowcaseObject />
+      </div>
     </motion.div>
   );
 }

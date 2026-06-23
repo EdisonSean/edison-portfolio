@@ -72,9 +72,18 @@ export default function FeaturedWorkVideoBackground({
         <video
           key={activeSource}
           className={[
-            "h-full w-full object-cover transition-opacity duration-700",
+            "h-full w-full object-cover",
             isVideoReady ? "opacity-60" : "opacity-0",
           ].join(" ")}
+          style={{
+            transform:
+              "translate3d(var(--home-video-parallax-x, 0px), var(--home-video-parallax-y, 0px), 0) scale(1.06)",
+            transformOrigin: "center",
+            transitionProperty: "opacity",
+            transitionDuration: "700ms",
+            transitionTimingFunction: "ease",
+            willChange: "opacity, transform",
+          }}
           src={resolvedSource}
           autoPlay
           muted
