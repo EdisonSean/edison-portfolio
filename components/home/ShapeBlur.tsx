@@ -355,6 +355,15 @@ type ShapeBlurProps = {
   outerPointerRange?: number;
   outerPointerNearOffset?: number;
   outerPointerWeakOffset?: number;
+  outerPointerBlurRadius?: number;
+  outerPointerCircleSize?: number;
+  outerPointerCircleEdge?: number;
+};
+
+type PointerPosition = {
+  x: number;
+  y: number;
+  distanceProgress: number;
 };
 
 export default function ShapeBlur({
@@ -370,6 +379,9 @@ export default function ShapeBlur({
   outerPointerRange = 0,
   outerPointerNearOffset = 0.1,
   outerPointerWeakOffset = 0.38,
+  outerPointerBlurRadius = 28,
+  outerPointerCircleSize = 0.26,
+  outerPointerCircleEdge = 0.52,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -458,15 +470,21 @@ export default function ShapeBlur({
     const resetPointer = () => {
       vMouse.set(inactivePointerPosition, inactivePointerPosition);
       hasPointer = false;
+      material.uniforms.u_blurRadius.value = blurRadius;
+      material.uniforms.u_circleSize.value = circleSize;
+      material.uniforms.u_circleEdge.value = circleEdge;
     };
 
-    const getMappedPointerPosition = (clientX: number, clientY: number) => {
+    const getMappedPointerPosition = (
+      clientX: number,
+      clientY: number,
+    ): PointerPosition => {
       const rect = mount.getBoundingClientRect();
       const localX = clientX - rect.left;
       const localY = clientY - rect.top;
 
       if (outerPointerRange <= 0) {
-        return { x: localX, y: localY };
+        return { x: localX, y: localY, distanceProgress: 0 };
       }
 
       const outsideDistance = Math.hypot(
@@ -475,7 +493,7 @@ export default function ShapeBlur({
       );
 
       if (outsideDistance === 0) {
-        return { x: localX, y: localY };
+        return { x: localX, y: localY, distanceProgress: 0 };
       }
 
       const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
@@ -502,12 +520,28 @@ export default function ShapeBlur({
       return {
         x: THREE.MathUtils.lerp(localX, innerX, rangeProgress),
         y: THREE.MathUtils.lerp(localY, innerY, rangeProgress),
+        distanceProgress: rangeProgress,
       };
     };
 
     const updatePointer = (clientX: number, clientY: number) => {
       const pointerPosition = getMappedPointerPosition(clientX, clientY);
       vMouse.set(pointerPosition.x, pointerPosition.y);
+      material.uniforms.u_blurRadius.value = THREE.MathUtils.lerp(
+        blurRadius,
+        outerPointerBlurRadius,
+        pointerPosition.distanceProgress,
+      );
+      material.uniforms.u_circleSize.value = THREE.MathUtils.lerp(
+        circleSize,
+        outerPointerCircleSize,
+        pointerPosition.distanceProgress,
+      );
+      material.uniforms.u_circleEdge.value = THREE.MathUtils.lerp(
+        circleEdge,
+        outerPointerCircleEdge,
+        pointerPosition.distanceProgress,
+      );
 
       if (!hasPointer) {
         vMouseDamp.copy(vMouse);
@@ -640,6 +674,9 @@ export default function ShapeBlur({
     outerPointerRange,
     outerPointerNearOffset,
     outerPointerWeakOffset,
+    outerPointerBlurRadius,
+    outerPointerCircleSize,
+    outerPointerCircleEdge,
   ]);
 
   return <div className={className} ref={mountRef} />;
