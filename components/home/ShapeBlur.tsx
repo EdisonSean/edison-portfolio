@@ -188,9 +188,12 @@ function distanceTransform2d(grid: Float32Array, width: number, height: number) 
 }
 
 type SdfTextureResult = {
+  distanceData: Float32Array;
+  height: number;
   texture: THREE.DataTexture;
   uvMin: THREE.Vector2;
   uvScale: THREE.Vector2;
+  width: number;
 };
 
 function createLogoMaskCanvas(image: HTMLImageElement, aspect: number) {
@@ -259,6 +262,7 @@ function createLogoSdfTexture(
   distanceTransform2d(inner, width, height);
 
   const textureData = new Uint8Array(width * height * 4);
+  const distanceData = new Float32Array(width * height);
 
   for (let y = 0; y < height; y += 1) {
     for (let x = 0; x < width; x += 1) {
@@ -266,6 +270,7 @@ function createLogoSdfTexture(
       const textureIndex = (height - 1 - y) * width + x;
       const signedDistance =
         Math.sqrt(outer[sourceIndex]) - Math.sqrt(inner[sourceIndex]);
+      distanceData[textureIndex] = signedDistance;
       const encoded = Math.round(
         THREE.MathUtils.clamp(
           0.5 + signedDistance / (SDF_SPREAD * 2),
@@ -296,9 +301,12 @@ function createLogoSdfTexture(
   texture.needsUpdate = true;
 
   return {
+    distanceData,
+    height,
     texture,
     uvMin: mask.uvMin,
     uvScale: mask.uvScale,
+    width,
   };
 }
 
@@ -353,8 +361,6 @@ type ShapeBlurProps = {
   circleSize?: number;
   circleEdge?: number;
   outerPointerRange?: number;
-  outerPointerNearOffset?: number;
-  outerPointerWeakOffset?: number;
   outerPointerBlurRadius?: number;
   outerPointerCircleSize?: number;
   outerPointerCircleEdge?: number;
@@ -364,6 +370,14 @@ type PointerPosition = {
   x: number;
   y: number;
   distanceProgress: number;
+};
+
+type SdfDistanceField = {
+  distanceData: Float32Array;
+  height: number;
+  uvMin: THREE.Vector2;
+  uvScale: THREE.Vector2;
+  width: number;
 };
 
 export default function ShapeBlur({
@@ -377,11 +391,9 @@ export default function ShapeBlur({
   circleSize = 0.16,
   circleEdge = 0.22,
   outerPointerRange = 0,
-  outerPointerNearOffset = 0.1,
-  outerPointerWeakOffset = 0.38,
-  outerPointerBlurRadius = 28,
-  outerPointerCircleSize = 0.26,
-  outerPointerCircleEdge = 0.52,
+  outerPointerBlurRadius = 24,
+  outerPointerCircleSize = 0.58,
+  outerPointerCircleEdge = 0.85,
 }: ShapeBlurProps) {
   const mountRef = useRef<HTMLDivElement | null>(null);
 
@@ -406,6 +418,7 @@ export default function ShapeBlur({
     );
     emptyTexture.needsUpdate = true;
     let logoSdfTexture: THREE.Texture | null = null;
+    let logoDistanceField: SdfDistanceField | null = null;
 
     const scene = new THREE.Scene();
     const camera = new THREE.OrthographicCamera();
@@ -448,12 +461,19 @@ export default function ShapeBlur({
     });
 
     loadSvgAsSdfTexture(logoSrc, logoAspect)
-      .then(({ texture, uvMin, uvScale }) => {
+      .then(({ distanceData, height, texture, uvMin, uvScale, width }) => {
         if (!active) {
           texture.dispose();
           return;
         }
 
+        logoDistanceField = {
+          distanceData,
+          height,
+          uvMin: uvMin.clone(),
+          uvScale: uvScale.clone(),
+          width,
+        };
         logoSdfTexture = texture;
         material.uniforms.u_logoSdfTexture.value = texture;
         material.uniforms.u_logoAspect.value = logoAspect;
@@ -475,6 +495,79 @@ export default function ShapeBlur({
       material.uniforms.u_circleEdge.value = circleEdge;
     };
 
+    const sampleSdfDistance = (x: number, y: number) => {
+      const field = logoDistanceField;
+
+      if (!field) {
+        return SDF_SPREAD;
+      }
+
+      const clampedX = THREE.MathUtils.clamp(x, 0, field.width - 1);
+      const clampedY = THREE.MathUtils.clamp(y, 0, field.height - 1);
+      const x0 = Math.floor(clampedX);
+      const y0 = Math.floor(clampedY);
+      const x1 = Math.min(x0 + 1, field.width - 1);
+      const y1 = Math.min(y0 + 1, field.height - 1);
+      const tx = clampedX - x0;
+      const ty = clampedY - y0;
+      const row0 = y0 * field.width;
+      const row1 = y1 * field.width;
+      const top = THREE.MathUtils.lerp(
+        field.distanceData[row0 + x0],
+        field.distanceData[row0 + x1],
+        tx,
+      );
+      const bottom = THREE.MathUtils.lerp(
+        field.distanceData[row1 + x0],
+        field.distanceData[row1 + x1],
+        tx,
+      );
+
+      return THREE.MathUtils.lerp(top, bottom, ty);
+    };
+
+    const getLogoOutsideDistance = (
+      localX: number,
+      localY: number,
+      rect: DOMRect,
+    ) => {
+      const field = logoDistanceField;
+
+      if (!field) {
+        return Math.hypot(localX - rect.width / 2, localY - rect.height / 2);
+      }
+
+      const canvasAspect = rect.width / rect.height;
+      const uvX = localX / rect.width;
+      const uvY = 1 - localY / rect.height;
+      let fittedX = uvX;
+      let fittedY = uvY;
+
+      if (canvasAspect > logoAspect) {
+        fittedX = (uvX - 0.5) * canvasAspect / logoAspect + 0.5;
+      } else {
+        fittedY = (uvY - 0.5) * logoAspect / canvasAspect + 0.5;
+      }
+
+      fittedX = (fittedX - 0.5) / shapeSize + 0.5;
+      fittedY = (fittedY - 0.5) / shapeSize + 0.5;
+
+      const sdfUvX = field.uvMin.x + fittedX * field.uvScale.x;
+      const sdfUvY = field.uvMin.y + fittedY * field.uvScale.y;
+      const localDistanceScale = (rect.width * shapeSize) / SDF_TEXTURE_WIDTH;
+
+      if (sdfUvX < 0 || sdfUvX > 1 || sdfUvY < 0 || sdfUvY > 1) {
+        return SDF_SPREAD * localDistanceScale;
+      }
+
+      const signedDistance = sampleSdfDistance(
+        sdfUvX * (field.width - 1),
+        sdfUvY * (field.height - 1),
+      );
+
+      return Math.max(0, signedDistance) * localDistanceScale;
+    };
+
     const getMappedPointerPosition = (
       clientX: number,
       clientY: number,
@@ -491,11 +584,14 @@ export default function ShapeBlur({
         Math.max(rect.left - clientX, 0, clientX - rect.right),
         Math.max(rect.top - clientY, 0, clientY - rect.bottom),
       );
-
-      if (outsideDistance === 0) {
-        return { x: localX, y: localY, distanceProgress: 0 };
-      }
-
+      const minDimension = Math.max(1, Math.min(rect.width, rect.height));
+      const rangeDistance = outerPointerRange * minDimension;
+      const logoOutsideDistance = getLogoOutsideDistance(localX, localY, rect);
+      const distanceProgress = THREE.MathUtils.clamp(
+        (logoOutsideDistance + outsideDistance * 0.7) / rangeDistance,
+        0,
+        1,
+      );
       const nearestX = THREE.MathUtils.clamp(localX, 0, rect.width);
       const nearestY = THREE.MathUtils.clamp(localY, 0, rect.height);
       const centerX = rect.width / 2;
@@ -503,24 +599,15 @@ export default function ShapeBlur({
       const toCenterX = centerX - nearestX;
       const toCenterY = centerY - nearestY;
       const toCenterLength = Math.max(1, Math.hypot(toCenterX, toCenterY));
-      const minDimension = Math.max(1, Math.min(rect.width, rect.height));
-      const rangeDistance = outerPointerRange * minDimension;
-      const rangeProgress = Math.sqrt(
-        THREE.MathUtils.smoothstep(outsideDistance, 0, rangeDistance),
-      );
       const inwardOffset =
-        THREE.MathUtils.lerp(
-          outerPointerNearOffset,
-          outerPointerWeakOffset,
-          rangeProgress,
-        ) * minDimension;
+        THREE.MathUtils.lerp(0.08, 0.34, distanceProgress) * minDimension;
       const innerX = nearestX + (toCenterX / toCenterLength) * inwardOffset;
       const innerY = nearestY + (toCenterY / toCenterLength) * inwardOffset;
 
       return {
-        x: THREE.MathUtils.lerp(localX, innerX, rangeProgress),
-        y: THREE.MathUtils.lerp(localY, innerY, rangeProgress),
-        distanceProgress: rangeProgress,
+        x: THREE.MathUtils.lerp(localX, innerX, distanceProgress),
+        y: THREE.MathUtils.lerp(localY, innerY, distanceProgress),
+        distanceProgress,
       };
     };
 
@@ -672,8 +759,6 @@ export default function ShapeBlur({
     circleSize,
     circleEdge,
     outerPointerRange,
-    outerPointerNearOffset,
-    outerPointerWeakOffset,
     outerPointerBlurRadius,
     outerPointerCircleSize,
     outerPointerCircleEdge,
