@@ -278,6 +278,12 @@ export default function Header() {
   const socialLinkSizeClass = isCompressed
     ? "h-8 w-8 text-[0.82rem]"
     : "h-9 w-9 text-[0.88rem] sm:h-10 sm:w-10 sm:text-[0.95rem]";
+  const headerVerticalPaddingClass = isCompressed
+    ? "py-3 sm:py-4 lg:py-5"
+    : "py-5 sm:py-7 lg:py-9";
+  const headerPositionClass = isHome
+    ? "fixed inset-x-0 top-0 z-50 px-5 sm:px-8 lg:px-10"
+    : "sticky top-0 z-40 -mx-5 -mt-5 px-5 sm:-mx-8 sm:-mt-7 sm:px-8 lg:-mx-10 lg:-mt-9 lg:px-10";
 
   useEffect(() => {
     let animationFrameId = 0;
@@ -339,18 +345,9 @@ export default function Header() {
     <header
       ref={containerRef}
       className={[
-        "z-10 grid grid-cols-1 items-start gap-8 transition-all duration-300 sm:grid-cols-[auto_1fr]",
-        isHome
-          ? [
-              "fixed inset-x-0 top-0 z-50 px-5 sm:px-8 lg:px-10",
-              isCompressed
-                ? "bg-[#050505]/94 py-3 shadow-[0_1px_0_rgba(255,255,255,0.1),0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:py-4 lg:py-5"
-                : "py-5 sm:py-7 lg:py-9",
-            ].join(" ")
-          : [
-              "sticky top-0 z-40 -mx-5 -mt-5 bg-[#050505] px-5 sm:-mx-8 sm:-mt-7 sm:px-8 lg:-mx-10 lg:-mt-9 lg:px-10",
-              isCompressed ? "py-3 sm:py-4 lg:py-5" : "py-5 sm:py-7 lg:py-9",
-            ].join(" "),
+        "z-10 grid grid-cols-1 items-start gap-8 bg-[#050505] transition-all duration-300 sm:grid-cols-[auto_1fr]",
+        headerPositionClass,
+        headerVerticalPaddingClass,
         isCompressed ? "gap-5" : "",
       ].join(" ")}
     >
