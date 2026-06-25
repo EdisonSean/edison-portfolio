@@ -272,7 +272,9 @@ export default function Header() {
   const expandedHeaderHeightRef = useRef(0);
   const pathname = usePathname();
   const [isCompressed, setIsCompressed] = useState(false);
+  const [hasHeaderBackdrop, setHasHeaderBackdrop] = useState(false);
   const isHome = pathname === "/";
+  const shouldShowHeaderBackdrop = !isHome || hasHeaderBackdrop;
   const currentHeadingTextClass = isCompressed
     ? compressedHeadingTextClass
     : headingTextClass;
@@ -307,17 +309,16 @@ export default function Header() {
       }
 
       const workCover = document.getElementById(homeWorkCoverId);
+      const workCoverTop = workCover?.getBoundingClientRect().top ?? Infinity;
       const expandedHeaderHeight =
         expandedHeaderHeightRef.current ||
         header?.getBoundingClientRect().height ||
         0;
 
       setIsCompressed(
-        Boolean(
-          workCover &&
-            workCover.getBoundingClientRect().top <= expandedHeaderHeight,
-        ),
+        Boolean(workCover && workCoverTop <= expandedHeaderHeight),
       );
+      setHasHeaderBackdrop(Boolean(workCover && workCoverTop <= 0));
     };
 
     const scheduleHeaderStateUpdate = () => {
@@ -375,6 +376,7 @@ export default function Header() {
       ref={containerRef}
       className={[
         "z-10 grid grid-cols-1 items-start gap-8 transition-all duration-300 sm:grid-cols-[auto_1fr]",
+        shouldShowHeaderBackdrop ? "bg-[#050505]" : "",
         headerPositionClass,
         headerVerticalPaddingClass,
         isCompressed ? "gap-5" : "",
