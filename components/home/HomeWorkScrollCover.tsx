@@ -25,7 +25,10 @@ export default function HomeWorkScrollCover() {
   }, [selectedWorks]);
 
   return (
-    <section className="relative z-20 min-h-svh bg-[#050505] px-5 py-5 text-white shadow-[0_-44px_120px_rgba(0,0,0,0.62)] sm:px-8 sm:py-7 lg:px-10 lg:py-9">
+    <section
+      id="home-work-cover"
+      className="relative z-20 min-h-svh bg-[#050505] px-5 py-5 text-white shadow-[0_-44px_120px_rgba(0,0,0,0.62)] sm:px-8 sm:py-7 lg:px-10 lg:py-9"
+    >
       <IndexContentLayout
         sidebar={
           <ArchiveSidebar

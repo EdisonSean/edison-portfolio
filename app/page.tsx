@@ -32,11 +32,11 @@ export default function Home() {
 
   return (
     <main className="relative isolate bg-[#050505] text-white">
+      <HomeIntroHeader />
       <section className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden px-5 py-5 sm:px-8 sm:py-7 lg:px-10 lg:py-9">
         <FeaturedWorkVideoBackground sources={featuredVideoSources} />
         <FeaturedWorkVideoPreloader sources={preloadVideoSources} />
         <HomePointerParallax />
-        <HomeIntroHeader />
         <HomeIntroShowcaseObject />
       </section>
       <HomeWorkScrollCover />

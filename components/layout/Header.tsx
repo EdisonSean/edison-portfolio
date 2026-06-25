@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import type { MouseEvent } from "react";
 import VariableProximity from "@/components/typography/VariableProximity";
 
 const directoryItems = [
@@ -48,6 +49,7 @@ const navVariableTextSettings = {
   radius: 80,
   falloff: "gaussian" as const,
 };
+const homeWorkCoverId = "home-work-cover";
 
 type SocialIconName = (typeof socialLinks)[number]["icon"];
 
@@ -278,11 +280,6 @@ export default function Header() {
     : "h-9 w-9 text-[0.88rem] sm:h-10 sm:w-10 sm:text-[0.95rem]";
 
   useEffect(() => {
-    if (isHome) {
-      setIsCompressed(false);
-      return;
-    }
-
     let animationFrameId = 0;
 
     const updateHeaderState = () => {
@@ -308,7 +305,35 @@ export default function Header() {
 
       window.removeEventListener("scroll", scheduleHeaderStateUpdate);
     };
-  }, [isHome]);
+  }, []);
+
+  const handleDirectoryClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    href: string,
+  ) => {
+    if (!isHome || href !== "/work") {
+      return;
+    }
+
+    const workCover = document.getElementById(homeWorkCoverId);
+
+    if (!workCover) {
+      return;
+    }
+
+    event.preventDefault();
+
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const targetScrollY =
+      window.scrollY + workCover.getBoundingClientRect().top;
+
+    window.scrollTo({
+      top: targetScrollY,
+      behavior: reducedMotion ? "auto" : "smooth",
+    });
+  };
 
   return (
     <header
@@ -316,7 +341,12 @@ export default function Header() {
       className={[
         "z-10 grid grid-cols-1 items-start gap-8 transition-all duration-300 sm:grid-cols-[auto_1fr]",
         isHome
-          ? "relative"
+          ? [
+              "fixed inset-x-0 top-0 z-50 px-5 sm:px-8 lg:px-10",
+              isCompressed
+                ? "bg-[#050505]/94 py-3 shadow-[0_1px_0_rgba(255,255,255,0.1),0_18px_70px_rgba(0,0,0,0.45)] backdrop-blur-sm sm:py-4 lg:py-5"
+                : "py-5 sm:py-7 lg:py-9",
+            ].join(" ")
           : [
               "sticky top-0 z-40 -mx-5 -mt-5 bg-[#050505] px-5 sm:-mx-8 sm:-mt-7 sm:px-8 lg:-mx-10 lg:-mt-9 lg:px-10",
               isCompressed ? "py-3 sm:py-4 lg:py-5" : "py-5 sm:py-7 lg:py-9",
@@ -348,7 +378,10 @@ export default function Header() {
         <ul className="grid w-full min-w-0 grid-cols-3 justify-items-start gap-x-0 sm:w-[min(72vw,660px)] sm:justify-items-end">
           {directoryItems.map((item) => {
             const isActive =
-              pathname === item.href || pathname.startsWith(`${item.href}/`);
+              pathname === item.href ||
+              pathname.startsWith(`${item.href}/`) ||
+              (isHome && isCompressed && item.href === "/work");
+            const shouldShowNavRule = !isHome || isCompressed;
 
             return (
               <li key={item.label} className="min-w-0">
@@ -356,11 +389,12 @@ export default function Header() {
                   className={[
                     "block transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     currentHeadingTextClass,
-                    isHome ? "" : "w-fit border-b-2 pb-1",
-                    !isHome && isActive ? "border-white" : "",
-                    !isHome && !isActive ? "border-transparent" : "",
+                    shouldShowNavRule ? "w-fit border-b-2 pb-1" : "",
+                    shouldShowNavRule && isActive ? "border-white" : "",
+                    shouldShowNavRule && !isActive ? "border-transparent" : "",
                   ].join(" ")}
                   href={item.href}
+                  onClick={(event) => handleDirectoryClick(event, item.href)}
                   aria-current={isActive ? "page" : undefined}
                 >
                   <VariableProximity
