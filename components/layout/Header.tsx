@@ -284,7 +284,7 @@ export default function Header() {
     : "py-5 sm:py-7 lg:py-9";
   const headerPositionClass = isHome
     ? "fixed inset-x-0 top-0 z-50 px-5 sm:px-8 lg:px-10"
-    : "sticky top-0 z-40 -mx-5 -mt-5 px-5 sm:-mx-8 sm:-mt-7 sm:px-8 lg:-mx-10 lg:-mt-9 lg:px-10";
+    : "sticky top-0 z-40 -mx-5 -mt-5 bg-[#050505] px-5 sm:-mx-8 sm:-mt-7 sm:px-8 lg:-mx-10 lg:-mt-9 lg:px-10";
 
   useEffect(() => {
     let animationFrameId = 0;
@@ -374,7 +374,7 @@ export default function Header() {
     <header
       ref={containerRef}
       className={[
-        "z-10 grid grid-cols-1 items-start gap-8 bg-[#050505] transition-all duration-300 sm:grid-cols-[auto_1fr]",
+        "z-10 grid grid-cols-1 items-start gap-8 transition-all duration-300 sm:grid-cols-[auto_1fr]",
         headerPositionClass,
         headerVerticalPaddingClass,
         isCompressed ? "gap-5" : "",
