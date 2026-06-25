@@ -9,6 +9,8 @@ const videoParallaxX = 38;
 const videoParallaxY = 28;
 const logoParallaxX = 10;
 const logoParallaxY = 7;
+const logoScrollBlur = 22;
+const logoScrollY = 92;
 const smoothing = 0.12;
 
 type ParallaxPosition = {
@@ -49,8 +51,33 @@ function resetParallaxVariables() {
   setLogoParallaxVariables(centeredPosition);
 }
 
+function setLogoScrollVariables(progress: number) {
+  const easedProgress = progress * progress * (3 - 2 * progress);
+
+  document.documentElement.style.setProperty(
+    "--home-logo-scroll-blur",
+    `${(easedProgress * logoScrollBlur).toFixed(2)}px`,
+  );
+  document.documentElement.style.setProperty(
+    "--home-logo-scroll-opacity",
+    `${(1 - easedProgress).toFixed(3)}`,
+  );
+  document.documentElement.style.setProperty(
+    "--home-logo-scroll-y",
+    `${(easedProgress * logoScrollY).toFixed(2)}px`,
+  );
+}
+
+function resetLogoScrollVariables() {
+  setLogoScrollVariables(0);
+}
+
 function clampParallaxValue(value: number) {
   return Math.max(-1, Math.min(1, value));
+}
+
+function clampProgress(value: number) {
+  return Math.max(0, Math.min(1, value));
 }
 
 export default function HomePointerParallax() {
@@ -68,11 +95,19 @@ export default function HomePointerParallax() {
     let hasPromptedForDeviceOrientation = false;
     let hasDeviceOrientationPermission = false;
     let orientationBaseline: ParallaxPosition | null = null;
+    let scrollAnimationFrameId = 0;
 
     const stopAnimation = () => {
       if (animationFrameId !== 0) {
         window.cancelAnimationFrame(animationFrameId);
         animationFrameId = 0;
+      }
+    };
+
+    const stopScrollAnimation = () => {
+      if (scrollAnimationFrameId !== 0) {
+        window.cancelAnimationFrame(scrollAnimationFrameId);
+        scrollAnimationFrameId = 0;
       }
     };
 
@@ -255,6 +290,29 @@ export default function HomePointerParallax() {
       scheduleParallax();
     };
 
+    const updateLogoScrollProgress = () => {
+      scrollAnimationFrameId = 0;
+
+      if (reducedMotionMedia.matches) {
+        resetLogoScrollVariables();
+        return;
+      }
+
+      const progress = clampProgress(
+        window.scrollY / Math.max(1, window.innerHeight),
+      );
+
+      setLogoScrollVariables(progress);
+    };
+
+    const scheduleLogoScrollProgress = () => {
+      if (scrollAnimationFrameId === 0) {
+        scrollAnimationFrameId = window.requestAnimationFrame(
+          updateLogoScrollProgress,
+        );
+      }
+    };
+
     const syncEnabledState = () => {
       isMouseParallaxEnabled =
         !reducedMotionMedia.matches && !constrainedPointerMedia.matches;
@@ -283,9 +341,12 @@ export default function HomePointerParallax() {
         stopAnimation();
         setLogoParallaxVariables(currentLogoPosition);
       }
+
+      scheduleLogoScrollProgress();
     };
 
     resetParallaxVariables();
+    resetLogoScrollVariables();
     syncEnabledState();
 
     window.addEventListener("pointermove", updateTargetPosition, {
@@ -298,21 +359,29 @@ export default function HomePointerParallax() {
       passive: true,
     });
     window.addEventListener("blur", resetTargetPosition);
+    window.addEventListener("scroll", scheduleLogoScrollProgress, {
+      passive: true,
+    });
+    window.addEventListener("resize", scheduleLogoScrollProgress);
     document.addEventListener("mouseleave", resetTargetPosition);
     reducedMotionMedia.addEventListener("change", syncEnabledState);
     constrainedPointerMedia.addEventListener("change", syncEnabledState);
 
     return () => {
       stopAnimation();
+      stopScrollAnimation();
       stopDeviceOrientation();
       window.removeEventListener("pointermove", updateTargetPosition);
       window.removeEventListener("pointerdown", requestDeviceOrientationAccess);
       window.removeEventListener("touchstart", requestDeviceOrientationAccess);
       window.removeEventListener("blur", resetTargetPosition);
+      window.removeEventListener("scroll", scheduleLogoScrollProgress);
+      window.removeEventListener("resize", scheduleLogoScrollProgress);
       document.removeEventListener("mouseleave", resetTargetPosition);
       reducedMotionMedia.removeEventListener("change", syncEnabledState);
       constrainedPointerMedia.removeEventListener("change", syncEnabledState);
       resetParallaxVariables();
+      resetLogoScrollVariables();
     };
   }, []);
 

@@ -63,9 +63,11 @@ export default function HomeIntroShowcaseObject() {
       <div
         className="relative flex min-w-0 flex-1"
         style={{
+          filter: "blur(var(--home-logo-scroll-blur, 0px))",
+          opacity: "var(--home-logo-scroll-opacity, 1)",
           transform:
-            "translate3d(var(--home-logo-parallax-x, 0px), var(--home-logo-parallax-y, 0px), 0)",
-          willChange: "transform",
+            "translate3d(var(--home-logo-parallax-x, 0px), calc(var(--home-logo-parallax-y, 0px) - var(--home-logo-scroll-y, 0px)), 0)",
+          willChange: "filter, opacity, transform",
         }}
       >
         <InteractiveShowcaseObject />

@@ -3,6 +3,7 @@ import FeaturedWorkVideoPreloader from "@/components/home/FeaturedWorkVideoPrelo
 import HomeIntroHeader from "@/components/home/HomeIntroHeader";
 import HomeIntroShowcaseObject from "@/components/home/HomeIntroShowcaseObject";
 import HomePointerParallax from "@/components/home/HomePointerParallax";
+import HomeWorkScrollCover from "@/components/home/HomeWorkScrollCover";
 import { labs } from "@/data/labs";
 import { getWorksByCategory } from "@/data/works";
 
@@ -30,12 +31,15 @@ export default function Home() {
   ].filter((src): src is string => Boolean(src));
 
   return (
-    <main className="relative isolate flex min-h-svh flex-col overflow-hidden bg-[#050505] px-5 py-5 text-white sm:px-8 sm:py-7 lg:px-10 lg:py-9">
-      <FeaturedWorkVideoBackground sources={featuredVideoSources} />
-      <FeaturedWorkVideoPreloader sources={preloadVideoSources} />
-      <HomePointerParallax />
-      <HomeIntroHeader />
-      <HomeIntroShowcaseObject />
+    <main className="relative isolate bg-[#050505] text-white">
+      <section className="sticky top-0 z-0 flex min-h-svh flex-col overflow-hidden px-5 py-5 sm:px-8 sm:py-7 lg:px-10 lg:py-9">
+        <FeaturedWorkVideoBackground sources={featuredVideoSources} />
+        <FeaturedWorkVideoPreloader sources={preloadVideoSources} />
+        <HomePointerParallax />
+        <HomeIntroHeader />
+        <HomeIntroShowcaseObject />
+      </section>
+      <HomeWorkScrollCover />
     </main>
   );
 }
