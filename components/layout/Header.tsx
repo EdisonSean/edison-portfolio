@@ -269,6 +269,7 @@ export function SocialContactLinks({
 
 export default function Header() {
   const containerRef = useRef<HTMLElement | null>(null);
+  const expandedHeaderHeightRef = useRef(0);
   const pathname = usePathname();
   const [isCompressed, setIsCompressed] = useState(false);
   const isHome = pathname === "/";
@@ -290,7 +291,33 @@ export default function Header() {
 
     const updateHeaderState = () => {
       animationFrameId = 0;
-      setIsCompressed(window.scrollY > 24);
+
+      const header = containerRef.current;
+
+      if (header && !isCompressed) {
+        expandedHeaderHeightRef.current = Math.max(
+          expandedHeaderHeightRef.current,
+          header.getBoundingClientRect().height,
+        );
+      }
+
+      if (!isHome) {
+        setIsCompressed(window.scrollY > 24);
+        return;
+      }
+
+      const workCover = document.getElementById(homeWorkCoverId);
+      const expandedHeaderHeight =
+        expandedHeaderHeightRef.current ||
+        header?.getBoundingClientRect().height ||
+        0;
+
+      setIsCompressed(
+        Boolean(
+          workCover &&
+            workCover.getBoundingClientRect().top <= expandedHeaderHeight,
+        ),
+      );
     };
 
     const scheduleHeaderStateUpdate = () => {
@@ -303,6 +330,7 @@ export default function Header() {
     window.addEventListener("scroll", scheduleHeaderStateUpdate, {
       passive: true,
     });
+    window.addEventListener("resize", scheduleHeaderStateUpdate);
 
     return () => {
       if (animationFrameId !== 0) {
@@ -310,8 +338,9 @@ export default function Header() {
       }
 
       window.removeEventListener("scroll", scheduleHeaderStateUpdate);
+      window.removeEventListener("resize", scheduleHeaderStateUpdate);
     };
-  }, []);
+  }, [isCompressed, isHome]);
 
   const handleDirectoryClick = (
     event: MouseEvent<HTMLAnchorElement>,
