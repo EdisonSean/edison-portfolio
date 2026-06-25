@@ -150,15 +150,6 @@ export default function ScrollEnhancer() {
   useEffect(() => {
     const dragHint = dragHintRef.current;
 
-    if (pathname === "/") {
-      hasUsedDragScrollRef.current = false;
-      setStoredDragUsage(false);
-      if (dragHint) {
-        dragHint.style.opacity = "0";
-      }
-      return;
-    }
-
     hasUsedDragScrollRef.current = getStoredDragUsage();
 
     if (shouldUseNativeScroll()) {
