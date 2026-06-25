@@ -409,7 +409,9 @@ export default function Header() {
               pathname === item.href ||
               pathname.startsWith(`${item.href}/`) ||
               (isHome && isCompressed && item.href === "/work");
-            const shouldShowNavRule = !isHome || isCompressed;
+            const shouldReserveNavRuleSpace = !isHome || isCompressed;
+            const shouldShowNavRule = !isHome || (isCompressed && isActive);
+            const shouldShowTransparentRule = !isHome && !isActive;
 
             return (
               <li key={item.label} className="min-w-0">
@@ -417,9 +419,12 @@ export default function Header() {
                   className={[
                     "block transition-all duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-white",
                     currentHeadingTextClass,
-                    shouldShowNavRule ? "w-fit border-b-2 pb-1" : "",
+                    shouldReserveNavRuleSpace ? "w-fit pb-1" : "",
+                    shouldShowNavRule ? "border-b-2" : "",
                     shouldShowNavRule && isActive ? "border-white" : "",
-                    shouldShowNavRule && !isActive ? "border-transparent" : "",
+                    shouldShowTransparentRule
+                      ? "border-b-2 border-transparent"
+                      : "",
                   ].join(" ")}
                   href={item.href}
                   onClick={(event) => handleDirectoryClick(event, item.href)}
