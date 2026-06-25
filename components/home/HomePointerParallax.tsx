@@ -7,6 +7,8 @@ const constrainedPointerQuery =
   "(max-width: 767px), (hover: none) and (pointer: coarse)";
 const videoParallaxX = 38;
 const videoParallaxY = 28;
+const logoParallaxX = 10;
+const logoParallaxY = 7;
 const smoothing = 0.12;
 
 type ParallaxPosition = {
@@ -14,7 +16,12 @@ type ParallaxPosition = {
   y: number;
 };
 
-function setParallaxVariables(position: ParallaxPosition) {
+type DeviceOrientationEventConstructorWithPermission =
+  typeof DeviceOrientationEvent & {
+    requestPermission?: () => Promise<PermissionState>;
+  };
+
+function setVideoParallaxVariables(position: ParallaxPosition) {
   document.documentElement.style.setProperty(
     "--home-video-parallax-x",
     `${(-position.x * videoParallaxX).toFixed(2)}px`,
@@ -25,18 +32,42 @@ function setParallaxVariables(position: ParallaxPosition) {
   );
 }
 
+function setLogoParallaxVariables(position: ParallaxPosition) {
+  document.documentElement.style.setProperty(
+    "--home-logo-parallax-x",
+    `${(position.x * logoParallaxX).toFixed(2)}px`,
+  );
+  document.documentElement.style.setProperty(
+    "--home-logo-parallax-y",
+    `${(position.y * logoParallaxY).toFixed(2)}px`,
+  );
+}
+
 function resetParallaxVariables() {
-  setParallaxVariables({ x: 0, y: 0 });
+  const centeredPosition = { x: 0, y: 0 };
+  setVideoParallaxVariables(centeredPosition);
+  setLogoParallaxVariables(centeredPosition);
+}
+
+function clampParallaxValue(value: number) {
+  return Math.max(-1, Math.min(1, value));
 }
 
 export default function HomePointerParallax() {
   useEffect(() => {
     const reducedMotionMedia = window.matchMedia(reducedMotionQuery);
     const constrainedPointerMedia = window.matchMedia(constrainedPointerQuery);
-    const currentPosition: ParallaxPosition = { x: 0, y: 0 };
-    const targetPosition: ParallaxPosition = { x: 0, y: 0 };
+    const currentVideoPosition: ParallaxPosition = { x: 0, y: 0 };
+    const targetVideoPosition: ParallaxPosition = { x: 0, y: 0 };
+    const currentLogoPosition: ParallaxPosition = { x: 0, y: 0 };
+    const targetLogoPosition: ParallaxPosition = { x: 0, y: 0 };
     let animationFrameId = 0;
-    let isEnabled = false;
+    let isMouseParallaxEnabled = false;
+    let isDeviceOrientationEnabled = false;
+    let isDeviceOrientationListening = false;
+    let hasPromptedForDeviceOrientation = false;
+    let hasDeviceOrientationPermission = false;
+    let orientationBaseline: ParallaxPosition | null = null;
 
     const stopAnimation = () => {
       if (animationFrameId !== 0) {
@@ -46,19 +77,31 @@ export default function HomePointerParallax() {
     };
 
     const animateParallax = () => {
-      currentPosition.x += (targetPosition.x - currentPosition.x) * smoothing;
-      currentPosition.y += (targetPosition.y - currentPosition.y) * smoothing;
+      currentVideoPosition.x +=
+        (targetVideoPosition.x - currentVideoPosition.x) * smoothing;
+      currentVideoPosition.y +=
+        (targetVideoPosition.y - currentVideoPosition.y) * smoothing;
+      currentLogoPosition.x +=
+        (targetLogoPosition.x - currentLogoPosition.x) * smoothing;
+      currentLogoPosition.y +=
+        (targetLogoPosition.y - currentLogoPosition.y) * smoothing;
 
-      setParallaxVariables(currentPosition);
+      setVideoParallaxVariables(currentVideoPosition);
+      setLogoParallaxVariables(currentLogoPosition);
 
       const isSettled =
-        Math.abs(targetPosition.x - currentPosition.x) < 0.001 &&
-        Math.abs(targetPosition.y - currentPosition.y) < 0.001;
+        Math.abs(targetVideoPosition.x - currentVideoPosition.x) < 0.001 &&
+        Math.abs(targetVideoPosition.y - currentVideoPosition.y) < 0.001 &&
+        Math.abs(targetLogoPosition.x - currentLogoPosition.x) < 0.001 &&
+        Math.abs(targetLogoPosition.y - currentLogoPosition.y) < 0.001;
 
       if (isSettled) {
-        currentPosition.x = targetPosition.x;
-        currentPosition.y = targetPosition.y;
-        setParallaxVariables(currentPosition);
+        currentVideoPosition.x = targetVideoPosition.x;
+        currentVideoPosition.y = targetVideoPosition.y;
+        currentLogoPosition.x = targetLogoPosition.x;
+        currentLogoPosition.y = targetLogoPosition.y;
+        setVideoParallaxVariables(currentVideoPosition);
+        setLogoParallaxVariables(currentLogoPosition);
         animationFrameId = 0;
         return;
       }
@@ -73,32 +116,172 @@ export default function HomePointerParallax() {
     };
 
     const updateTargetPosition = (event: PointerEvent) => {
-      if (!isEnabled || event.pointerType !== "mouse") {
+      if (!isMouseParallaxEnabled || event.pointerType !== "mouse") {
         return;
       }
 
-      targetPosition.x = (event.clientX / window.innerWidth - 0.5) * 2;
-      targetPosition.y = (event.clientY / window.innerHeight - 0.5) * 2;
+      const pointerX = (event.clientX / window.innerWidth - 0.5) * 2;
+      const pointerY = (event.clientY / window.innerHeight - 0.5) * 2;
+
+      targetVideoPosition.x = pointerX;
+      targetVideoPosition.y = pointerY;
+      targetLogoPosition.x = pointerX;
+      targetLogoPosition.y = pointerY;
       scheduleParallax();
     };
 
+    const updateDeviceOrientationPosition = (event: DeviceOrientationEvent) => {
+      if (
+        !isDeviceOrientationEnabled ||
+        event.beta === null ||
+        event.gamma === null
+      ) {
+        return;
+      }
+
+      if (!orientationBaseline) {
+        orientationBaseline = {
+          x: event.gamma,
+          y: event.beta,
+        };
+      }
+
+      targetLogoPosition.x = clampParallaxValue(
+        (event.gamma - orientationBaseline.x) / 18,
+      );
+      targetLogoPosition.y = clampParallaxValue(
+        (event.beta - orientationBaseline.y) / 18,
+      );
+      scheduleParallax();
+    };
+
+    const startDeviceOrientation = () => {
+      if (isDeviceOrientationListening || !isDeviceOrientationEnabled) {
+        return;
+      }
+
+      window.addEventListener(
+        "deviceorientation",
+        updateDeviceOrientationPosition,
+      );
+      isDeviceOrientationListening = true;
+    };
+
+    const stopDeviceOrientation = () => {
+      if (!isDeviceOrientationListening) {
+        return;
+      }
+
+      window.removeEventListener(
+        "deviceorientation",
+        updateDeviceOrientationPosition,
+      );
+      isDeviceOrientationListening = false;
+      orientationBaseline = null;
+    };
+
+    const getDeviceOrientationEvent = () => {
+      if (typeof DeviceOrientationEvent === "undefined") {
+        return null;
+      }
+
+      return DeviceOrientationEvent as DeviceOrientationEventConstructorWithPermission;
+    };
+
+    const canRequestDeviceOrientationPermission = () => {
+      const deviceOrientationEvent =
+        getDeviceOrientationEvent();
+
+      return typeof deviceOrientationEvent?.requestPermission === "function";
+    };
+
+    const startDeviceOrientationIfPermissionIsNotRequired = () => {
+      if (hasDeviceOrientationPermission) {
+        startDeviceOrientation();
+        return;
+      }
+
+      const deviceOrientationEvent = getDeviceOrientationEvent();
+
+      if (
+        deviceOrientationEvent &&
+        !canRequestDeviceOrientationPermission()
+      ) {
+        startDeviceOrientation();
+      }
+    };
+
+    const requestDeviceOrientationAccess = () => {
+      if (!isDeviceOrientationEnabled || hasPromptedForDeviceOrientation) {
+        return;
+      }
+
+      hasPromptedForDeviceOrientation = true;
+
+      const deviceOrientationEvent = getDeviceOrientationEvent();
+
+      if (!deviceOrientationEvent) {
+        return;
+      }
+
+      if (!canRequestDeviceOrientationPermission()) {
+        startDeviceOrientation();
+        return;
+      }
+
+      const requestPermission = deviceOrientationEvent.requestPermission;
+
+      if (!requestPermission) {
+        return;
+      }
+
+      void requestPermission()
+        .then((permission) => {
+          if (permission === "granted") {
+            hasDeviceOrientationPermission = true;
+            startDeviceOrientation();
+          }
+        })
+        .catch(() => {
+          resetTargetPosition();
+        });
+    };
+
     const resetTargetPosition = () => {
-      targetPosition.x = 0;
-      targetPosition.y = 0;
+      targetVideoPosition.x = 0;
+      targetVideoPosition.y = 0;
+      targetLogoPosition.x = 0;
+      targetLogoPosition.y = 0;
       scheduleParallax();
     };
 
     const syncEnabledState = () => {
-      isEnabled =
+      isMouseParallaxEnabled =
         !reducedMotionMedia.matches && !constrainedPointerMedia.matches;
+      isDeviceOrientationEnabled =
+        !reducedMotionMedia.matches && constrainedPointerMedia.matches;
 
-      if (!isEnabled) {
-        targetPosition.x = 0;
-        targetPosition.y = 0;
-        currentPosition.x = 0;
-        currentPosition.y = 0;
+      if (isDeviceOrientationEnabled) {
+        startDeviceOrientationIfPermissionIsNotRequired();
+      } else {
+        stopDeviceOrientation();
+      }
+
+      if (!isMouseParallaxEnabled) {
+        targetVideoPosition.x = 0;
+        targetVideoPosition.y = 0;
+        currentVideoPosition.x = 0;
+        currentVideoPosition.y = 0;
+        setVideoParallaxVariables(currentVideoPosition);
+      }
+
+      if (!isMouseParallaxEnabled && !isDeviceOrientationEnabled) {
+        targetLogoPosition.x = 0;
+        targetLogoPosition.y = 0;
+        currentLogoPosition.x = 0;
+        currentLogoPosition.y = 0;
         stopAnimation();
-        resetParallaxVariables();
+        setLogoParallaxVariables(currentLogoPosition);
       }
     };
 
@@ -108,6 +291,12 @@ export default function HomePointerParallax() {
     window.addEventListener("pointermove", updateTargetPosition, {
       passive: true,
     });
+    window.addEventListener("pointerdown", requestDeviceOrientationAccess, {
+      passive: true,
+    });
+    window.addEventListener("touchstart", requestDeviceOrientationAccess, {
+      passive: true,
+    });
     window.addEventListener("blur", resetTargetPosition);
     document.addEventListener("mouseleave", resetTargetPosition);
     reducedMotionMedia.addEventListener("change", syncEnabledState);
@@ -115,7 +304,10 @@ export default function HomePointerParallax() {
 
     return () => {
       stopAnimation();
+      stopDeviceOrientation();
       window.removeEventListener("pointermove", updateTargetPosition);
+      window.removeEventListener("pointerdown", requestDeviceOrientationAccess);
+      window.removeEventListener("touchstart", requestDeviceOrientationAccess);
       window.removeEventListener("blur", resetTargetPosition);
       document.removeEventListener("mouseleave", resetTargetPosition);
       reducedMotionMedia.removeEventListener("change", syncEnabledState);
