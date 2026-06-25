@@ -56,7 +56,7 @@ export default function HomeIntroHeader() {
 
   return (
     <motion.div
-      className="relative z-10"
+      className="fixed inset-x-0 top-0 z-[60]"
       initial={false}
       animate={controls}
     >
