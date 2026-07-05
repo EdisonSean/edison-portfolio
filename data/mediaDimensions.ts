@@ -19,7 +19,7 @@ export const mediaDimensions: Record<string, MediaDimensions> = {
   "/lab/vibecoding/instagram-to-eagle/gui_overview2.webp": { width: 1499, height: 928 },
   "/lab/vibecoding/instagram-to-eagle/workflow_diagram.webp": { width: 1146, height: 1384 },
   "/lab/vibecoding/vibe-coded-portfolio-website/github_repo_overview.webp": { width: 949, height: 1055 },
-  "/lab/vibecoding/vibe-coded-portfolio-website/portfolio_walkthrough.mp4": { width: 1920, height: 964 },
+  "/lab/vibecoding/vibe-coded-portfolio-website/portfolio_walkthrough.mp4": { width: 1666, height: 1270 },
   "/lab/vibecoding/vibe-coded-portfolio-website/vibecoding_process.webp": { width: 1506, height: 1389 },
   "/works/cloth/bananain-cooling-quilt-weave/亚朵夏凉被_shot10_v1_1.mp4": { width: 1920, height: 1920 },
   "/works/cloth/bananain-cooling-quilt-weave/breakdown_knitting_v001_1.mp4": { width: 1920, height: 1080 },
