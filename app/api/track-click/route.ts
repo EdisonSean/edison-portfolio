@@ -27,12 +27,40 @@ function getRedirectUrl(request: NextRequest, url: string) {
   }
 }
 
+function getSupabaseJwtRole(key: string) {
+  try {
+    const [, payload] = key.split(".");
+
+    if (!payload) {
+      return "unknown";
+    }
+
+    const normalizedPayload = payload.replace(/-/g, "+").replace(/_/g, "/");
+    const decodedPayload = JSON.parse(
+      Buffer.from(normalizedPayload, "base64").toString("utf8"),
+    ) as { role?: string };
+
+    return decodedPayload.role ?? "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
 async function writeTrackingEvent(event: Record<string, unknown>) {
   const supabaseUrl = process.env.SUPABASE_URL;
   const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
   if (!supabaseUrl || !serviceRoleKey) {
     console.warn("Supabase tracking env vars are not configured.");
+    return;
+  }
+
+  const keyRole = getSupabaseJwtRole(serviceRoleKey);
+
+  if (keyRole !== "service_role") {
+    console.warn(
+      `Supabase tracking skipped: SUPABASE_SERVICE_ROLE_KEY has role "${keyRole}", expected "service_role".`,
+    );
     return;
   }
 
@@ -51,7 +79,7 @@ async function writeTrackingEvent(event: Record<string, unknown>) {
 
   if (!response.ok) {
     const errorText = await response.text();
-    throw new Error(`Supabase tracking insert failed: ${response.status} ${errorText}`);
+    console.warn(`Supabase tracking insert failed: ${response.status} ${errorText}`);
   }
 }
 
@@ -93,7 +121,7 @@ export async function GET(request: NextRequest) {
   try {
     await writeTrackingEvent(event);
   } catch (error) {
-    console.error(error);
+    console.warn(error);
   }
 
   return new Response(null, {
