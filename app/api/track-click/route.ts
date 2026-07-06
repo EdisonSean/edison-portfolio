@@ -57,9 +57,9 @@ async function writeTrackingEvent(event: Record<string, unknown>) {
 
   const keyRole = getSupabaseJwtRole(serviceRoleKey);
 
-  if (keyRole !== "service_role") {
+  if (keyRole === "anon") {
     console.warn(
-      `Supabase tracking skipped: SUPABASE_SERVICE_ROLE_KEY has role "${keyRole}", expected "service_role".`,
+      'Supabase tracking skipped: SUPABASE_SERVICE_ROLE_KEY is an anon key. Use a service_role JWT or Supabase secret key.',
     );
     return;
   }
