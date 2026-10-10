@@ -10,6 +10,11 @@ const nextConfig: NextConfig = {
         destination:
           "/api/track-click?campaign=buildersclub_20261010&recipient=BuildersClub&token=bc01&target=portfolio&url=https%3A%2F%2Fedisonfx.art%2F",
       },
+      {
+        source: "/p/t",
+        destination:
+          "/api/track-click?campaign=buildersclub_20261010&recipient=BuildersClub&token=bc01&target=portfolio&url=https%3A%2F%2Fedisonfx.art%2F",
+      },
     ];
   },
   async headers() {
