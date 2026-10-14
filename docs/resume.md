@@ -2,7 +2,7 @@
 
 ## Edison Xiao / 冠森
 
-**Houdini FX Artist / CG Artist**
+**3D Motion Designer / Houdini Artist**
 
 Edison Xiao is a Houdini FX artist focused on procedural motion, product-driven visual effects, and simulation-based design.
 
